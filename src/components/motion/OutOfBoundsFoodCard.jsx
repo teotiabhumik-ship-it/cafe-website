@@ -16,8 +16,8 @@ export default function OutOfBoundsFoodCard({ item, onOpenDelivery }) {
   const smoothX = useSpring(x, springConfig);
   const smoothY = useSpring(y, springConfig);
 
-  const rotateX = useTransform(smoothY, [-0.5, 0.5], [8, -8]);
-  const rotateY = useTransform(smoothX, [-0.5, 0.5], [-8, 8]);
+  const rotateX = useTransform(smoothY, [-0.5, 0.5], [7, -7]);
+  const rotateY = useTransform(smoothX, [-0.5, 0.5], [-7, 7]);
 
   const handleMouseMove = (e) => {
     if (!cardRef.current) return;
@@ -47,7 +47,7 @@ export default function OutOfBoundsFoodCard({ item, onOpenDelivery }) {
   };
 
   return (
-    <div className="relative pt-16 group h-full">
+    <div className="relative pt-10 sm:pt-12 group h-full">
       {/* 3D Tilt Card Base */}
       <motion.div
         ref={cardRef}
@@ -59,83 +59,65 @@ export default function OutOfBoundsFoodCard({ item, onOpenDelivery }) {
           rotateY,
           transformStyle: 'preserve-3d',
         }}
-        whileHover={{ scale: 1.02 }}
+        whileHover={{ scale: 1.015 }}
         transition={{ duration: 0.25 }}
-        className="relative perspective-1000 h-full flex flex-col justify-between rounded-3xl bg-gradient-to-b from-[#181513] via-[#141210] to-[#0f0e0c] border border-stone-800/80 group-hover:border-[#c8a97e]/45 transition-colors duration-300 shadow-[0_16px_36px_rgba(0,0,0,0.7)] pt-24 pb-6 px-6"
+        className="relative perspective-1000 h-full flex flex-col justify-between rounded-3xl bg-gradient-to-b from-[#181513] via-[#141210] to-[#0f0e0c] border border-stone-800/80 group-hover:border-[#c8a97e]/45 transition-colors duration-300 shadow-[0_16px_36px_rgba(0,0,0,0.7)] p-4 sm:p-5"
       >
-        {/* Out-Of-Bounds Floating Artisan Plate */}
+        {/* Out-Of-Bounds Normal Rectangular Photo Breakout */}
         <div
-          className="absolute -top-14 sm:-top-16 left-1/2 -translate-x-1/2 z-20 pointer-events-none"
+          className="relative -mt-10 sm:-mt-12 z-20"
           style={{
             transformStyle: 'preserve-3d',
-            transform: 'translateZ(55px)',
+            transform: 'translateZ(45px)',
           }}
         >
           <motion.div
-            className="relative"
+            className="relative h-48 sm:h-52 w-full rounded-2xl overflow-hidden border border-stone-700/70 group-hover:border-[#c8a97e]/60 transition-colors duration-300"
             animate={
               isHovered
-                ? { y: -14, scale: 1.08, rotate: 1.5 }
-                : { y: 0, scale: 1, rotate: 0 }
+                ? { y: -8, scale: 1.03 }
+                : { y: 0, scale: 1 }
             }
-            transition={{ type: 'spring', stiffness: 320, damping: 20 }}
+            transition={{ type: 'spring', stiffness: 320, damping: 22 }}
+            style={{
+              boxShadow: isHovered
+                ? '0 24px 45px -8px rgba(0, 0, 0, 0.95), 0 0 25px rgba(200, 169, 126, 0.2)'
+                : '0 16px 30px -6px rgba(0, 0, 0, 0.85)',
+            }}
           >
-            {/* Ambient Gold Halo Glow behind the food */}
-            <div
-              className={`absolute inset-0 rounded-full transition-all duration-500 blur-xl -z-10 scale-110 ${
-                isHovered
-                  ? 'bg-[#c8a97e]/35 opacity-100'
-                  : 'bg-[#c8a97e]/15 opacity-70'
-              }`}
+            {/* Full Normal Rectangular Food Image */}
+            <img
+              src={item.image}
+              alt={item.name}
+              className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
+              loading="lazy"
             />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none" />
 
-            {/* Artisanal Ceramic Plate Framing */}
-            <div
-              className={`w-36 h-36 sm:w-44 sm:h-44 rounded-full p-1.5 bg-gradient-to-b from-stone-600/50 via-[#1e1b18] to-[#0c0b0a] border border-stone-700/70 transition-all duration-500 ${
-                isHovered
-                  ? 'shadow-[0_28px_50px_rgba(0,0,0,0.95)] border-[#c8a97e]/60'
-                  : 'shadow-[0_18px_35px_rgba(0,0,0,0.85)]'
-              }`}
-            >
-              {/* Inner Plate Bevel & Food Image */}
-              <div className="w-full h-full rounded-full overflow-hidden border border-[#c8a97e]/40 relative bg-[#181512]">
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  className="w-full h-full object-cover group-hover:scale-115 transition-transform duration-700 ease-out"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10 pointer-events-none" />
-              </div>
+            {/* Tag Badge */}
+            <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-semibold tracking-wider uppercase bg-black/75 backdrop-blur-md text-[#c8a97e] border border-stone-700/80 shadow-md">
+              {item.tag}
+            </span>
+
+            {/* Rating Badge */}
+            <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-black/75 backdrop-blur-md border border-stone-700/80 flex items-center gap-1 text-[11px] font-semibold text-stone-200 shadow-md">
+              <Star className="w-3 h-3 fill-[#c8a97e] text-[#c8a97e]" />
+              <span>{item.rating}</span>
             </div>
 
-            {/* Pure Veg Badge pinned to the out-of-bounds plate rim */}
-            <div className="absolute bottom-1 right-2 px-2.5 py-0.5 rounded-full bg-black/90 backdrop-blur-md border border-emerald-500/50 flex items-center gap-1.5 shadow-lg">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-              <span className="text-[9px] text-emerald-300 font-semibold uppercase tracking-wider">
-                Veg
+            {/* Pure Veg Badge */}
+            <div className="absolute bottom-3 left-3 px-2 py-0.5 rounded bg-black/75 backdrop-blur-md border border-emerald-500/50 flex items-center gap-1.5 shadow-md">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              <span className="text-[10px] text-emerald-300 font-semibold tracking-wide">
+                Pure Veg
               </span>
             </div>
           </motion.div>
         </div>
 
-        {/* Card Shoulder Tags (Tag & Rating) */}
-        <div
-          className="flex items-center justify-between gap-2 mb-4"
-          style={{ transform: 'translateZ(25px)' }}
-        >
-          <span className="px-3 py-1 rounded-full text-[10px] font-semibold tracking-wider uppercase bg-[#1d1a17] text-[#c8a97e] border border-stone-800/90 shadow-sm">
-            {item.tag}
-          </span>
-          <div className="px-2.5 py-1 rounded-full bg-[#1d1a17] border border-stone-800/90 flex items-center gap-1 text-[11px] font-semibold text-stone-200 shadow-sm">
-            <Star className="w-3 h-3 fill-[#c8a97e] text-[#c8a97e]" />
-            <span>{item.rating}</span>
-          </div>
-        </div>
-
         {/* Card Body Details */}
         <div
-          className="flex-1 flex flex-col justify-between"
+          className="flex-1 flex flex-col justify-between mt-4"
           style={{ transform: 'translateZ(20px)' }}
         >
           <div>

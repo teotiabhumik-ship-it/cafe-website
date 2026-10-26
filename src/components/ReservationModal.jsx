@@ -23,16 +23,15 @@ export default function ReservationModal({ isOpen, onClose }) {
     e.preventDefault();
     if (!formData.name || !formData.phone) return;
 
-    // Trigger celebratory confetti
     try {
       confetti({
         particleCount: 80,
         spread: 70,
         origin: { y: 0.6 },
-        colors: ['#f59e0b', '#d97706', '#fbbf24', '#f43f5e'],
+        colors: ['#c8a97e', '#f5efe6', '#10b981', '#f43f5e'],
       });
     } catch (err) {
-      // safe fallback
+      // fallback
     }
 
     setSubmitted(true);
@@ -64,25 +63,25 @@ export default function ReservationModal({ isOpen, onClose }) {
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 20 }}
-        className="relative max-w-lg w-full bg-[#160f0c] rounded-3xl border border-amber-700/50 shadow-2xl overflow-hidden my-8"
+        className="relative max-w-lg w-full bg-[#161412] rounded-3xl border border-stone-700 shadow-2xl overflow-hidden my-8"
       >
         {/* Header Ribbon */}
-        <div className="p-6 bg-gradient-to-r from-amber-950 via-[#1e1410] to-amber-950 border-b border-amber-800/40 relative">
+        <div className="p-6 bg-[#1b1815] border-b border-stone-800 relative">
           <button
             onClick={handleClose}
-            className="absolute top-5 right-5 p-2 rounded-full bg-black/40 hover:bg-black text-amber-200 hover:text-white transition-colors"
+            className="absolute top-5 right-5 p-2 rounded-full bg-black/40 hover:bg-black text-stone-300 hover:text-white transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
 
-          <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-amber-400 mb-1">
-            <Sparkles className="w-4 h-4 text-amber-400" />
+          <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#c8a97e] mb-1">
+            <Sparkles className="w-4 h-4 text-[#c8a97e]" />
             <span>Table & Party Reservation</span>
           </div>
-          <h3 className="font-serif-title text-2xl font-bold text-amber-50">
+          <h3 className="font-serif-title text-2xl font-bold text-[#fbf9f5]">
             {submitted ? 'Reservation Requested!' : 'Book Your Cozy Spot'}
           </h3>
-          <p className="text-xs text-amber-200/70 mt-1 font-light">
+          <p className="text-xs text-stone-400 mt-1 font-light">
             Cafe ElleBee • B-19 Ground Floor, RDC Raj Nagar
           </p>
         </div>
@@ -91,30 +90,30 @@ export default function ReservationModal({ isOpen, onClose }) {
         <div className="p-6 sm:p-8">
           {submitted ? (
             <div className="text-center space-y-6 py-4">
-              <div className="w-16 h-16 rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center mx-auto text-emerald-400">
+              <div className="w-16 h-16 rounded-full bg-emerald-500/15 border border-emerald-500/40 flex items-center justify-center mx-auto text-emerald-400">
                 <CheckCircle2 className="w-9 h-9" />
               </div>
 
               <div>
-                <h4 className="font-serif-title text-xl font-bold text-amber-100">
+                <h4 className="font-serif-title text-xl font-bold text-[#fbf9f5]">
                   Thank You, {formData.name}!
                 </h4>
-                <p className="text-sm text-amber-200/80 font-light mt-2 max-w-sm mx-auto leading-relaxed">
+                <p className="text-sm text-stone-300 font-light mt-2 max-w-sm mx-auto leading-relaxed">
                   We have received your reservation request for <strong>{formData.guests} guests</strong> on <strong>{formData.date || 'today'}</strong> at <strong>{formData.time}</strong>.
                 </p>
               </div>
 
-              <div className="p-4 rounded-2xl bg-amber-950/40 border border-amber-800/30 text-left text-xs text-amber-200 space-y-1.5">
+              <div className="p-4 rounded-2xl bg-[#13110f] border border-stone-800 text-left text-xs text-stone-300 space-y-1.5">
                 <p><strong>Occasion:</strong> {formData.occasion}</p>
                 <p><strong>Contact:</strong> {formData.phone}</p>
                 {formData.notes && <p><strong>Notes:</strong> {formData.notes}</p>}
               </div>
 
-              {/* Instant WhatsApp Confirmation Button */}
+              {/* Instant WhatsApp Confirmation */}
               <div className="space-y-3 pt-2">
                 <button
                   onClick={handleWhatsAppSend}
-                  className="w-full py-3.5 px-6 rounded-full font-semibold text-white bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 shadow-lg shadow-emerald-900/30 flex items-center justify-center gap-2 text-sm transition-all"
+                  className="w-full py-3.5 px-6 rounded-full font-semibold text-white bg-emerald-600 hover:bg-emerald-500 shadow-lg shadow-emerald-900/30 flex items-center justify-center gap-2 text-sm transition-all"
                 >
                   <MessageCircle className="w-4 h-4" />
                   <span>Send Confirmation to Cafe on WhatsApp</span>
@@ -122,7 +121,7 @@ export default function ReservationModal({ isOpen, onClose }) {
 
                 <button
                   onClick={handleClose}
-                  className="w-full py-2.5 text-xs text-amber-400 hover:text-white"
+                  className="w-full py-2.5 text-xs text-stone-400 hover:text-white"
                 >
                   Close Window
                 </button>
@@ -130,10 +129,10 @@ export default function ReservationModal({ isOpen, onClose }) {
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
-              {/* Full Name & Phone Number */}
+              {/* Name & Phone */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-medium text-amber-200 mb-1">
+                  <label className="block text-xs font-medium text-stone-300 mb-1">
                     Your Name *
                   </label>
                   <input
@@ -142,11 +141,11 @@ export default function ReservationModal({ isOpen, onClose }) {
                     placeholder="e.g. Priya Sharma"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#120d0b] border border-amber-800/40 text-amber-100 placeholder-amber-400/40 text-sm focus:outline-none focus:border-amber-400"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#12100e] border border-stone-800 text-stone-100 placeholder-stone-500 text-sm focus:outline-none focus:border-[#c8a97e]"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-amber-200 mb-1">
+                  <label className="block text-xs font-medium text-stone-300 mb-1">
                     Phone Number *
                   </label>
                   <input
@@ -155,21 +154,21 @@ export default function ReservationModal({ isOpen, onClose }) {
                     placeholder="+91 98765 43210"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#120d0b] border border-amber-800/40 text-amber-100 placeholder-amber-400/40 text-sm focus:outline-none focus:border-amber-400"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#12100e] border border-stone-800 text-stone-100 placeholder-stone-500 text-sm focus:outline-none focus:border-[#c8a97e]"
                   />
                 </div>
               </div>
 
-              {/* Number of Guests & Occasion */}
+              {/* Guests & Occasion */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-medium text-amber-200 mb-1">
+                  <label className="block text-xs font-medium text-stone-300 mb-1">
                     Number of Guests
                   </label>
                   <select
                     value={formData.guests}
                     onChange={(e) => setFormData({ ...formData, guests: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#120d0b] border border-amber-800/40 text-amber-100 text-sm focus:outline-none focus:border-amber-400"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#12100e] border border-stone-800 text-stone-100 text-sm focus:outline-none focus:border-[#c8a97e]"
                   >
                     <option value="1">1 Person (Solo Break)</option>
                     <option value="2">2 People (Cozy Date)</option>
@@ -181,13 +180,13 @@ export default function ReservationModal({ isOpen, onClose }) {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-amber-200 mb-1">
+                  <label className="block text-xs font-medium text-stone-300 mb-1">
                     Occasion / Event
                   </label>
                   <select
                     value={formData.occasion}
                     onChange={(e) => setFormData({ ...formData, occasion: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#120d0b] border border-amber-800/40 text-amber-100 text-sm focus:outline-none focus:border-amber-400"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#12100e] border border-stone-800 text-stone-100 text-sm focus:outline-none focus:border-[#c8a97e]"
                   >
                     <option value="Casual Coffee & Bites">Casual Coffee & Bites</option>
                     <option value="Birthday Party Celebration">Birthday Party Celebration</option>
@@ -199,28 +198,28 @@ export default function ReservationModal({ isOpen, onClose }) {
                 </div>
               </div>
 
-              {/* Date & Time Slot */}
+              {/* Date & Time */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-medium text-amber-200 mb-1">
+                  <label className="block text-xs font-medium text-stone-300 mb-1">
                     Reservation Date
                   </label>
                   <input
                     type="date"
                     value={formData.date}
                     onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#120d0b] border border-amber-800/40 text-amber-100 text-sm focus:outline-none focus:border-amber-400"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#12100e] border border-stone-800 text-stone-100 text-sm focus:outline-none focus:border-[#c8a97e]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-amber-200 mb-1">
+                  <label className="block text-xs font-medium text-stone-300 mb-1">
                     Preferred Time Slot
                   </label>
                   <select
                     value={formData.time}
                     onChange={(e) => setFormData({ ...formData, time: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#120d0b] border border-amber-800/40 text-amber-100 text-sm focus:outline-none focus:border-amber-400"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#12100e] border border-stone-800 text-stone-100 text-sm focus:outline-none focus:border-[#c8a97e]"
                   >
                     <option value="12:00 PM">12:00 PM (Lunch)</option>
                     <option value="01:30 PM">01:30 PM</option>
@@ -235,28 +234,28 @@ export default function ReservationModal({ isOpen, onClose }) {
 
               {/* Special Requests */}
               <div>
-                <label className="block text-xs font-medium text-amber-200 mb-1">
+                <label className="block text-xs font-medium text-stone-300 mb-1">
                   Special Notes or Decor Requests (Optional)
                 </label>
                 <textarea
                   rows="2"
-                  placeholder="e.g. Birthday balloon decor, quiet corner table, customized cake..."
+                  placeholder="e.g. Birthday balloon decor, quiet corner table, custom dessert..."
                   value={formData.notes}
                   onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#120d0b] border border-amber-800/40 text-amber-100 placeholder-amber-400/40 text-sm focus:outline-none focus:border-amber-400"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#12100e] border border-stone-800 text-stone-100 placeholder-stone-500 text-sm focus:outline-none focus:border-[#c8a97e]"
                 ></textarea>
               </div>
 
-              {/* Submit CTA */}
+              {/* Submit CTA (Ivory & Obsidian) */}
               <div className="pt-2">
                 <button
                   type="submit"
-                  className="w-full py-3.5 px-6 rounded-full font-semibold text-black bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 shadow-xl shadow-amber-500/20 text-sm transition-all"
+                  className="w-full py-3.5 px-6 rounded-full font-semibold text-[#0c0b0a] bg-[#f5efe6] hover:bg-[#ebe1d2] shadow-xl text-sm transition-all"
                 >
                   Confirm Table Request
                 </button>
-                <p className="text-[11px] text-center text-amber-400/60 mt-2 font-light">
-                  No advance fee required. We hold tables for 15 minutes past reservation time.
+                <p className="text-[11px] text-center text-stone-400 mt-2 font-light">
+                  No advance fee required. Tables are held for 15 minutes past reservation time.
                 </p>
               </div>
             </form>

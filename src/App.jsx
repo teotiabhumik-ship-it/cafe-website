@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import Lenis from 'lenis';
 import Navbar from './components/Navbar';
 import AmbientCursor from './components/AmbientCursor';
-import HomeView from './views/HomeView';
-import MenuView from './views/MenuView';
-import SpaceView from './views/SpaceView';
-import CelebrationsView from './views/CelebrationsView';
-import LocationView from './views/LocationView';
+import Hero from './components/Hero';
+import CafeGallerySection from './components/CafeGallerySection';
+import MenuSection from './components/MenuSection';
+import PartySection from './components/PartySection';
+import VisibleMapSection from './components/VisibleMapSection';
+import ReviewsSection from './components/ReviewsSection';
 import ReservationModal from './components/ReservationModal';
 import DeliveryModal from './components/DeliveryModal';
 import Footer from './components/Footer';
 
 export default function App() {
-  const [activeView, setActiveView] = useState('home');
   const [isReserveOpen, setIsReserveOpen] = useState(false);
   const [isDeliveryOpen, setIsDeliveryOpen] = useState(false);
 
@@ -38,67 +37,46 @@ export default function App() {
     };
   }, []);
 
-  const handleSelectView = (view) => {
-    setActiveView(view);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   return (
-    <div className="min-h-screen bg-[#0c0908] text-[#f7ede2] font-sans selection:bg-amber-500 selection:text-black relative">
-      {/* Interactive Ambient Amber Light Cursor Follower */}
+    <div className="min-h-screen bg-[#0c0b0a] text-[#ede8e1] font-sans selection:bg-[#c8a97e] selection:text-black relative">
+      {/* Subtle Ambient Light Follower */}
       <AmbientCursor />
 
-      {/* Top Fixed Navigation with View Switcher */}
+      {/* Top Fixed Navigation */}
       <Navbar
-        activeView={activeView}
-        setActiveView={handleSelectView}
         onOpenReserve={() => setIsReserveOpen(true)}
         onOpenDelivery={() => setIsDeliveryOpen(true)}
       />
 
-      {/* Uncluttered Multi-View Experience with Smooth Transitions */}
+      {/* Main Experience Flow */}
       <main className="relative z-10">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeView}
-            initial={{ opacity: 0, y: 16, filter: 'blur(4px)' }}
-            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-            exit={{ opacity: 0, y: -16, filter: 'blur(4px)' }}
-            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-          >
-            {activeView === 'home' && (
-              <HomeView
-                onSelectView={handleSelectView}
-                onOpenReserve={() => setIsReserveOpen(true)}
-              />
-            )}
+        {/* 1. Hero with Real Cafe Interior Backdrop & Steam Physics */}
+        <Hero
+          onOpenReserve={() => setIsReserveOpen(true)}
+        />
 
-            {activeView === 'menu' && (
-              <MenuView
-                onOpenDelivery={() => setIsDeliveryOpen(true)}
-              />
-            )}
+        {/* 2. Authentic Pictures of the Cafe & Ambiance Tour */}
+        <CafeGallerySection />
 
-            {activeView === 'space' && (
-              <SpaceView />
-            )}
+        {/* 3. Curated Menu with Search & Bestseller Toggle */}
+        <MenuSection
+          onOpenDelivery={() => setIsDeliveryOpen(true)}
+        />
 
-            {activeView === 'celebrations' && (
-              <CelebrationsView
-                onOpenReserve={() => setIsReserveOpen(true)}
-              />
-            )}
+        {/* 4. Celebrations & Private Party Lounge Packages */}
+        <PartySection
+          onOpenReserve={() => setIsReserveOpen(true)}
+        />
 
-            {activeView === 'visit' && (
-              <LocationView />
-            )}
-          </motion.div>
-        </AnimatePresence>
+        {/* 5. DIRECTLY VISIBLE INTERACTIVE GOOGLE MAP & LOCATION HUB */}
+        <VisibleMapSection />
+
+        {/* 6. Guest Reviews & 4.6-Star Google Rating */}
+        <ReviewsSection />
       </main>
 
       {/* Footer */}
       <Footer
-        onSelectView={handleSelectView}
         onOpenReserve={() => setIsReserveOpen(true)}
         onOpenDelivery={() => setIsDeliveryOpen(true)}
       />

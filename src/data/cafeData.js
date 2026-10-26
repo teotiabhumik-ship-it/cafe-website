@@ -3,7 +3,7 @@ export const CAFE_INFO = {
   tagline: "Where Cozy Aromas Meet Vibrant Evenings",
   description: "A sanctuary of artisanal coffees, gourmet comfort food, and warm ambient aesthetics nestled in the heart of RDC, Raj Nagar, Ghaziabad.",
   address: "B-19, Ground Floor, RDC, Raj Nagar, Ghaziabad, Uttar Pradesh 201002",
-  landmark: "In the bustling RDC Commercial Hub, Raj Nagar",
+  landmark: "Ground Floor, RDC Commercial Hub, Raj Nagar",
   coordinates: {
     lat: 28.6738898,
     lng: 77.443433,
@@ -15,13 +15,52 @@ export const CAFE_INFO = {
   instagramHandle: "cafe_ellebee",
   instagramUrl: "https://www.instagram.com/cafe_ellebee/",
   hours: "11:00 AM – 11:00 PM",
-  days: "Monday – Sunday (All 7 Days)",
+  days: "Monday – Sunday (Open All 7 Days)",
   costForTwo: "₹600 – ₹900",
   rating: 4.6,
   reviewCount: "1,200+",
   swiggyUrl: "https://www.swiggy.com/restaurants/cafe-ellebee-rdc-raj-nagar-ghaziabad",
   zomatoUrl: "https://www.zomato.com/ncr/cafe-ellebee-raj-nagar-ghaziabad",
 };
+
+export const CAFE_GALLERY = [
+  {
+    title: "Warm Ambient Lounge & Seating",
+    category: "Interior",
+    image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1200&q=80",
+    caption: "Intimate table corners crafted for cozy conversations, dates, and warm memories."
+  },
+  {
+    title: "Cozy Dining Corners & Velvet Chairs",
+    category: "Interior",
+    image: "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?auto=format&fit=crop&w=1200&q=80",
+    caption: "Plush comfortable seating with warm incandescent lighting for relaxing afternoons."
+  },
+  {
+    title: "Aesthetic Neon Glow Photo Wall",
+    category: "Vibes",
+    image: "https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=1200&q=80",
+    caption: "Our signature neon installation—the go-to photo backdrop for stories and reels."
+  },
+  {
+    title: "Artisanal Coffee & Espresso Bar",
+    category: "Brew Bar",
+    image: "https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=1200&q=80",
+    caption: "Single-origin espresso beans freshly ground and pulled for velvety lattes & frappes."
+  },
+  {
+    title: "Private Celebrations & Birthday Lounge",
+    category: "Events",
+    image: "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=1200&q=80",
+    caption: "Dedicated lounge zone with custom balloon setups, party platters, and celebration music."
+  },
+  {
+    title: "Gourmet Stone-Baked Pizzas",
+    category: "Kitchen",
+    image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1200&q=80",
+    caption: "Handcrafted crispy crust loaded with fresh farm toppings and melted mozzarella."
+  }
+];
 
 export const MENU_CATEGORIES = [
   { id: "all", label: "All Items" },
@@ -353,44 +392,5 @@ export const CELEBRATION_PACKAGES = [
       "Seamless billing and group packages"
     ],
     popularFor: "Kitty Parties, Reunions & College Farewell"
-  }
-];
-
-export const GALLERY_ITEMS = [
-  {
-    title: "Warm Ambient Lounge & Seating",
-    category: "Ambiance",
-    image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80",
-    caption: "Intimate table corners crafted for cozy conversations and warm memories."
-  },
-  {
-    title: "Artisanal Coffee & Latte Art",
-    category: "Brew Bar",
-    image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80",
-    caption: "Brewed to perfection using single-origin beans and creamy micro-foam."
-  },
-  {
-    title: "Celebration Nights & Private Parties",
-    category: "Events",
-    image: "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=800&q=80",
-    caption: "Turn birthdays, anniversaries, and reunions into glowing celebrations."
-  },
-  {
-    title: "Gourmet Stone-Baked Pizzas",
-    category: "Kitchen",
-    image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=80",
-    caption: "Handcrafted dough topped with fresh herbs and molten stringy cheese."
-  },
-  {
-    title: "Aesthetic Neon Glow Wall",
-    category: "Photo Corner",
-    image: "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=800&q=80",
-    caption: "The go-to backdrop for your favorite Instagram stories and reels."
-  },
-  {
-    title: "Indulgent Desserts & Shakes",
-    category: "Sweet Treats",
-    image: "https://images.unsplash.com/photo-1577805947697-89e18249d767?auto=format&fit=crop&w=800&q=80",
-    caption: "Decadence in every bite, from sizzling brownies to monster shakes."
   }
 ];

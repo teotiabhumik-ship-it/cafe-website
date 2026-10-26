@@ -4,7 +4,7 @@ import { motion, useSpring } from 'framer-motion';
 export default function AmbientCursor() {
   const [isVisible, setIsVisible] = useState(false);
 
-  const springConfig = { damping: 28, stiffness: 220, mass: 0.6 };
+  const springConfig = { damping: 30, stiffness: 200, mass: 0.6 };
   const cursorX = useSpring(-200, springConfig);
   const cursorY = useSpring(-200, springConfig);
 
@@ -34,13 +34,13 @@ export default function AmbientCursor() {
 
   return (
     <motion.div
-      className="fixed pointer-events-none z-30 -translate-x-1/2 -translate-y-1/2 rounded-full blur-[90px] transition-opacity duration-300"
+      className="fixed pointer-events-none z-30 -translate-x-1/2 -translate-y-1/2 rounded-full blur-[100px] transition-opacity duration-500"
       style={{
         x: cursorX,
         y: cursorY,
         width: 320,
         height: 320,
-        background: 'radial-gradient(circle, rgba(245, 158, 11, 0.12) 0%, rgba(217, 119, 6, 0.04) 50%, transparent 75%)',
+        background: 'radial-gradient(circle, rgba(200, 169, 126, 0.08) 0%, rgba(200, 169, 126, 0.02) 50%, transparent 75%)',
       }}
     />
   );

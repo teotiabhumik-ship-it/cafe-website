@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Coffee, MapPin, Calendar, ShoppingBag, Menu as MenuIcon, X, Clock, Sparkles } from 'lucide-react';
+import { Coffee, MapPin, Calendar, ShoppingBag, Menu as MenuIcon, X, Clock } from 'lucide-react';
 import { CAFE_INFO } from '../data/cafeData';
 
-export default function Navbar({ activeView, setActiveView, onOpenReserve, onOpenDelivery }) {
+export default function Navbar({ onOpenReserve, onOpenDelivery }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -15,80 +14,58 @@ export default function Navbar({ activeView, setActiveView, onOpenReserve, onOpe
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const views = [
-    { id: 'home', label: 'The Sanctuary' },
-    { id: 'menu', label: 'Artisan Menu' },
-    { id: 'space', label: 'The Space' },
-    { id: 'celebrations', label: 'Celebrations' },
-    { id: 'visit', label: 'Find Us & Map' },
+  const navLinks = [
+    { name: 'The Cafe', href: '#gallery' },
+    { name: 'Menu', href: '#menu' },
+    { name: 'Celebrations', href: '#celebrations' },
+    { name: 'Location & Map', href: '#map-location' },
+    { name: 'Reviews', href: '#reviews' },
   ];
-
-  const handleSelectView = (id) => {
-    setActiveView(id);
-    setMobileMenuOpen(false);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-[#090706]/95 backdrop-blur-md border-b border-amber-900/30 py-3 shadow-2xl'
-          : 'bg-gradient-to-b from-[#090706]/90 via-[#090706]/60 to-transparent py-4 sm:py-5'
+          ? 'bg-[#0f0e0d]/95 backdrop-blur-md border-b border-stone-800/80 py-3 shadow-xl'
+          : 'bg-gradient-to-b from-[#0c0b0a]/90 via-[#0c0b0a]/60 to-transparent py-4 sm:py-5'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           
-          {/* Brand Identity */}
-          <button
-            onClick={() => handleSelectView('home')}
-            className="flex items-center gap-3 text-left group"
-          >
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-500 via-amber-600 to-amber-700 flex items-center justify-center shadow-lg shadow-amber-600/25 group-hover:scale-105 transition-transform">
-              <Coffee className="w-5 h-5 text-amber-50 animate-pulse" />
+          {/* Brand Logo */}
+          <a href="#" className="flex items-center gap-3 group">
+            <div className="w-10 h-10 rounded-full bg-[#1e1b18] border border-stone-700/80 flex items-center justify-center text-[#c8a97e] group-hover:border-[#c8a97e] transition-colors">
+              <Coffee className="w-5 h-5 text-[#c8a97e]" />
             </div>
             <div>
-              <span className="font-serif-title text-xl sm:text-2xl font-bold tracking-wider text-amber-100 group-hover:text-amber-400 transition-colors">
+              <span className="font-serif-title text-xl sm:text-2xl font-bold tracking-wider text-[#f5f2eb] group-hover:text-[#c8a97e] transition-colors">
                 Cafe ElleBee
               </span>
-              <span className="block text-[10px] tracking-widest uppercase text-amber-400/80 -mt-1 font-sans font-medium">
-                RDC • Raj Nagar
+              <span className="block text-[10px] tracking-widest uppercase text-stone-400 font-sans font-medium -mt-1">
+                RDC • Raj Nagar, Ghaziabad
               </span>
             </div>
-          </button>
+          </a>
 
-          {/* Desktop Navigation Pill Bar (Clean & Separated) */}
-          <nav className="hidden lg:flex items-center gap-1 p-1.5 rounded-full bg-[#140e0b]/80 border border-amber-900/40 backdrop-blur-md shadow-inner">
-            {views.map((tab) => {
-              const isActive = activeView === tab.id;
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => handleSelectView(tab.id)}
-                  className={`relative px-4 py-2 rounded-full text-xs font-medium tracking-wide transition-all duration-200 ${
-                    isActive
-                      ? 'text-black font-semibold'
-                      : 'text-amber-200/80 hover:text-white hover:bg-amber-950/40'
-                  }`}
-                >
-                  {isActive && (
-                    <motion.div
-                      layoutId="activeTabIndicator"
-                      className="absolute inset-0 rounded-full bg-gradient-to-r from-amber-400 to-amber-500 shadow-md shadow-amber-500/30"
-                      transition={{ type: 'spring', stiffness: 350, damping: 30 }}
-                    />
-                  )}
-                  <span className="relative z-10">{tab.label}</span>
-                </button>
-              );
-            })}
+          {/* Desktop Navigation Links */}
+          <nav className="hidden lg:flex items-center gap-7">
+            {navLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                className="text-xs sm:text-sm font-medium text-stone-300 hover:text-[#f5f2eb] transition-colors relative group py-1"
+              >
+                {link.name}
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#c8a97e] transition-all duration-300 group-hover:w-full"></span>
+              </a>
+            ))}
           </nav>
 
-          {/* Actions: Status & Modals */}
+          {/* Actions: Live Status & CTAs */}
           <div className="hidden sm:flex items-center gap-3">
-            {/* Live Status */}
-            <div className="hidden xl:flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-950/50 border border-amber-800/40 text-xs text-amber-200 font-sans">
+            {/* Live Open Status */}
+            <div className="hidden xl:flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#171513] border border-stone-800 text-xs text-stone-300 font-sans">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
               <span className="w-2 h-2 rounded-full bg-emerald-400 -ml-4"></span>
               <span>Open • 11 AM - 11 PM</span>
@@ -97,36 +74,36 @@ export default function Navbar({ activeView, setActiveView, onOpenReserve, onOpe
             {/* Order Online Button */}
             <button
               onClick={onOpenDelivery}
-              className="flex items-center gap-2 px-3.5 py-2 text-xs font-medium text-amber-200 hover:text-white bg-amber-950/40 hover:bg-amber-900/60 border border-amber-700/50 rounded-full transition-all duration-200"
+              className="flex items-center gap-2 px-4 py-2 text-xs font-medium text-stone-200 hover:text-white bg-[#191715] hover:bg-[#221f1c] border border-stone-700/80 rounded-full transition-all duration-200"
             >
-              <ShoppingBag className="w-3.5 h-3.5 text-amber-400" />
+              <ShoppingBag className="w-3.5 h-3.5 text-[#c8a97e]" />
               <span>Order Online</span>
             </button>
 
-            {/* Book Table Button */}
+            {/* Book Table Button (Refined Cream & Dark Obsidian) */}
             <button
               onClick={onOpenReserve}
-              className="flex items-center gap-2 px-4 py-2 text-xs font-semibold text-black bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 rounded-full shadow-lg shadow-amber-500/25 hover:scale-105 transition-all duration-200"
+              className="flex items-center gap-2 px-4 py-2 text-xs font-semibold text-[#0c0b0a] bg-[#f5efe6] hover:bg-[#ebe1d2] rounded-full shadow-md hover:scale-105 transition-all duration-200"
             >
-              <Calendar className="w-3.5 h-3.5 text-black" />
+              <Calendar className="w-3.5 h-3.5 text-[#0c0b0a]" />
               <span>Book Table</span>
             </button>
           </div>
 
-          {/* Mobile Menu Toggle */}
+          {/* Mobile Menu Button */}
           <div className="flex lg:hidden items-center gap-2">
             <button
               onClick={onOpenReserve}
-              className="px-3 py-1.5 text-xs font-semibold text-black bg-amber-400 rounded-full"
+              className="px-3 py-1.5 text-xs font-semibold text-[#0c0b0a] bg-[#f5efe6] rounded-full"
             >
               Reserve
             </button>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 text-amber-200 hover:text-white rounded-lg focus:outline-none"
-              aria-label="Toggle Navigation Menu"
+              className="p-2 text-stone-300 hover:text-white rounded-lg focus:outline-none"
+              aria-label="Toggle Menu"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <MenuIcon className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <MenuIcon className="w-6 h-6 text-stone-300" />}
             </button>
           </div>
 
@@ -135,32 +112,26 @@ export default function Navbar({ activeView, setActiveView, onOpenReserve, onOpe
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#0e0a09] border-b border-amber-900/50 px-4 pt-3 pb-6 space-y-3 mt-2 shadow-2xl animate-in slide-in-from-top-2">
-          <div className="flex items-center justify-between py-2 border-b border-amber-950/70 text-xs text-amber-300">
+        <div className="lg:hidden bg-[#12100e] border-b border-stone-800 px-4 pt-3 pb-6 space-y-3 mt-2 shadow-2xl animate-in slide-in-from-top-2">
+          <div className="flex items-center justify-between py-2 border-b border-stone-800/80 text-xs text-stone-300">
             <span className="flex items-center gap-1.5">
-              <Clock className="w-3.5 h-3.5 text-amber-400" />
+              <Clock className="w-3.5 h-3.5 text-[#c8a97e]" />
               Daily: 11:00 AM – 11:00 PM
             </span>
-            <span className="text-[11px] text-amber-400/80">RDC Raj Nagar</span>
+            <span className="text-[11px] text-stone-400">RDC Raj Nagar</span>
           </div>
 
           <div className="flex flex-col space-y-1">
-            {views.map((tab) => {
-              const isActive = activeView === tab.id;
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => handleSelectView(tab.id)}
-                  className={`w-full text-left px-4 py-2.5 rounded-xl text-sm font-medium transition-colors ${
-                    isActive
-                      ? 'bg-amber-400 text-black font-semibold'
-                      : 'text-amber-100 hover:bg-amber-950/40 hover:text-amber-300'
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              );
-            })}
+            {navLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full text-left px-3.5 py-2.5 rounded-xl text-sm font-medium text-stone-200 hover:bg-[#1a1714] hover:text-[#f5f2eb] transition-colors"
+              >
+                {link.name}
+              </a>
+            ))}
           </div>
 
           <div className="grid grid-cols-2 gap-2 pt-2">
@@ -169,9 +140,9 @@ export default function Navbar({ activeView, setActiveView, onOpenReserve, onOpe
                 setMobileMenuOpen(false);
                 onOpenDelivery();
               }}
-              className="w-full py-2.5 text-xs font-medium text-amber-200 bg-amber-950/60 border border-amber-800/50 rounded-lg flex items-center justify-center gap-1.5"
+              className="w-full py-2.5 text-xs font-medium text-stone-200 bg-[#1a1714] border border-stone-700 rounded-lg flex items-center justify-center gap-1.5"
             >
-              <ShoppingBag className="w-3.5 h-3.5 text-amber-400" />
+              <ShoppingBag className="w-3.5 h-3.5 text-[#c8a97e]" />
               Order Food
             </button>
             <button
@@ -179,9 +150,9 @@ export default function Navbar({ activeView, setActiveView, onOpenReserve, onOpe
                 setMobileMenuOpen(false);
                 onOpenReserve();
               }}
-              className="w-full py-2.5 text-xs font-semibold text-black bg-gradient-to-r from-amber-400 to-amber-500 rounded-lg flex items-center justify-center gap-1.5"
+              className="w-full py-2.5 text-xs font-semibold text-[#0c0b0a] bg-[#f5efe6] rounded-lg flex items-center justify-center gap-1.5"
             >
-              <Calendar className="w-3.5 h-3.5 text-black" />
+              <Calendar className="w-3.5 h-3.5 text-[#0c0b0a]" />
               Book Table
             </button>
           </div>

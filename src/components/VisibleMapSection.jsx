@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, Navigation, Clock, Phone, Copy, Check, Car, ExternalLink, ShieldCheck } from 'lucide-react';
+import MagneticButton from './motion/MagneticButton';
 import { CAFE_INFO } from '../data/cafeData';
 
 export default function VisibleMapSection() {
@@ -17,28 +18,58 @@ export default function VisibleMapSection() {
       
       {/* Header */}
       <div className="text-center max-w-3xl mx-auto mb-14">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#181513] border border-stone-800 text-stone-300 text-xs font-semibold tracking-widest uppercase mb-4">
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#181513] border border-stone-800 text-stone-300 text-xs font-semibold tracking-widest uppercase mb-4"
+        >
           <MapPin className="w-3.5 h-3.5 text-[#c8a97e]" />
           Location & Live Map
-        </div>
-        <h2 className="font-serif-title text-3xl sm:text-5xl font-bold text-[#fbf9f5] mb-4">
+        </motion.div>
+        <motion.h2
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="font-serif-title text-3xl sm:text-5xl font-bold text-[#fbf9f5] mb-4"
+        >
           Visit Us in RDC, Raj Nagar
-        </h2>
-        <p className="text-sm sm:text-base text-stone-300/80 font-light max-w-xl mx-auto leading-relaxed">
+        </motion.h2>
+        <motion.p
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="text-sm sm:text-base text-stone-300/80 font-light max-w-xl mx-auto leading-relaxed"
+        >
           Situated on the Ground Floor in the bustling commercial heart of RDC Ghaziabad. Use the live map below for instant turn-by-turn navigation.
-        </p>
+        </motion.p>
       </div>
 
       {/* Main Grid: Details Card + Directly Embedded Interactive Google Map */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
         
         {/* Left Column: Location, Hours & Direct Hotline */}
-        <div className="lg:col-span-5 p-8 rounded-3xl bg-[#141210] border border-stone-800/80 shadow-2xl flex flex-col justify-between space-y-6">
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="lg:col-span-5 p-8 rounded-3xl bg-[#141210] border border-stone-800/80 shadow-2xl flex flex-col justify-between space-y-6"
+        >
           <div>
-            {/* Live Open Status */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-800/50 text-emerald-300 text-xs font-medium mb-6">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-              <span className="w-2 h-2 rounded-full bg-emerald-400 -ml-4"></span>
+            {/* Live Open Status with Pulsing Radar Ring */}
+            <div className="inline-flex items-center gap-2.5 px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-800/50 text-emerald-300 text-xs font-medium mb-6">
+              <span className="relative flex h-2 w-2">
+                <motion.span 
+                  animate={{ scale: [1, 2.2], opacity: [0.8, 0] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: 'easeOut' }}
+                  className="absolute inline-flex h-full w-full rounded-full bg-emerald-400"
+                />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              </span>
               <span>Open Today • 11:00 AM – 11:00 PM</span>
             </div>
 
@@ -64,7 +95,7 @@ export default function VisibleMapSection() {
               {/* 1-Click Copy Address Button */}
               <button
                 onClick={handleCopyAddress}
-                className="w-full py-2.5 px-4 rounded-xl bg-[#1b1815] hover:bg-[#221f1c] border border-stone-700/80 text-stone-200 text-xs font-medium flex items-center justify-center gap-2 transition-colors mt-2"
+                className="w-full py-2.5 px-4 rounded-xl bg-[#1b1815] hover:bg-[#221f1c] border border-stone-700/80 text-stone-200 text-xs font-medium flex items-center justify-center gap-2 transition-all mt-2 active:scale-98"
               >
                 {copied ? (
                   <>
@@ -103,14 +134,16 @@ export default function VisibleMapSection() {
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
                 {CAFE_INFO.phoneNumbers.map((phone) => (
-                  <a
+                  <motion.a
                     key={phone}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                     href={`tel:${phone.replace(/\s+/g, '')}`}
                     className="p-2.5 rounded-xl bg-[#181513] hover:bg-[#221f1c] border border-stone-800 text-xs text-stone-200 hover:text-white flex items-center justify-center gap-1.5 transition-colors"
                   >
                     <Phone className="w-3 h-3 text-[#c8a97e]" />
                     <span>{phone}</span>
-                  </a>
+                  </motion.a>
                 ))}
               </div>
             </div>
@@ -124,28 +157,38 @@ export default function VisibleMapSection() {
             </div>
           </div>
 
-          {/* Action Button */}
+          {/* Action Button with Magnetic Motion */}
           <div className="pt-4 border-t border-stone-800">
-            <a
+            <MagneticButton
               href={CAFE_INFO.googleMapsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
               className="w-full py-3.5 px-6 rounded-full font-semibold text-[#0c0b0a] bg-[#f5efe6] hover:bg-[#ebe1d2] shadow-xl flex items-center justify-center gap-2 text-xs sm:text-sm transition-all"
             >
               <Navigation className="w-4 h-4 text-[#0c0b0a]" />
               <span>Open in Google Maps App</span>
               <ExternalLink className="w-3.5 h-3.5 text-[#0c0b0a]" />
-            </a>
+            </MagneticButton>
           </div>
-        </div>
+        </motion.div>
 
         {/* Right Column: DIRECTLY VISIBLE INTERACTIVE GOOGLE MAP */}
-        <div className="lg:col-span-7 rounded-3xl overflow-hidden border border-stone-800 shadow-2xl relative min-h-[480px] lg:min-h-full flex flex-col group bg-[#161412]">
-          
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="lg:col-span-7 rounded-3xl overflow-hidden border border-stone-800 shadow-2xl relative min-h-[480px] lg:min-h-full flex flex-col group bg-[#161412]"
+        >
           {/* Top Bar on Map */}
           <div className="absolute top-4 left-4 right-4 z-10 flex items-center justify-between pointer-events-none">
             <div className="px-3.5 py-1.5 rounded-full bg-[#12100e]/90 backdrop-blur-md border border-stone-700/80 text-xs text-stone-200 shadow-xl flex items-center gap-2 pointer-events-auto">
-              <MapPin className="w-3.5 h-3.5 text-[#c8a97e]" />
+              <span className="relative flex h-2 w-2">
+                <motion.span 
+                  animate={{ scale: [1, 2], opacity: [0.9, 0] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: 'easeOut' }}
+                  className="absolute inline-flex h-full w-full rounded-full bg-[#c8a97e]"
+                />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#c8a97e]"></span>
+              </span>
               <span className="font-semibold text-white">Cafe ElleBee</span>
               <span className="text-stone-400">• RDC Raj Nagar</span>
             </div>
@@ -153,7 +196,7 @@ export default function VisibleMapSection() {
               href={CAFE_INFO.googleMapsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3.5 py-1.5 rounded-full bg-[#f5efe6] text-[#0c0b0a] font-semibold text-xs shadow-xl hover:bg-[#ebe1d2] transition-colors pointer-events-auto flex items-center gap-1.5"
+              className="px-3.5 py-1.5 rounded-full bg-[#f5efe6] text-[#0c0b0a] font-semibold text-xs shadow-xl hover:bg-[#ebe1d2] transition-colors pointer-events-auto flex items-center gap-1.5 hover:scale-105 active:scale-95"
             >
               <span>Get Directions</span>
               <Navigation className="w-3 h-3 text-[#0c0b0a]" />
@@ -187,7 +230,7 @@ export default function VisibleMapSection() {
             </a>
           </div>
 
-        </div>
+        </motion.div>
 
       </div>
 

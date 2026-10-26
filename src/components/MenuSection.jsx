@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Star, ShoppingBag, Utensils, Coffee, ChevronRight } from 'lucide-react';
+import TiltCard from './motion/TiltCard';
 import { MENU_CATEGORIES, MENU_ITEMS } from '../data/cafeData';
 
 export default function MenuSection({ onOpenDelivery }) {
@@ -25,16 +26,34 @@ export default function MenuSection({ onOpenDelivery }) {
       
       {/* Header */}
       <div className="text-center max-w-3xl mx-auto mb-12">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#181513] border border-stone-800 text-stone-300 text-xs font-semibold tracking-widest uppercase mb-4">
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#181513] border border-stone-800 text-stone-300 text-xs font-semibold tracking-widest uppercase mb-4"
+        >
           <Utensils className="w-3.5 h-3.5 text-[#c8a97e]" />
           Culinary Craft
-        </div>
-        <h2 className="font-serif-title text-3xl sm:text-5xl font-bold text-[#fbf9f5] mb-4">
+        </motion.div>
+        <motion.h2
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="font-serif-title text-3xl sm:text-5xl font-bold text-[#fbf9f5] mb-4"
+        >
           Curated Food & Artisan Sips
-        </h2>
-        <p className="text-sm sm:text-base text-stone-300/80 font-light max-w-xl mx-auto leading-relaxed">
+        </motion.h2>
+        <motion.p
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="text-sm sm:text-base text-stone-300/80 font-light max-w-xl mx-auto leading-relaxed"
+        >
           From freshly ground single-origin espresso to golden stone-baked pizzas and our famous crispy corn — explore the complete menu below.
-        </p>
+        </motion.p>
       </div>
 
       {/* Search & Bestseller Controls */}
@@ -71,7 +90,7 @@ export default function MenuSection({ onOpenDelivery }) {
         </button>
       </div>
 
-      {/* Category Tabs */}
+      {/* Category Tabs with Shared Layout Morphing (layoutId) */}
       <div className="flex items-center gap-2 overflow-x-auto pb-4 scrollbar-none justify-start sm:justify-center mb-12">
         {MENU_CATEGORIES.map((cat) => {
           const isActive = activeCategory === cat.id;
@@ -79,93 +98,100 @@ export default function MenuSection({ onOpenDelivery }) {
             <button
               key={cat.id}
               onClick={() => setActiveCategory(cat.id)}
-              className={`px-4 py-2 rounded-full text-xs font-medium whitespace-nowrap transition-all duration-200 ${
-                isActive
-                  ? 'bg-[#f5efe6] text-[#0c0b0a] font-semibold shadow-md scale-105'
-                  : 'bg-[#161412] text-stone-300 hover:text-white border border-stone-800'
+              className={`relative px-4 py-2 rounded-full text-xs font-medium whitespace-nowrap transition-colors duration-200 ${
+                isActive ? 'text-[#0c0b0a] font-semibold' : 'text-stone-300 hover:text-white'
               }`}
             >
-              {cat.label}
+              {isActive && (
+                <motion.div
+                  layoutId="activeMenuTabPill"
+                  className="absolute inset-0 bg-[#f5efe6] rounded-full shadow-md"
+                  transition={{ type: 'spring', stiffness: 380, damping: 28 }}
+                />
+              )}
+              <span className="relative z-10">{cat.label}</span>
             </button>
           );
         })}
       </div>
 
-      {/* Menu Grid */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={activeCategory + searchQuery + bestsellerOnly}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          transition={{ duration: 0.3 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
+      {/* 3D Tilt Menu Cards Grid */}
+      <motion.div
+        layout
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+      >
+        <AnimatePresence mode="popLayout">
           {filteredItems.length > 0 ? (
             filteredItems.map((item) => (
-              <div
+              <motion.div
+                layout
                 key={item.id}
-                className="group relative rounded-2xl bg-[#141210] border border-stone-800/80 hover:border-stone-600/80 overflow-hidden shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between"
+                initial={{ opacity: 0, scale: 0.96 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.96 }}
+                transition={{ duration: 0.3 }}
               >
-                {/* Food Image */}
-                <div className="relative h-48 w-full overflow-hidden bg-[#1a1714]">
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#141210] via-transparent to-black/30" />
+                <TiltCard className="rounded-2xl bg-[#141210] border border-stone-800/80 hover:border-stone-600/80 overflow-hidden shadow-xl h-full flex flex-col justify-between">
+                  {/* Food Image */}
+                  <div className="relative h-48 w-full overflow-hidden bg-[#1a1714]">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#141210] via-transparent to-black/30" />
 
-                  {/* Tag */}
-                  <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-semibold tracking-wider uppercase bg-black/70 backdrop-blur-md text-stone-200 border border-stone-700">
-                    {item.tag}
-                  </span>
-
-                  {/* Rating */}
-                  <div className="absolute top-3 right-3 px-2 py-0.5 rounded-full bg-black/70 backdrop-blur-md flex items-center gap-1 text-[11px] font-semibold text-stone-200">
-                    <Star className="w-3 h-3 fill-[#c8a97e] text-[#c8a97e]" />
-                    <span>{item.rating}</span>
-                  </div>
-
-                  {/* Veg indicator */}
-                  <div className="absolute bottom-2 left-3 flex items-center gap-1 text-[10px] text-emerald-400 font-semibold px-2 py-0.5 rounded bg-black/60 backdrop-blur-sm border border-emerald-800/40">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                    <span>Pure Veg</span>
-                  </div>
-                </div>
-
-                {/* Card Info */}
-                <div className="p-5 flex-1 flex flex-col justify-between">
-                  <div>
-                    <div className="flex items-start justify-between gap-2 mb-2">
-                      <h3 className="font-serif-title text-base sm:text-lg font-bold text-[#fbf9f5] group-hover:text-[#c8a97e] transition-colors">
-                        {item.name}
-                      </h3>
-                      <span className="font-serif-title text-base font-bold text-[#fbf9f5] shrink-0">
-                        ₹{item.price}
-                      </span>
-                    </div>
-                    <p className="text-xs text-stone-400 font-light leading-relaxed line-clamp-2 mb-4">
-                      {item.description}
-                    </p>
-                  </div>
-
-                  {/* Actions */}
-                  <div className="pt-3 border-t border-stone-800/80 flex items-center justify-between">
-                    <span className="text-[10px] text-stone-500 uppercase tracking-widest font-sans">
-                      Freshly Prepared
+                    {/* Tag */}
+                    <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-semibold tracking-wider uppercase bg-black/70 backdrop-blur-md text-stone-200 border border-stone-700">
+                      {item.tag}
                     </span>
-                    <button
-                      onClick={onOpenDelivery}
-                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium text-stone-200 bg-[#1c1916] hover:bg-[#26231f] border border-stone-700 transition-colors"
-                    >
-                      <ShoppingBag className="w-3 h-3 text-[#c8a97e]" />
-                      <span>Order Now</span>
-                    </button>
+
+                    {/* Rating */}
+                    <div className="absolute top-3 right-3 px-2 py-0.5 rounded-full bg-black/70 backdrop-blur-md flex items-center gap-1 text-[11px] font-semibold text-stone-200">
+                      <Star className="w-3 h-3 fill-[#c8a97e] text-[#c8a97e]" />
+                      <span>{item.rating}</span>
+                    </div>
+
+                    {/* Veg indicator */}
+                    <div className="absolute bottom-2 left-3 flex items-center gap-1 text-[10px] text-emerald-400 font-semibold px-2 py-0.5 rounded bg-black/60 backdrop-blur-sm border border-emerald-800/40">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                      <span>Pure Veg</span>
+                    </div>
                   </div>
-                </div>
-              </div>
+
+                  {/* Card Info */}
+                  <div className="p-5 flex-1 flex flex-col justify-between">
+                    <div>
+                      <div className="flex items-start justify-between gap-2 mb-2">
+                        <h3 className="font-serif-title text-base sm:text-lg font-bold text-[#fbf9f5] group-hover:text-[#c8a97e] transition-colors">
+                          {item.name}
+                        </h3>
+                        <span className="font-serif-title text-base font-bold text-[#fbf9f5] shrink-0">
+                          ₹{item.price}
+                        </span>
+                      </div>
+                      <p className="text-xs text-stone-400 font-light leading-relaxed line-clamp-2 mb-4">
+                        {item.description}
+                      </p>
+                    </div>
+
+                    {/* Actions */}
+                    <div className="pt-3 border-t border-stone-800/80 flex items-center justify-between">
+                      <span className="text-[10px] text-stone-500 uppercase tracking-widest font-sans">
+                        Freshly Prepared
+                      </span>
+                      <button
+                        onClick={onOpenDelivery}
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium text-stone-200 bg-[#1c1916] hover:bg-[#26231f] border border-stone-700 transition-colors"
+                      >
+                        <ShoppingBag className="w-3 h-3 text-[#c8a97e]" />
+                        <span>Order Now</span>
+                      </button>
+                    </div>
+                  </div>
+                </TiltCard>
+              </motion.div>
             ))
           ) : (
             <div className="col-span-full py-16 text-center text-stone-400">
@@ -184,11 +210,14 @@ export default function MenuSection({ onOpenDelivery }) {
               </button>
             </div>
           )}
-        </motion.div>
-      </AnimatePresence>
+        </AnimatePresence>
+      </motion.div>
 
-      {/* Online Delivery Platform Banner */}
-      <div className="mt-16 p-8 rounded-3xl bg-[#141210] border border-stone-800/80 flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl">
+      {/* Online Delivery Platform Banner with Subtle Hover Lift */}
+      <motion.div 
+        whileHover={{ y: -3 }}
+        className="mt-16 p-8 rounded-3xl bg-[#141210] border border-stone-800/80 flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl transition-shadow hover:shadow-stone-900/50"
+      >
         <div>
           <h3 className="font-serif-title text-xl font-bold text-[#fbf9f5] mb-1">
             Want hot food delivered to your door?
@@ -199,13 +228,13 @@ export default function MenuSection({ onOpenDelivery }) {
         </div>
         <button
           onClick={onOpenDelivery}
-          className="px-6 py-3.5 rounded-full font-semibold text-[#0c0b0a] bg-[#f5efe6] hover:bg-[#ebe1d2] shadow-md flex items-center gap-2 text-xs sm:text-sm shrink-0"
+          className="px-6 py-3.5 rounded-full font-semibold text-[#0c0b0a] bg-[#f5efe6] hover:bg-[#ebe1d2] shadow-md flex items-center gap-2 text-xs sm:text-sm shrink-0 transition-all hover:scale-105 active:scale-95"
         >
           <ShoppingBag className="w-4 h-4 text-[#0c0b0a]" />
           <span>Order on Swiggy / Zomato</span>
           <ChevronRight className="w-4 h-4" />
         </button>
-      </div>
+      </motion.div>
 
     </section>
   );

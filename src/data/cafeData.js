@@ -25,322 +25,338 @@ export const CAFE_INFO = {
 
 export const CAFE_GALLERY = [
   {
-    title: "Warm Ambient Lounge & Seating",
+    title: "Main Lounge & Skylight Ceiling",
     category: "Interior",
-    image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1200&q=80",
-    caption: "Intimate table corners crafted for cozy conversations, dates, and warm memories."
+    image: "/images/cafe_interior_main.jpg",
+    caption: "Teal leather banquettes, floral blossom feature wall, and wooden coffered ceiling."
   },
   {
-    title: "Cozy Dining Corners & Velvet Chairs",
-    category: "Interior",
-    image: "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?auto=format&fit=crop&w=1200&q=80",
-    caption: "Plush comfortable seating with warm incandescent lighting for relaxing afternoons."
+    title: "Exterior Entrance & Neon Sign",
+    category: "Facade",
+    image: "/images/cafe_entrance_signboard.jpg",
+    caption: "Official neon script Elle Bee sign and glass-grid entrance at RDC Raj Nagar."
   },
   {
-    title: "Aesthetic Neon Glow Photo Wall",
-    category: "Vibes",
-    image: "https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=1200&q=80",
-    caption: "Our signature neon installation—the go-to photo backdrop for stories and reels."
-  },
-  {
-    title: "Artisanal Coffee & Espresso Bar",
+    title: "Signature Branded Coolers",
     category: "Brew Bar",
-    image: "https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=1200&q=80",
-    caption: "Single-origin espresso beans freshly ground and pulled for velvety lattes & frappes."
+    image: "/images/cafe_branded_drinks.jpg",
+    caption: "Iced mocktails and refresher brews served in custom ElleBee glass cans."
   },
   {
-    title: "Private Celebrations & Birthday Lounge",
-    category: "Events",
-    image: "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=1200&q=80",
-    caption: "Dedicated lounge zone with custom balloon setups, party platters, and celebration music."
-  },
-  {
-    title: "Gourmet Stone-Baked Pizzas",
+    title: "Artisan Pink Sauce Pasta",
     category: "Kitchen",
-    image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1200&q=80",
-    caption: "Handcrafted crispy crust loaded with fresh farm toppings and melted mozzarella."
+    image: "/images/cafe_pasta_dish.jpg",
+    caption: "Penne pasta rolled in creamy rosé sauce served with toasted garlic bread."
+  },
+  {
+    title: "Paneer Tikka Fattoush Platter",
+    category: "Specialty",
+    image: "/images/cafe_paneer_nachos.jpg",
+    caption: "Smoked paneer tikka, seasoned greens, and crunchy spiced pita crisps."
+  },
+  {
+    title: "Private Party Celebration Setup",
+    category: "Lounge",
+    image: "/images/cafe_party_celebration.jpg",
+    caption: "Dedicated celebration wing with balloon canopies and celebration platters."
+  },
+  {
+    title: "Cozy Dining Booths & Planters",
+    category: "Seating",
+    image: "/images/cafe_booths_seating.jpg",
+    caption: "Comfortable booth seating framed with warm accent lighting and green planters."
+  },
+  {
+    title: "Full Hall Perspective",
+    category: "Ambiance",
+    image: "/images/cafe_full_dining_hall.jpg",
+    caption: "Wide view across the dining hall showing patterned tile floors and warm acoustics."
+  },
+  {
+    title: "Architectural Cozy Corner",
+    category: "Vibes",
+    image: "/images/cafe_aesthetic_corner.jpg",
+    caption: "Intimate table corners curated for quiet dates, studying, and conversations."
   }
 ];
 
 export const MENU_CATEGORIES = [
   { id: "all", label: "All Items" },
-  { id: "beverages", label: "Coffee & Coolers" },
-  { id: "shakes", label: "Gourmet Shakes" },
-  { id: "starters", label: "Bites & Starters" },
   { id: "italian", label: "Pizzas & Pastas" },
-  { id: "burgers", label: "Burgers & Sandwiches" },
-  { id: "asian", label: "Pan-Asian Wok" },
-  { id: "desserts", label: "Sweet Treats" },
+  { id: "starters", label: "Bites & Starters" },
+  { id: "asian", label: "Pan-Asian & Dim Sum" },
+  { id: "burgers", label: "Burgers" },
+  { id: "beverages", label: "Coffee & Coolers" }
 ];
 
 export const MENU_ITEMS = [
-  // Beverages & Coffee
+  // Pizzas & Pastas
   {
     id: 1,
-    name: "Classic Artisanal Cold Coffee",
-    category: "beverages",
-    price: 189,
-    description: "Rich espresso blended with chilled creamy milk, chocolate drizzle, and vanilla froth.",
+    name: "Signature Pink Sauce Penne Pasta",
+    category: "italian",
+    price: 289,
+    description: "Al dente penne pasta rolled in our house rosé cream sauce with herbs, served with golden garlic bread.",
     tag: "Bestseller",
     isVeg: true,
     rating: 4.9,
-    image: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=600&q=80"
+    image: "/images/cafe_pasta_dish.jpg"
   },
   {
     id: 2,
-    name: "Hazelnut Mocha Frappe",
-    category: "beverages",
-    price: 219,
-    description: "Double shot espresso with roasted hazelnut syrup, dark mocha sauce, topped with fresh whipped cream.",
-    tag: "Chef Special",
+    name: "Classic Margherita Pizza",
+    category: "italian",
+    price: 299,
+    description: "Hand-tossed crust, San Marzano tomato reduction, fragrant fresh basil leaves, and bubbling mozzarella.",
+    tag: "Classic",
     isVeg: true,
     rating: 4.8,
-    image: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=600&q=80"
+    image: "/images/cafe_dish_margherita_pizza.jpg"
   },
   {
     id: 3,
-    name: "Blue Curacao Sparkler",
-    category: "beverages",
-    price: 179,
-    description: "Zesty blue citrus mocktail infused with mint sprigs, lime wedge, and sparkling soda.",
-    tag: "Refreshing",
+    name: "Rustic Farmhouse Veggie Pizza",
+    category: "italian",
+    price: 349,
+    description: "Abundant sautéed mushrooms, bell peppers, sweet corn, black olives, and stretchy mozzarella cheese pull.",
+    tag: "Chef Special",
     isVeg: true,
-    rating: 4.7,
-    image: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=600&q=80"
+    rating: 4.9,
+    image: "/images/cafe_dish_farmhouse_pizza.jpg"
   },
   {
     id: 4,
-    name: "Signature Lemon Mint Iced Tea",
-    category: "beverages",
-    price: 159,
-    description: "Freshly brewed Assam tea leaves, chilled with hand-pressed organic lemons and garden mint.",
-    tag: "Popular",
+    name: "Fiery Penne Arrabbiata",
+    category: "italian",
+    price: 269,
+    description: "Slow-simmered spicy Italian tomato sauce with garlic, black olives, crushed chili flakes, and toasted herb bread.",
+    tag: "Spicy & Bold",
     isVeg: true,
     rating: 4.7,
-    image: "https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=600&q=80"
+    image: "/images/cafe_dish_red_pasta.jpg"
   },
-
-  // Shakes
   {
     id: 5,
-    name: "Overloaded Nutella Brownie Shake",
-    category: "shakes",
-    price: 249,
-    description: "Decadent thick shake loaded with pure Nutella, fudge brownie chunks, and chocolate flakes.",
-    tag: "Must Try",
-    isVeg: true,
-    rating: 4.9,
-    image: "https://images.unsplash.com/photo-1577805947697-89e18249d767?auto=format&fit=crop&w=600&q=80"
-  },
-  {
-    id: 6,
-    name: "Crispy KitKat Crunchy Shake",
-    category: "shakes",
-    price: 229,
-    description: "Crispy wafer KitKat blended in rich vanilla ice cream, topped with KitKat sticks and chocolate swirl.",
-    tag: "Bestseller",
+    name: "Creamy Basil Pesto Pasta",
+    category: "italian",
+    price: 299,
+    description: "Fragrant basil pesto sauce folded into rich garlic cream over tender penne, served with crispy garlic toast.",
+    tag: "Specialty",
     isVeg: true,
     rating: 4.8,
-    image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80"
+    image: "/images/cafe_dish_pesto_pasta.jpg"
   },
 
-  // Starters & Bites
+  // Bites & Starters
   {
-    id: 7,
-    name: "ElleBee Signature Crispy Corn",
+    id: 6,
+    name: "Baked Loaded Cheese Nachos",
     category: "starters",
     price: 219,
-    description: "Golden fried sweet corn kernels tossed with fresh scallions, green chillies, and spicy tangy house masala.",
-    tag: "Customer Favorite",
+    description: "Stone-ground corn chips layered with bubbling melted mozzarella, sliced black olives, and tangy homemade salsa.",
+    tag: "Bestseller",
     isVeg: true,
     rating: 4.9,
-    image: "https://images.unsplash.com/photo-1582169296194-e4d644c48063?auto=format&fit=crop&w=600&q=80"
+    image: "/images/cafe_dish_loaded_nachos.jpg"
+  },
+  {
+    id: 7,
+    name: "Crispy Cheese Cigar Rolls",
+    category: "starters",
+    price: 229,
+    description: "Hand-rolled crispy cigar rolls filled with molten cheese, served vertically in a shot-glass flight over spicy dips.",
+    tag: "Chef Special",
+    isVeg: true,
+    rating: 4.8,
+    image: "/images/cafe_dish_cigar_rolls.jpg"
   },
   {
     id: 8,
-    name: "Korean Cream Cheese Garlic Bun",
+    name: "Paneer Tikka Fattoush Platter",
     category: "starters",
-    price: 239,
-    description: "Warm brioche bun stuffed with sweet & savoury herb cream cheese and dunked in roasted garlic butter.",
-    tag: "Trending",
+    price: 199,
+    description: "Tandoori smoked paneer cubes tossed with garden greens, crisp seasoned pita crisps, and Mediterranean dressing.",
+    tag: "House Special",
     isVeg: true,
-    rating: 4.8,
-    image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80"
+    rating: 4.9,
+    image: "/images/cafe_paneer_nachos.jpg"
   },
   {
     id: 9,
-    name: "Peri Peri Loaded Cheese Fries",
+    name: "Cheese Corn Croquettes",
     category: "starters",
     price: 199,
-    description: "Crispy skin-on french fries seasoned with fiery African peri-peri spice and drenched in melted cheddar.",
+    description: "Golden crumbed croquettes with sweet corn and melting cheese centers, presented on a wooden platter with duo dips.",
     tag: "Popular",
     isVeg: true,
     rating: 4.7,
-    image: "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=600&q=80"
+    image: "/images/cafe_dish_croquettes.jpg"
   },
   {
     id: 10,
-    name: "Steamed Paneer Tikka Dim Sums",
+    name: "Crispy Golden Spring Rolls",
     category: "starters",
-    price: 229,
-    description: "Delicate translucent dumplings filled with smoked marinated paneer and herbs, served with fiery schezwan dip.",
-    tag: "Chef Special",
+    price: 189,
+    description: "Thin flaky rolls stuffed with julienned wok vegetables, served hot with sweet chili sauce and garden garnish.",
+    tag: "Crispy",
     isVeg: true,
     rating: 4.8,
-    image: "https://images.unsplash.com/photo-1541696432-82c6da8ce7bf?auto=format&fit=crop&w=600&q=80"
+    image: "/images/cafe_dish_spring_rolls.jpg"
   },
-
-  // Pizzas & Pastas
   {
     id: 11,
-    name: "Rustic Farmhouse Gourmet Pizza",
-    category: "italian",
-    price: 329,
-    description: "Crisp hand-tossed crust, san marzano tomato sauce, mozzarella, bell peppers, sweet corn, mushrooms & black olives.",
-    tag: "Bestseller",
+    name: "Crispy Honey Chilli Potato",
+    category: "starters",
+    price: 199,
+    description: "Fried crisp potato strips wok-glazed in sweet honey, roasted chili flakes, sesame seeds, and capsicum.",
+    tag: "Customer Favorite",
     isVeg: true,
-    rating: 4.9,
-    image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80"
+    rating: 4.8,
+    image: "/images/cafe_dish_honey_chilli_potato.jpg"
   },
   {
     id: 12,
-    name: "Tandoori Paneer Makhani Pizza",
-    category: "italian",
-    price: 349,
-    description: "Fusion delight featuring clay-oven tandoori paneer cubes, red onions, coriander drizzle, and stringy mozzarella.",
-    tag: "Fusion Special",
+    name: "Traditional Dahi Ke Kebabs",
+    category: "starters",
+    price: 219,
+    description: "Golden crisp spiced yogurt patties served on shredded garden salad with house mint-coriander emulsion.",
+    tag: "Traditional",
     isVeg: true,
     rating: 4.8,
-    image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=600&q=80"
+    image: "/images/cafe_dish_dahi_kebabs.jpg"
   },
+
+  // Pan-Asian Wok & Dim Sum
   {
     id: 13,
-    name: "Creamy Truffle Mushroom Alfredo",
-    category: "italian",
-    price: 299,
-    description: "Penne pasta rolled in velvety garlic parmesan cream sauce with sauteed button mushrooms and herb oil.",
-    tag: "Chef Special",
+    name: "Steamed Veg Dim Sums / Momos",
+    category: "asian",
+    price: 189,
+    description: "Hand-pleated thin dumplings steamed to perfection in a wooden box, served with fiery red pepper chutney.",
+    tag: "Handcrafted",
     isVeg: true,
-    rating: 4.8,
-    image: "https://images.unsplash.com/photo-1621996346565-e3d5d6281691?auto=format&fit=crop&w=600&q=80"
+    rating: 4.9,
+    image: "/images/cafe_dish_steamed_momos.jpg"
   },
   {
     id: 14,
-    name: "Fiery Pink Sauce Rigatoni",
-    category: "italian",
-    price: 289,
-    description: "Perfect harmony of tangy arrabbiata tomato sauce and silky white cheese sauce with fresh basil.",
-    tag: "Must Try",
-    isVeg: true,
-    rating: 4.7,
-    image: "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=600&q=80"
-  },
-
-  // Burgers & Sandwiches
-  {
-    id: 15,
-    name: "Double Decker Crisp Cottage Burger",
-    category: "burgers",
-    price: 219,
-    description: "Dual spiced paneer and veggie patty layered with caramelised onions, pickled jalapenos, and molten cheddar in a toasted brioche bun.",
-    tag: "Bestseller",
-    isVeg: true,
-    rating: 4.8,
-    image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80"
-  },
-  {
-    id: 16,
-    name: "Golden Corn & Three Cheese Grilled Sandwich",
-    category: "burgers",
-    price: 199,
-    description: "Jumbo buttered bread stuffed with sweet corn kernels, mozzarella, english cheddar, and aromatic italian herbs.",
-    tag: "All Time Classic",
-    isVeg: true,
-    rating: 4.9,
-    image: "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=600&q=80"
-  },
-
-  // Pan-Asian
-  {
-    id: 17,
-    name: "Wok-Tossed Chilli Paneer Gravy / Dry",
+    name: "Wok-Tossed Chilli Paneer",
     category: "asian",
-    price: 279,
-    description: "Crispy batter-coated cottage cheese cubes tossed in spicy soya sauce, fresh green chillies, capsicum, and spring onions.",
+    price: 249,
+    description: "Crispy cottage cheese cubes tossed with bell peppers, sweet onions, and spicy dark soya sauce at high flame.",
     tag: "Indo-Chinese",
     isVeg: true,
     rating: 4.8,
-    image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80"
+    image: "/images/cafe_dish_chilli_paneer.jpg"
   },
   {
-    id: 18,
-    name: "Street Style Veg Hakka Noodles",
+    id: 15,
+    name: "Street Style Chilli Garlic Noodles",
     category: "asian",
-    price: 239,
-    description: "Hand-pulled noodles tossed at high flame with julienned vegetables, garlic, and oriental spices.",
+    price: 219,
+    description: "Wok-seared hakka noodles tossed with scallions, bell peppers, paneer chunks, and fiery chili garlic sauce.",
     tag: "Popular",
     isVeg: true,
     rating: 4.7,
-    image: "https://images.unsplash.com/photo-1612927601601-6638404737ce?auto=format&fit=crop&w=600&q=80"
+    image: "/images/cafe_dish_hakka_noodles.jpg"
+  },
+  {
+    id: 16,
+    name: "Cafe ElleBee Signature Wok Noodles",
+    category: "asian",
+    price: 229,
+    description: "Freshly prepared noodle bowl tossed in house oriental spices, served with traditional chopsticks.",
+    tag: "House Special",
+    isVeg: true,
+    rating: 4.8,
+    image: "/images/cafe_dish_wok_noodles.jpg"
+  },
+  {
+    id: 17,
+    name: "Aromatic Vegetable Fried Rice",
+    category: "asian",
+    price: 219,
+    description: "Fragrant basmati grains wok-fried with finely chopped garden vegetables, scallions, and sweet chili sauce.",
+    tag: "Wok Special",
+    isVeg: true,
+    rating: 4.7,
+    image: "/images/cafe_dish_fried_rice.jpg"
   },
 
-  // Desserts
+  // Burgers
+  {
+    id: 18,
+    name: "Gourmet ElleBee Double Decker Burger",
+    category: "burgers",
+    price: 189,
+    description: "Crisp seasoned veggie patty layered with melted cheese, crisp lettuce, tomato, onions, tortilla chips, and dipping sauces.",
+    tag: "Bestseller",
+    isVeg: true,
+    rating: 4.8,
+    image: "/images/cafe_dish_burger.jpg"
+  },
+
+  // Beverages & Coffee
   {
     id: 19,
-    name: "Sizzling Walnut Brownie with Gelato",
-    category: "desserts",
-    price: 229,
-    description: "Freshly baked rich chocolate walnut brownie served on a smoking hot iron plate with hot fudge and vanilla gelato.",
-    tag: "Signature Dessert",
+    name: "Signature ElleBee Branded Iced Coolers",
+    category: "beverages",
+    price: 179,
+    description: "Refreshing citrus and berry coolers served in custom ElleBee glass cans with fresh mint and fizz.",
+    tag: "Signature",
     isVeg: true,
     rating: 4.9,
-    image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=600&q=80"
+    image: "/images/cafe_branded_drinks.jpg"
   },
   {
     id: 20,
-    name: "Belgian Chocolate Glazed Waffle",
-    category: "desserts",
-    price: 219,
-    description: "Crisp golden Belgian waffle smothered with melted milk & dark chocolate, banana slices, and toasted almond slivers.",
-    tag: "Sweet Delight",
+    name: "Classic Artisanal Cold Coffee",
+    category: "beverages",
+    price: 199,
+    description: "Single-origin espresso pulled fresh, blended with chilled creamy milk, chocolate syrup, and silky froth.",
+    tag: "Bestseller",
     isVeg: true,
-    rating: 4.8,
-    image: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80"
+    rating: 4.9,
+    image: "/images/cafe_branded_drinks.jpg"
   }
 ];
 
 export const REVIEWS = [
   {
     id: 1,
+    author: "Aakash Sharma",
     name: "Aakash Sharma",
     rating: 5,
+    time: "2 weeks ago",
     date: "2 weeks ago",
-    comment: "Hands down the coziest cafe in RDC Raj Nagar! The ambience with the warm neon signs and ambient lighting is breathtaking. Their Crispy Corn and Hazelnut Frappe are unmatched.",
-    avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80"
+    comment: "Hands down the coziest cafe in RDC Raj Nagar! The ambience with the warm lighting and floral skylight ceiling is breathtaking. Their Pink Sauce Pasta and signature coolers are unmatched."
   },
   {
     id: 2,
+    author: "Pooja Verma",
     name: "Pooja Verma",
     rating: 5,
+    time: "1 month ago",
     date: "1 month ago",
-    comment: "We hosted my sister's 21st birthday party here and the team at Cafe ElleBee made it unforgettable! Super courteous staff, amazing music, delicious food, and tons of aesthetic photo spots.",
-    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80"
+    comment: "We hosted my sister's 21st birthday party here and the team at Cafe ElleBee made it unforgettable! Super courteous staff, amazing music, delicious food, and tons of aesthetic photo spots."
   },
   {
     id: 3,
+    author: "Rohan Malhotra",
     name: "Rohan Malhotra",
     rating: 5,
+    time: "3 weeks ago",
     date: "3 weeks ago",
-    comment: "Perfect date spot in Ghaziabad. Quiet and snug during late afternoons, with the best pasta and cold coffee in town. Great parking availability nearby in RDC as well.",
-    avatar: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=150&q=80"
+    comment: "Perfect date spot in Ghaziabad. Quiet and snug during late afternoons, with the best pasta, loaded nachos, and cold coffee in town. Great parking availability nearby in RDC as well."
   },
   {
     id: 4,
+    author: "Sneha Tyagi",
     name: "Sneha Tyagi",
     rating: 5,
+    time: "Last month",
     date: "Last month",
-    comment: "The Korean cream cheese garlic bun is pure heaven! Also love that they have prompt service and a genuinely warm, hospitable atmosphere. Will definitely be visiting regularly.",
-    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80"
+    comment: "The Dim Sums and Cheese Cigar Rolls are pure perfection! Also love that they have prompt service and a genuinely warm, hospitable atmosphere. Will definitely be visiting regularly."
   }
 ];
 
@@ -348,31 +364,31 @@ export const CELEBRATION_PACKAGES = [
   {
     id: "birthday",
     title: "The Birthday Glow Package",
-    tagline: "Turn another year bolder under our signature neon lights",
+    tagline: "Turn another year bolder under our warm ceiling lighting & balloon canopy",
     price: "₹699",
     priceUnit: "per guest (Min 8 guests)",
     badge: "Most Popular",
     features: [
-      "Custom Neon backdrop & warm balloon arch setup",
-      "Welcome signature mocktails (Blue Curacao / Mojito)",
-      "3-course finger bites (Crispy corn, peri peri fries, dim sums)",
-      "Choice of gourmet pizzas & pasta platters",
-      "Complimentary cake cutting ceremony & birthday soundtrack"
+      "Custom balloon canopy & warm ambient lounge setup",
+      "Welcome signature coolers in ElleBee glass cans",
+      "3-course finger bites (Loaded nachos, croquettes, dim sums)",
+      "Choice of stone-baked gourmet pizzas & pasta platters",
+      "Complimentary cake cutting ceremony & celebration soundtrack"
     ],
     popularFor: "Birthdays & Youth Milestones"
   },
   {
     id: "couples",
     title: "Candlelit Date & Anniversary",
-    tagline: "An intimate, quiet table enveloped in warm ambient shadows",
+    tagline: "An intimate, quiet booth enveloped in warm ambient shadows",
     price: "₹1,299",
     priceUnit: "per couple",
     badge: "Intimate Evening",
     features: [
       "Reserved cozy booth with candlelit table styling",
-      "2 Handcrafted artisanal beverages or frappes",
-      "Choice of wood-fired style pizza or creamy pasta",
-      "Signature sizzling walnut brownie with vanilla gelato",
+      "2 Handcrafted artisanal coolers or cold coffees",
+      "Choice of gourmet pizza or signature pink sauce pasta",
+      "Complimentary celebration dessert plate",
       "Priority personalized hospitality"
     ],
     popularFor: "Anniversaries & Romantic Dates"
@@ -387,7 +403,7 @@ export const CELEBRATION_PACKAGES = [
     features: [
       "Exclusive lounge wing for 10 to 30+ guests",
       "Endless pitchers of iced teas & refreshing coolers",
-      "Massive platters: Nachos, burgers, Korean buns & crispy corn",
+      "Platters: Loaded nachos, burger sliders, cigar rolls & noodles",
       "Curated lo-fi / party playlist control",
       "Seamless billing and group packages"
     ],

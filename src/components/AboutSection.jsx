@@ -88,7 +88,7 @@ export default function AboutSection() {
               {/* Main Image */}
               <div className="relative rounded-3xl overflow-hidden border border-amber-800/30 shadow-2xl shadow-black/80 aspect-[4/3] group">
                 <img
-                  src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=900&q=80"
+                  src="/images/cafe_interior_main.jpg"
                   alt="Cafe ElleBee Cozy Ambiance"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />

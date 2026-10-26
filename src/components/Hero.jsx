@@ -92,8 +92,8 @@ export default function Hero({ onOpenReserve }) {
         className="relative w-full h-[400px] sm:h-[500px] rounded-2xl overflow-hidden border border-stone-800/60 shadow-2xl mb-12"
       >
         <img
-          src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1920&q=80"
-          alt="Cafe ElleBee Warm Lounge"
+          src="/images/cafe_interior_main.jpg"
+          alt="Cafe ElleBee Dining Hall & Skylight Lounge"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#090807] via-transparent to-black/20" />
@@ -101,10 +101,10 @@ export default function Hero({ onOpenReserve }) {
         {/* Caption in bottom-left */}
         <div className="absolute bottom-6 left-6 sm:bottom-8 sm:left-8">
           <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-[#c8a97e] block mb-1">
-            Ground Floor Lounge
+            Ground Floor Lounge • RDC Raj Nagar
           </span>
           <p className="font-serif-title text-base sm:text-lg text-[#fbf9f5] font-semibold">
-            Ambient lighting, velvet booths, and artisan coffee aromas.
+            Teal banquettes, coffered wooden skylight, and artisan coffee aromas.
           </p>
         </div>
       </motion.div>

@@ -17,7 +17,7 @@ export default function HomeView({ onSelectView, onOpenReserve }) {
           <div 
             className="absolute inset-0 bg-cover bg-center opacity-20 scale-105 transition-transform duration-10000"
             style={{
-              backgroundImage: `url('https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1920&q=80')`,
+              backgroundImage: `url('/images/cafe_interior_main.jpg')`,
             }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0c0908] via-[#0c0908]/85 to-transparent" />
@@ -312,7 +312,7 @@ export default function HomeView({ onSelectView, onOpenReserve }) {
           <div className="lg:col-span-6 relative">
             <div className="rounded-3xl overflow-hidden border border-amber-800/40 shadow-2xl aspect-[4/3]">
               <img
-                src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=900&q=80"
+                src="/images/cafe_interior_main.jpg"
                 alt="Cafe ElleBee Cozy Corner"
                 className="w-full h-full object-cover"
               />

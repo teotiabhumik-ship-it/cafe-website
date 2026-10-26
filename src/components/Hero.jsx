@@ -4,6 +4,26 @@ import { Coffee, Sparkles, Navigation, Calendar, ArrowRight, Star, Heart } from 
 import { CAFE_INFO } from '../data/cafeData';
 
 export default function Hero({ onOpenReserve }) {
+  const smoothScrollTo = (e, targetId) => {
+    e.preventDefault();
+    const target = document.querySelector(targetId);
+    if (!target) return;
+
+    if (window.lenis) {
+      window.lenis.scrollTo(target, {
+        offset: -85,
+        duration: 1.4,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      });
+    } else {
+      const position = target.getBoundingClientRect().top + window.pageYOffset;
+      window.scrollTo({
+        top: position - 85,
+        behavior: 'smooth',
+      });
+    }
+  };
+
   return (
     <section className="relative min-h-[92vh] flex items-center justify-center overflow-hidden pt-28 pb-16 px-4 sm:px-6 lg:px-8">
       {/* Background with Real Cafe Interior Ambience */}
@@ -18,7 +38,7 @@ export default function Hero({ onOpenReserve }) {
         <div className="absolute inset-0 bg-gradient-to-t from-[#0c0b0a] via-[#0c0b0a]/80 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#0c0b0a] via-transparent to-[#0c0b0a]" />
         
-        {/* Subtle Warm Brass Ambient Backlight (Not radioactive yellow) */}
+        {/* Subtle Warm Brass Ambient Backlight */}
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-[#c8a97e]/8 rounded-full blur-[140px] pointer-events-none" />
       </div>
 
@@ -64,7 +84,7 @@ export default function Hero({ onOpenReserve }) {
           <span className="text-stone-400">RDC Raj Nagar, Ghaziabad</span>
         </motion.div>
 
-        {/* Refined Main Heading (Crisp Ivory & Warm Champagne) */}
+        {/* Refined Main Heading */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -90,10 +110,7 @@ export default function Hero({ onOpenReserve }) {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.7, delay: 0.4 }}
           className="relative my-3 flex flex-col items-center justify-center cursor-pointer group"
-          onClick={() => {
-            const el = document.getElementById('menu');
-            if (el) el.scrollIntoView({ behavior: 'smooth' });
-          }}
+          onClick={(e) => smoothScrollTo(e, '#menu')}
         >
           <div className="relative w-16 h-10 flex justify-center items-end gap-2 mb-1">
             <div className="w-1.5 h-7 bg-gradient-to-t from-stone-300/30 to-transparent rounded-full animate-steam" style={{ animationDelay: '0s' }}></div>
@@ -113,7 +130,7 @@ export default function Hero({ onOpenReserve }) {
           transition={{ duration: 0.8, delay: 0.5 }}
           className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto mt-6"
         >
-          {/* Reserve Table Button (Ivory & Obsidian) */}
+          {/* Reserve Table Button */}
           <button
             onClick={onOpenReserve}
             className="w-full sm:w-auto px-8 py-4 rounded-full font-semibold text-[#0c0b0a] bg-[#f5efe6] hover:bg-[#ebe1d2] shadow-xl hover:scale-105 active:scale-95 transition-all text-sm sm:text-base flex items-center justify-center gap-2 group"
@@ -123,18 +140,20 @@ export default function Hero({ onOpenReserve }) {
             <ArrowRight className="w-4 h-4 text-[#0c0b0a] group-hover:translate-x-1 transition-transform" />
           </button>
 
-          {/* Explore Menu */}
+          {/* Smooth Scroll to Menu */}
           <a
             href="#menu"
-            className="w-full sm:w-auto px-7 py-4 rounded-full font-medium text-stone-200 hover:text-white bg-[#191715] hover:bg-[#221f1c] border border-stone-700/80 transition-all text-sm sm:text-base flex items-center justify-center gap-2"
+            onClick={(e) => smoothScrollTo(e, '#menu')}
+            className="w-full sm:w-auto px-7 py-4 rounded-full font-medium text-stone-200 hover:text-white bg-[#191715] hover:bg-[#221f1c] border border-stone-700/80 transition-all text-sm sm:text-base flex items-center justify-center gap-2 cursor-pointer"
           >
             <span>Explore Menu</span>
           </a>
 
-          {/* Jump Directly to the Visible Map */}
+          {/* Smooth Scroll Directly to Visible Map */}
           <a
             href="#map-location"
-            className="w-full sm:w-auto px-6 py-4 rounded-full font-medium text-[#c8a97e] hover:text-[#e5d2b8] hover:bg-[#1a1714] transition-all text-sm flex items-center justify-center gap-2 border border-stone-800"
+            onClick={(e) => smoothScrollTo(e, '#map-location')}
+            className="w-full sm:w-auto px-6 py-4 rounded-full font-medium text-[#c8a97e] hover:text-[#e5d2b8] hover:bg-[#1a1714] transition-all text-sm flex items-center justify-center gap-2 border border-stone-800 cursor-pointer"
           >
             <Navigation className="w-4 h-4 text-[#c8a97e]" />
             <span>View Location & Map</span>

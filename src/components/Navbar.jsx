@@ -5,14 +5,7 @@ import { CAFE_INFO } from '../data/cafeData';
 export default function Navbar({ onOpenReserve, onOpenDelivery }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const [activeSection, setActiveSection] = useState('');
 
   const navLinks = [
     { name: 'The Cafe', href: '#gallery' },
@@ -21,6 +14,62 @@ export default function Navbar({ onOpenReserve, onOpenDelivery }) {
     { name: 'Location & Map', href: '#map-location' },
     { name: 'Reviews', href: '#reviews' },
   ];
+
+  // Detect scroll state and active section for navigation highlight
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+
+      // Section spy
+      const sectionIds = ['gallery', 'menu', 'celebrations', 'map-location', 'reviews'];
+      const scrollPosition = window.scrollY + 200;
+
+      for (let i = sectionIds.length - 1; i >= 0; i--) {
+        const el = document.getElementById(sectionIds[i]);
+        if (el && el.offsetTop <= scrollPosition) {
+          setActiveSection(`#${sectionIds[i]}`);
+          return;
+        }
+      }
+      setActiveSection('');
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Smooth buttery scroll handler via Lenis
+  const handleNavClick = (e, href) => {
+    e.preventDefault();
+    setMobileMenuOpen(false);
+
+    if (href === '#' || !href) {
+      if (window.lenis) {
+        window.lenis.scrollTo(0, { duration: 1.4 });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      return;
+    }
+
+    const targetElement = document.querySelector(href);
+    if (targetElement) {
+      if (window.lenis) {
+        // Smooth gliding scroll with navbar offset
+        window.lenis.scrollTo(targetElement, {
+          offset: -85,
+          duration: 1.4,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        });
+      } else {
+        const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+        window.scrollTo({
+          top: elementPosition - 85,
+          behavior: 'smooth',
+        });
+      }
+    }
+  };
 
   return (
     <header
@@ -33,8 +82,12 @@ export default function Navbar({ onOpenReserve, onOpenDelivery }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           
-          {/* Brand Logo */}
-          <a href="#" className="flex items-center gap-3 group">
+          {/* Brand Logo - Smooth Scroll to Top */}
+          <a
+            href="#"
+            onClick={(e) => handleNavClick(e, '#')}
+            className="flex items-center gap-3 group cursor-pointer"
+          >
             <div className="w-10 h-10 rounded-full bg-[#1e1b18] border border-stone-700/80 flex items-center justify-center text-[#c8a97e] group-hover:border-[#c8a97e] transition-colors">
               <Coffee className="w-5 h-5 text-[#c8a97e]" />
             </div>
@@ -48,18 +101,28 @@ export default function Navbar({ onOpenReserve, onOpenDelivery }) {
             </div>
           </a>
 
-          {/* Desktop Navigation Links */}
+          {/* Desktop Navigation Links with Buttery Smooth Scroll */}
           <nav className="hidden lg:flex items-center gap-7">
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                className="text-xs sm:text-sm font-medium text-stone-300 hover:text-[#f5f2eb] transition-colors relative group py-1"
-              >
-                {link.name}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#c8a97e] transition-all duration-300 group-hover:w-full"></span>
-              </a>
-            ))}
+            {navLinks.map((link) => {
+              const isActive = activeSection === link.href;
+              return (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  className={`text-xs sm:text-sm font-medium transition-colors relative group py-1 cursor-pointer ${
+                    isActive ? 'text-[#f5f2eb] font-semibold' : 'text-stone-300 hover:text-[#f5f2eb]'
+                  }`}
+                >
+                  {link.name}
+                  <span
+                    className={`absolute bottom-0 left-0 h-0.5 bg-[#c8a97e] transition-all duration-300 ${
+                      isActive ? 'w-full' : 'w-0 group-hover:w-full'
+                    }`}
+                  ></span>
+                </a>
+              );
+            })}
           </nav>
 
           {/* Actions: Live Status & CTAs */}
@@ -80,7 +143,7 @@ export default function Navbar({ onOpenReserve, onOpenDelivery }) {
               <span>Order Online</span>
             </button>
 
-            {/* Book Table Button (Refined Cream & Dark Obsidian) */}
+            {/* Book Table Button */}
             <button
               onClick={onOpenReserve}
               className="flex items-center gap-2 px-4 py-2 text-xs font-semibold text-[#0c0b0a] bg-[#f5efe6] hover:bg-[#ebe1d2] rounded-full shadow-md hover:scale-105 transition-all duration-200"
@@ -126,7 +189,7 @@ export default function Navbar({ onOpenReserve, onOpenDelivery }) {
               <a
                 key={link.name}
                 href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={(e) => handleNavClick(e, link.href)}
                 className="w-full text-left px-3.5 py-2.5 rounded-xl text-sm font-medium text-stone-200 hover:bg-[#1a1714] hover:text-[#f5f2eb] transition-colors"
               >
                 {link.name}

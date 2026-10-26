@@ -16,14 +16,18 @@ export default function App() {
   const [isReserveOpen, setIsReserveOpen] = useState(false);
   const [isDeliveryOpen, setIsDeliveryOpen] = useState(false);
 
-  // Initialize Lenis smooth scroll
+  // Initialize Lenis smooth scroll and expose to window for smooth anchor navigation
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 1.4,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       smoothWheel: true,
+      wheelMultiplier: 1.0,
+      touchMultiplier: 1.5,
     });
+
+    window.lenis = lenis;
 
     function raf(time) {
       lenis.raf(time);
@@ -34,6 +38,7 @@ export default function App() {
     return () => {
       cancelAnimationFrame(rafId);
       lenis.destroy();
+      window.lenis = null;
     };
   }, []);
 
@@ -42,7 +47,7 @@ export default function App() {
       {/* Subtle Ambient Light Follower */}
       <AmbientCursor />
 
-      {/* Top Fixed Navigation */}
+      {/* Top Fixed Navigation with Smooth Animated Section Scrolling */}
       <Navbar
         onOpenReserve={() => setIsReserveOpen(true)}
         onOpenDelivery={() => setIsDeliveryOpen(true)}

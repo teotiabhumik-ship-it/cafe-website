@@ -4,6 +4,35 @@ import InstagramIcon from './InstagramIcon';
 import { CAFE_INFO } from '../data/cafeData';
 
 export default function Footer({ onOpenReserve, onOpenDelivery }) {
+  const smoothScrollTo = (e, targetId) => {
+    e.preventDefault();
+    if (targetId === '#' || !targetId) {
+      if (window.lenis) {
+        window.lenis.scrollTo(0, { duration: 1.4 });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      return;
+    }
+
+    const target = document.querySelector(targetId);
+    if (!target) return;
+
+    if (window.lenis) {
+      window.lenis.scrollTo(target, {
+        offset: -85,
+        duration: 1.4,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      });
+    } else {
+      const position = target.getBoundingClientRect().top + window.pageYOffset;
+      window.scrollTo({
+        top: position - 85,
+        behavior: 'smooth',
+      });
+    }
+  };
+
   return (
     <footer className="bg-[#080706] border-t border-stone-900 pt-16 pb-12 px-4 sm:px-6 lg:px-8 text-stone-400 relative">
       <div className="max-w-7xl mx-auto">
@@ -11,7 +40,11 @@ export default function Footer({ onOpenReserve, onOpenDelivery }) {
           
           {/* Brand Info */}
           <div className="lg:col-span-5 space-y-4">
-            <a href="#" className="flex items-center gap-3">
+            <a 
+              href="#" 
+              onClick={(e) => smoothScrollTo(e, '#')}
+              className="flex items-center gap-3 cursor-pointer"
+            >
               <div className="w-10 h-10 rounded-full bg-[#181614] border border-stone-700/80 flex items-center justify-center text-[#c8a97e]">
                 <Coffee className="w-5 h-5 text-[#c8a97e]" />
               </div>
@@ -60,26 +93,56 @@ export default function Footer({ onOpenReserve, onOpenDelivery }) {
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Quick Links with Smooth Scrolling */}
           <div className="lg:col-span-3 space-y-3">
             <h4 className="font-serif-title text-sm font-bold text-[#fbf9f5] uppercase tracking-wider">
               Explore
             </h4>
             <ul className="space-y-2 text-xs sm:text-sm font-light text-stone-300">
               <li>
-                <a href="#gallery" className="hover:text-white transition-colors">The Cafe & Ambiance</a>
+                <a 
+                  href="#gallery" 
+                  onClick={(e) => smoothScrollTo(e, '#gallery')}
+                  className="hover:text-white transition-colors cursor-pointer"
+                >
+                  The Cafe & Ambiance
+                </a>
               </li>
               <li>
-                <a href="#menu" className="hover:text-white transition-colors">Food & Coffee Menu</a>
+                <a 
+                  href="#menu" 
+                  onClick={(e) => smoothScrollTo(e, '#menu')}
+                  className="hover:text-white transition-colors cursor-pointer"
+                >
+                  Food & Coffee Menu
+                </a>
               </li>
               <li>
-                <a href="#celebrations" className="hover:text-white transition-colors">Party & Event Packages</a>
+                <a 
+                  href="#celebrations" 
+                  onClick={(e) => smoothScrollTo(e, '#celebrations')}
+                  className="hover:text-white transition-colors cursor-pointer"
+                >
+                  Party & Event Packages
+                </a>
               </li>
               <li>
-                <a href="#map-location" className="hover:text-white transition-colors">Visible Map & Location</a>
+                <a 
+                  href="#map-location" 
+                  onClick={(e) => smoothScrollTo(e, '#map-location')}
+                  className="hover:text-white transition-colors cursor-pointer"
+                >
+                  Visible Map & Location
+                </a>
               </li>
               <li>
-                <a href="#reviews" className="hover:text-white transition-colors">Guest Reviews</a>
+                <a 
+                  href="#reviews" 
+                  onClick={(e) => smoothScrollTo(e, '#reviews')}
+                  className="hover:text-white transition-colors cursor-pointer"
+                >
+                  Guest Reviews
+                </a>
               </li>
             </ul>
           </div>

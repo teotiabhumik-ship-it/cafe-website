@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Lenis from 'lenis';
-import { UiModeProvider, useUiMode } from './context/UiModeContext';
 import Navbar from './components/Navbar';
-import AmbientCursor from './components/AmbientCursor';
 import Hero from './components/Hero';
 import CafeGallerySection from './components/CafeGallerySection';
 import MenuSection from './components/MenuSection';
@@ -11,18 +9,16 @@ import VisibleMapSection from './components/VisibleMapSection';
 import ReviewsSection from './components/ReviewsSection';
 import ReservationModal from './components/ReservationModal';
 import DeliveryModal from './components/DeliveryModal';
-import FloatingModeToggle from './components/FloatingModeToggle';
 import Footer from './components/Footer';
 
-function CafeApp() {
+export default function App() {
   const [isReserveOpen, setIsReserveOpen] = useState(false);
   const [isDeliveryOpen, setIsDeliveryOpen] = useState(false);
-  const { isMinimal } = useUiMode();
 
-  // Initialize Lenis smooth scroll and expose to window for smooth anchor navigation
+  // Initialize Lenis smooth scroll for seamless navigation
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.4,
+      duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       smoothWheel: true,
@@ -46,47 +42,39 @@ function CafeApp() {
   }, []);
 
   return (
-    <div className={`min-h-screen text-[#ede8e1] font-sans selection:bg-[#c8a97e] selection:text-black relative ${
-      isMinimal ? 'bg-[#090908]' : 'bg-[#0c0b0a]'
-    }`}>
-      {/* Subtle Ambient Light Follower (active in Luxe mode) */}
-      {!isMinimal && <AmbientCursor />}
-
-      {/* Top Fixed Navigation */}
+    <div className="min-h-screen bg-[#090807] text-[#ede8e1] font-sans selection:bg-[#c8a97e] selection:text-black relative antialiased">
+      {/* Top Fixed Minimal Navigation */}
       <Navbar
         onOpenReserve={() => setIsReserveOpen(true)}
         onOpenDelivery={() => setIsDeliveryOpen(true)}
       />
 
-      {/* Main Experience Flow */}
+      {/* Main Minimalist Flow */}
       <main className="relative z-10">
         {/* 1. Hero */}
         <Hero
           onOpenReserve={() => setIsReserveOpen(true)}
         />
 
-        {/* 2. Authentic Pictures of the Cafe & Ambiance Tour */}
+        {/* 2. Spaces & Atmosphere Gallery */}
         <CafeGallerySection />
 
-        {/* 3. Curated Menu with Search & Bestseller Toggle */}
+        {/* 3. Curated Menu */}
         <MenuSection
           onOpenDelivery={() => setIsDeliveryOpen(true)}
         />
 
-        {/* 4. Celebrations & Private Party Lounge Packages */}
+        {/* 4. Celebrations & Private Gatherings */}
         <PartySection
           onOpenReserve={() => setIsReserveOpen(true)}
         />
 
-        {/* 5. DIRECTLY VISIBLE INTERACTIVE GOOGLE MAP & LOCATION HUB */}
+        {/* 5. DIRECTLY VISIBLE INTERACTIVE GOOGLE MAP & LOCATION */}
         <VisibleMapSection />
 
-        {/* 6. Guest Reviews & 4.6-Star Google Rating */}
+        {/* 6. Guest Testimonials & Praise */}
         <ReviewsSection />
       </main>
-
-      {/* Floating Mode Switcher in Bottom Right Corner */}
-      <FloatingModeToggle />
 
       {/* Footer */}
       <Footer
@@ -106,13 +94,5 @@ function CafeApp() {
         onClose={() => setIsDeliveryOpen(false)}
       />
     </div>
-  );
-}
-
-export default function App() {
-  return (
-    <UiModeProvider>
-      <CafeApp />
-    </UiModeProvider>
   );
 }

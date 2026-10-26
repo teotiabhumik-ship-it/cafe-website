@@ -8,7 +8,7 @@
 
   body {
     font-family: var(--font-body);
-    background-color: #0c0b0a;
+    background-color: #090807;
     color: #ede8e1;
     overflow-x: hidden;
     scroll-behavior: smooth;
@@ -19,7 +19,12 @@
   }
 }
 
-/* Elegant Warm Accents (Subtle Champagne & Brass, Not Oversaturated Yellow) */
+/* Hairline Minimalist Borders */
+.border-stone-850 {
+  border-color: rgba(45, 41, 38, 0.7);
+}
+
+/* Elegant Warm Accents */
 .text-brass {
   color: #c8a97e;
 }
@@ -32,45 +37,17 @@
   border-color: rgba(200, 169, 126, 0.35);
 }
 
-/* Delicate Ambient Card Glow */
-.box-glow-subtle {
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7), 0 0 1px 1px rgba(255, 255, 255, 0.05);
-}
-
 /* Refined Dark Scrollbar */
 ::-webkit-scrollbar {
-  width: 7px;
+  width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #0c0b0a;
+  background: #090807;
 }
 ::-webkit-scrollbar-thumb {
-  background: #262320;
-  border-radius: 4px;
+  background: #24211d;
+  border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #3d3833;
-}
-
-/* Subtle rising steam */
-@keyframes gentleSteam {
-  0% {
-    transform: translateY(0) scaleX(1);
-    opacity: 0;
-  }
-  30% {
-    opacity: 0.25;
-  }
-  60% {
-    transform: translateY(-45px) scaleX(1.2) rotate(2deg);
-    opacity: 0.15;
-  }
-  100% {
-    transform: translateY(-90px) scaleX(1.5) rotate(-3deg);
-    opacity: 0;
-  }
-}
-
-.animate-steam {
-  animation: gentleSteam 4.5s ease-out infinite;
+  background: #38342e;
 }

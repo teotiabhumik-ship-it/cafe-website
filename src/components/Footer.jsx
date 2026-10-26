@@ -1,5 +1,5 @@
 import React from 'react';
-import { Coffee, MapPin, Phone, Clock, Heart, Navigation } from 'lucide-react';
+import { Coffee, Navigation } from 'lucide-react';
 import InstagramIcon from './InstagramIcon';
 import { CAFE_INFO } from '../data/cafeData';
 
@@ -8,7 +8,7 @@ export default function Footer({ onOpenReserve, onOpenDelivery }) {
     e.preventDefault();
     if (targetId === '#' || !targetId) {
       if (window.lenis) {
-        window.lenis.scrollTo(0, { duration: 1.4 });
+        window.lenis.scrollTo(0, { duration: 1.2 });
       } else {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
@@ -20,184 +20,108 @@ export default function Footer({ onOpenReserve, onOpenDelivery }) {
 
     if (window.lenis) {
       window.lenis.scrollTo(target, {
-        offset: -85,
-        duration: 1.4,
+        offset: -80,
+        duration: 1.2,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       });
     } else {
       const position = target.getBoundingClientRect().top + window.pageYOffset;
       window.scrollTo({
-        top: position - 85,
+        top: position - 80,
         behavior: 'smooth',
       });
     }
   };
 
   return (
-    <footer className="bg-[#080706] border-t border-stone-900 pt-16 pb-12 px-4 sm:px-6 lg:px-8 text-stone-400 relative">
+    <footer className="border-t border-stone-850 pt-20 pb-12 px-4 sm:px-6 lg:px-8 text-stone-400">
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-stone-800/80">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 pb-16 border-b border-stone-850">
           
-          {/* Brand Info */}
+          {/* Brand & Address */}
           <div className="lg:col-span-5 space-y-4">
-            <a 
-              href="#" 
-              onClick={(e) => smoothScrollTo(e, '#')}
-              className="flex items-center gap-3 cursor-pointer"
-            >
-              <div className="w-10 h-10 rounded-full bg-[#181614] border border-stone-700/80 flex items-center justify-center text-[#c8a97e]">
-                <Coffee className="w-5 h-5 text-[#c8a97e]" />
-              </div>
-              <div>
-                <span className="font-serif-title text-2xl font-bold tracking-wider text-[#fbf9f5]">
-                  Cafe ElleBee
-                </span>
-                <span className="block text-[10px] tracking-widest uppercase text-stone-400 font-sans -mt-0.5">
-                  RDC • Raj Nagar, Ghaziabad
-                </span>
-              </div>
-            </a>
-
+            <span className="font-serif text-2xl font-bold tracking-[0.2em] uppercase text-[#fbf9f5] block">
+              ElleBee
+            </span>
             <p className="text-xs sm:text-sm font-light text-stone-400 max-w-sm leading-relaxed">
-              Craft coffee, gourmet comfort bites, and an ambient neon glow. A cozy haven designed for memorable conversations, quiet coffee breaks, and joyful birthday celebrations.
+              Specialty coffees, handcrafted shakes, and gourmet European comfort food. Ground Floor, RDC Raj Nagar, Ghaziabad.
             </p>
+            <div className="pt-2 text-xs font-mono text-stone-400 space-y-1">
+              <p>{CAFE_INFO.address}</p>
+              <p>Hotline: +91 93544 60764</p>
+            </div>
+          </div>
+
+          {/* Quick Links */}
+          <div className="lg:col-span-3 space-y-3">
+            <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#c8a97e] block mb-2">
+              Navigation
+            </span>
+            <ul className="space-y-2 text-xs font-mono">
+              <li>
+                <a href="#gallery" onClick={(e) => smoothScrollTo(e, '#gallery')} className="hover:text-white transition-colors">
+                  01. The Spaces
+                </a>
+              </li>
+              <li>
+                <a href="#menu" onClick={(e) => smoothScrollTo(e, '#menu')} className="hover:text-white transition-colors">
+                  02. Curated Menu
+                </a>
+              </li>
+              <li>
+                <a href="#celebrations" onClick={(e) => smoothScrollTo(e, '#celebrations')} className="hover:text-white transition-colors">
+                  03. Celebrations & Lounge
+                </a>
+              </li>
+              <li>
+                <a href="#map-location" onClick={(e) => smoothScrollTo(e, '#map-location')} className="hover:text-white transition-colors">
+                  04. Location & Map
+                </a>
+              </li>
+              <li>
+                <a href="#reviews" onClick={(e) => smoothScrollTo(e, '#reviews')} className="hover:text-white transition-colors">
+                  05. Guest Reviews
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Connect & Hours */}
+          <div className="lg:col-span-4 space-y-3">
+            <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#c8a97e] block mb-2">
+              Hours & Order
+            </span>
+            <div className="text-xs font-mono text-stone-300 space-y-1 mb-4">
+              <p>Monday – Sunday : 11:00 AM – 11:00 PM</p>
+              <p className="text-stone-500">Open all 7 days in RDC Raj Nagar</p>
+            </div>
 
             <div className="flex items-center gap-3 pt-2">
               <a
                 href={CAFE_INFO.instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full bg-[#161412] hover:bg-[#201d1a] border border-stone-800 flex items-center justify-center text-stone-300 hover:text-white transition-colors"
-                aria-label="Instagram"
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono text-stone-300 hover:text-white border border-stone-800 hover:border-stone-700 transition-colors"
               >
-                <InstagramIcon className="w-4 h-4" />
+                <InstagramIcon className="w-3.5 h-3.5 text-[#c8a97e]" />
+                <span>@cafe_ellebee</span>
               </a>
-              <a
-                href={CAFE_INFO.googleMapsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full bg-[#161412] hover:bg-[#201d1a] border border-stone-800 flex items-center justify-center text-stone-300 hover:text-white transition-colors"
-                aria-label="Google Maps"
-              >
-                <Navigation className="w-4 h-4" />
-              </a>
-              <a
-                href={`https://wa.me/919354460764`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full bg-[#161412] hover:bg-[#201d1a] border border-stone-800 flex items-center justify-center text-stone-300 hover:text-white transition-colors text-xs font-bold"
-                aria-label="WhatsApp"
-              >
-                WA
-              </a>
-            </div>
-          </div>
 
-          {/* Quick Links with Smooth Scrolling */}
-          <div className="lg:col-span-3 space-y-3">
-            <h4 className="font-serif-title text-sm font-bold text-[#fbf9f5] uppercase tracking-wider">
-              Explore
-            </h4>
-            <ul className="space-y-2 text-xs sm:text-sm font-light text-stone-300">
-              <li>
-                <a 
-                  href="#gallery" 
-                  onClick={(e) => smoothScrollTo(e, '#gallery')}
-                  className="hover:text-white transition-colors cursor-pointer"
-                >
-                  The Cafe & Ambiance
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="#menu" 
-                  onClick={(e) => smoothScrollTo(e, '#menu')}
-                  className="hover:text-white transition-colors cursor-pointer"
-                >
-                  Food & Coffee Menu
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="#celebrations" 
-                  onClick={(e) => smoothScrollTo(e, '#celebrations')}
-                  className="hover:text-white transition-colors cursor-pointer"
-                >
-                  Party & Event Packages
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="#map-location" 
-                  onClick={(e) => smoothScrollTo(e, '#map-location')}
-                  className="hover:text-white transition-colors cursor-pointer"
-                >
-                  Visible Map & Location
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="#reviews" 
-                  onClick={(e) => smoothScrollTo(e, '#reviews')}
-                  className="hover:text-white transition-colors cursor-pointer"
-                >
-                  Guest Reviews
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Contact Details */}
-          <div className="lg:col-span-4 space-y-3">
-            <h4 className="font-serif-title text-sm font-bold text-[#fbf9f5] uppercase tracking-wider">
-              Visit & Contact
-            </h4>
-            
-            <div className="space-y-2 text-xs sm:text-sm font-light text-stone-300">
-              <div className="flex items-start gap-2.5">
-                <MapPin className="w-4 h-4 text-[#c8a97e] shrink-0 mt-0.5" />
-                <span>{CAFE_INFO.address}</span>
-              </div>
-
-              <div className="flex items-center gap-2.5">
-                <Clock className="w-4 h-4 text-[#c8a97e] shrink-0" />
-                <span>Daily: {CAFE_INFO.hours}</span>
-              </div>
-
-              <div className="flex items-center gap-2.5">
-                <Phone className="w-4 h-4 text-[#c8a97e] shrink-0" />
-                <div className="flex items-center gap-2">
-                  <a href="tel:+919354460764" className="hover:text-white transition-colors">+91 93544 60764</a>
-                  <span>/</span>
-                  <a href="tel:+919999286130" className="hover:text-white transition-colors">+91 99992 86130</a>
-                </div>
-              </div>
-            </div>
-
-            <div className="pt-2 flex items-center gap-3">
-              <button
-                onClick={onOpenReserve}
-                className="px-4 py-2 text-xs font-semibold text-[#0c0b0a] bg-[#f5efe6] hover:bg-[#ebe1d2] rounded-full transition-colors"
-              >
-                Reserve Table
-              </button>
               <button
                 onClick={onOpenDelivery}
-                className="px-4 py-2 text-xs font-medium text-stone-200 bg-[#161412] border border-stone-700/80 hover:bg-[#201d1a] rounded-full transition-colors"
+                className="px-3.5 py-1.5 rounded-full text-xs font-mono text-stone-300 hover:text-white border border-stone-800 hover:border-stone-700 transition-colors"
               >
-                Order Online
+                Delivery
               </button>
             </div>
           </div>
 
         </div>
 
-        {/* Bottom Credits */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-stone-500 font-light">
-          <p>© {new Date().getFullYear()} Cafe ElleBee, RDC Raj Nagar, Ghaziabad. All rights reserved.</p>
-          <p className="flex items-center gap-1">
-            Crafted with <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500" /> for coffee lovers & cozy souls
-          </p>
+        {/* Bottom Baseline */}
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-stone-500">
+          <p>© {new Date().getFullYear()} Cafe ElleBee. All rights reserved.</p>
+          <p>100% Pure Vegetarian Kitchen • RDC Commercial Hub, Raj Nagar</p>
         </div>
       </div>
     </footer>

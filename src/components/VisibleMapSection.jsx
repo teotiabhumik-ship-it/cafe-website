@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { MapPin, Navigation, Clock, Phone, Copy, Check, Car, ExternalLink, ShieldCheck } from 'lucide-react';
-import MagneticButton from './motion/MagneticButton';
+import { MapPin, Navigation, Clock, Phone, Copy, Check, ExternalLink } from 'lucide-react';
 import { CAFE_INFO } from '../data/cafeData';
 
 export default function VisibleMapSection() {
@@ -14,223 +13,118 @@ export default function VisibleMapSection() {
   };
 
   return (
-    <section id="map-location" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-stone-900">
+    <section id="map-location" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-stone-850">
       
       {/* Header */}
-      <div className="text-center max-w-3xl mx-auto mb-14">
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#181513] border border-stone-800 text-stone-300 text-xs font-semibold tracking-widest uppercase mb-4"
-        >
-          <MapPin className="w-3.5 h-3.5 text-[#c8a97e]" />
-          Location & Live Map
-        </motion.div>
-        <motion.h2
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="font-serif-title text-3xl sm:text-5xl font-bold text-[#fbf9f5] mb-4"
-        >
-          Visit Us in RDC, Raj Nagar
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-sm sm:text-base text-stone-300/80 font-light max-w-xl mx-auto leading-relaxed"
-        >
-          Situated on the Ground Floor in the bustling commercial heart of RDC Ghaziabad. Use the live map below for instant turn-by-turn navigation.
-        </motion.p>
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-16">
+        <div>
+          <span className="text-[11px] font-mono uppercase tracking-[0.28em] text-[#c8a97e] block mb-3 font-medium">
+            Location & Access
+          </span>
+          <h2 className="font-serif-title text-3xl sm:text-5xl font-bold text-[#fbf9f5]">
+            Find Us in Raj Nagar
+          </h2>
+        </div>
+        <p className="text-xs sm:text-sm text-stone-400 font-light max-w-md leading-relaxed">
+          Conveniently located on the Ground Floor in the commercial heart of RDC, Raj Nagar, Ghaziabad. Ample nearby parking available.
+        </p>
       </div>
 
-      {/* Main Grid: Details Card + Directly Embedded Interactive Google Map */}
+      {/* Main Grid: Details + Directly Embedded Google Map */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
         
-        {/* Left Column: Location, Hours & Direct Hotline */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="lg:col-span-5 p-8 rounded-3xl bg-[#141210] border border-stone-800/80 shadow-2xl flex flex-col justify-between space-y-6"
-        >
-          <div>
-            {/* Live Open Status with Pulsing Radar Ring */}
-            <div className="inline-flex items-center gap-2.5 px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-800/50 text-emerald-300 text-xs font-medium mb-6">
-              <span className="relative flex h-2 w-2">
-                <motion.span 
-                  animate={{ scale: [1, 2.2], opacity: [0.8, 0] }}
-                  transition={{ duration: 2, repeat: Infinity, ease: 'easeOut' }}
-                  className="absolute inline-flex h-full w-full rounded-full bg-emerald-400"
-                />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+        {/* Left Column: Address, Hours & Contact */}
+        <div className="lg:col-span-5 p-8 rounded-2xl bg-[#11100e] border border-stone-850 flex flex-col justify-between space-y-8">
+          
+          <div className="space-y-6">
+            {/* Address */}
+            <div>
+              <span className="text-[10px] font-mono uppercase tracking-widest text-[#c8a97e] block mb-2">
+                Address
               </span>
-              <span>Open Today • 11:00 AM – 11:00 PM</span>
-            </div>
-
-            {/* Address Details */}
-            <div className="space-y-3 mb-6">
-              <div className="flex items-start gap-3.5">
-                <div className="w-10 h-10 rounded-2xl bg-[#1f1b17] border border-stone-700/80 flex items-center justify-center text-[#c8a97e] shrink-0">
-                  <MapPin className="w-5 h-5" />
-                </div>
-                <div>
-                  <h3 className="font-serif-title text-xl font-bold text-[#fbf9f5]">
-                    Cafe ElleBee
-                  </h3>
-                  <p className="text-xs sm:text-sm text-stone-300/80 font-light mt-1 leading-relaxed">
-                    {CAFE_INFO.address}
-                  </p>
-                  <p className="text-[11px] text-[#c8a97e] mt-1 font-medium">
-                    Landmark: Ground Floor, RDC Commercial Hub, Raj Nagar
-                  </p>
-                </div>
-              </div>
-
-              {/* 1-Click Copy Address Button */}
+              <p className="text-sm font-medium text-stone-200 leading-relaxed mb-3">
+                {CAFE_INFO.address}
+              </p>
               <button
                 onClick={handleCopyAddress}
-                className="w-full py-2.5 px-4 rounded-xl bg-[#1b1815] hover:bg-[#221f1c] border border-stone-700/80 text-stone-200 text-xs font-medium flex items-center justify-center gap-2 transition-all mt-2 active:scale-98"
+                className="inline-flex items-center gap-1.5 text-xs font-mono text-stone-400 hover:text-white transition-colors"
               >
                 {copied ? (
                   <>
-                    <Check className="w-4 h-4 text-emerald-400" />
-                    <span className="text-emerald-300 font-semibold">Address Copied! Paste in Uber / Ola</span>
+                    <Check className="w-3.5 h-3.5 text-emerald-400" />
+                    <span className="text-emerald-400">Address Copied</span>
                   </>
                 ) : (
                   <>
-                    <Copy className="w-3.5 h-3.5 text-[#c8a97e]" />
-                    <span>Copy Full Address for Cab Booking</span>
+                    <Copy className="w-3.5 h-3.5" />
+                    <span>Copy Address</span>
                   </>
                 )}
               </button>
             </div>
 
-            {/* Hours Block */}
-            <div className="p-4 rounded-2xl bg-[#1a1714] border border-stone-800 space-y-2 mb-6">
-              <div className="flex items-center gap-2 text-xs font-semibold text-stone-200">
-                <Clock className="w-4 h-4 text-[#c8a97e]" />
-                <span>Operating Hours</span>
-              </div>
-              <div className="flex items-center justify-between text-xs text-stone-300 font-light pt-1">
-                <span>Monday – Sunday</span>
-                <span className="font-medium text-[#fbf9f5]">11:00 AM – 11:00 PM</span>
-              </div>
-              <p className="text-[11px] text-stone-400 italic">
-                Dine-in, takeaway, and delivery active all day.
+            {/* Operating Hours */}
+            <div className="pt-6 border-t border-stone-850">
+              <span className="text-[10px] font-mono uppercase tracking-widest text-[#c8a97e] block mb-2">
+                Hours
+              </span>
+              <p className="text-sm font-medium text-stone-200">
+                11:00 AM – 11:00 PM
+              </p>
+              <p className="text-xs font-mono text-stone-500 mt-0.5">
+                Open All 7 Days (Monday – Sunday)
               </p>
             </div>
 
-            {/* Direct Phone Numbers */}
-            <div className="space-y-2 mb-6">
-              <div className="flex items-center gap-2 text-xs font-semibold text-stone-200">
-                <Phone className="w-4 h-4 text-[#c8a97e]" />
-                <span>Call for Table Inquiries</span>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+            {/* Phone */}
+            <div className="pt-6 border-t border-stone-850">
+              <span className="text-[10px] font-mono uppercase tracking-widest text-[#c8a97e] block mb-2">
+                Telephone & Reservations
+              </span>
+              <div className="flex flex-col gap-1">
                 {CAFE_INFO.phoneNumbers.map((phone) => (
-                  <motion.a
+                  <a
                     key={phone}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
                     href={`tel:${phone.replace(/\s+/g, '')}`}
-                    className="p-2.5 rounded-xl bg-[#181513] hover:bg-[#221f1c] border border-stone-800 text-xs text-stone-200 hover:text-white flex items-center justify-center gap-1.5 transition-colors"
+                    className="text-sm font-mono text-stone-300 hover:text-[#c8a97e] transition-colors"
                   >
-                    <Phone className="w-3 h-3 text-[#c8a97e]" />
-                    <span>{phone}</span>
-                  </motion.a>
+                    {phone}
+                  </a>
                 ))}
               </div>
             </div>
-
-            {/* Parking & Transit Advice */}
-            <div className="flex items-start gap-2.5 text-xs text-stone-400 pt-3 border-t border-stone-800/80">
-              <Car className="w-4 h-4 text-[#c8a97e] shrink-0 mt-0.5" />
-              <span>
-                Dedicated open-air and complex parking bays are available throughout RDC. Convenient auto-rickshaw and cab drops right at the ground floor entrance.
-              </span>
-            </div>
           </div>
 
-          {/* Action Button with Magnetic Motion */}
-          <div className="pt-4 border-t border-stone-800">
-            <MagneticButton
-              href={CAFE_INFO.googleMapsUrl}
-              className="w-full py-3.5 px-6 rounded-full font-semibold text-[#0c0b0a] bg-[#f5efe6] hover:bg-[#ebe1d2] shadow-xl flex items-center justify-center gap-2 text-xs sm:text-sm transition-all"
-            >
-              <Navigation className="w-4 h-4 text-[#0c0b0a]" />
-              <span>Open in Google Maps App</span>
-              <ExternalLink className="w-3.5 h-3.5 text-[#0c0b0a]" />
-            </MagneticButton>
-          </div>
-        </motion.div>
-
-        {/* Right Column: DIRECTLY VISIBLE INTERACTIVE GOOGLE MAP */}
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="lg:col-span-7 rounded-3xl overflow-hidden border border-stone-800 shadow-2xl relative min-h-[480px] lg:min-h-full flex flex-col group bg-[#161412]"
-        >
-          {/* Top Bar on Map */}
-          <div className="absolute top-4 left-4 right-4 z-10 flex items-center justify-between pointer-events-none">
-            <div className="px-3.5 py-1.5 rounded-full bg-[#12100e]/90 backdrop-blur-md border border-stone-700/80 text-xs text-stone-200 shadow-xl flex items-center gap-2 pointer-events-auto">
-              <span className="relative flex h-2 w-2">
-                <motion.span 
-                  animate={{ scale: [1, 2], opacity: [0.9, 0] }}
-                  transition={{ duration: 2, repeat: Infinity, ease: 'easeOut' }}
-                  className="absolute inline-flex h-full w-full rounded-full bg-[#c8a97e]"
-                />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#c8a97e]"></span>
-              </span>
-              <span className="font-semibold text-white">Cafe ElleBee</span>
-              <span className="text-stone-400">• RDC Raj Nagar</span>
-            </div>
+          {/* Action to open in Google Maps */}
+          <div className="pt-6 border-t border-stone-850">
             <a
               href={CAFE_INFO.googleMapsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3.5 py-1.5 rounded-full bg-[#f5efe6] text-[#0c0b0a] font-semibold text-xs shadow-xl hover:bg-[#ebe1d2] transition-colors pointer-events-auto flex items-center gap-1.5 hover:scale-105 active:scale-95"
+              className="w-full py-3 rounded-full text-xs font-mono tracking-wider text-[#090807] bg-[#f5f2eb] hover:bg-[#ded8ce] transition-colors flex items-center justify-center gap-2"
             >
-              <span>Get Directions</span>
-              <Navigation className="w-3 h-3 text-[#0c0b0a]" />
+              <Navigation className="w-3.5 h-3.5 text-[#090807]" />
+              <span>Get Directions on Google Maps</span>
+              <ExternalLink className="w-3 h-3 text-stone-600" />
             </a>
           </div>
 
-          {/* Fully Visible Interactive Google Map iframe */}
+        </div>
+
+        {/* Right Column: Directly Visible Google Map */}
+        <div className="lg:col-span-7 rounded-2xl overflow-hidden border border-stone-850 bg-[#141210] min-h-[420px] lg:min-h-[500px] relative shadow-sm">
           <iframe
-            title="Cafe ElleBee Location Map"
+            title="Cafe ElleBee Google Maps Location"
             src={CAFE_INFO.googleMapsEmbedUrl}
-            className="w-full h-full min-h-[480px] filter contrast-[1.02] brightness-[0.92]"
-            style={{ border: 0 }}
+            width="100%"
+            height="100%"
+            style={{ border: 0, minHeight: '420px' }}
             allowFullScreen=""
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
+            className="w-full h-full grayscale-[25%] contrast-[105%] hover:grayscale-0 transition-all duration-500"
           />
-
-          {/* Bottom Bar on Map */}
-          <div className="absolute bottom-4 left-4 right-4 z-10 p-3 rounded-2xl bg-[#12100e]/90 backdrop-blur-md border border-stone-800 text-xs text-stone-300 flex items-center justify-between">
-            <span className="flex items-center gap-1.5 text-[11px] text-stone-300">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-              Verified Business Listing on Google Maps
-            </span>
-            <a
-              href={CAFE_INFO.googleMapsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[11px] text-[#c8a97e] underline hover:text-white"
-            >
-              Enlarge Map
-            </a>
-          </div>
-
-        </motion.div>
+        </div>
 
       </div>
 

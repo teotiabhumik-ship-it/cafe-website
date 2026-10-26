@@ -1,13 +1,9 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Star, Utensils, Coffee, ChevronRight, ShoppingBag } from 'lucide-react';
-import { useUiMode } from '../context/UiModeContext';
-import MinimalFoodCard from './motion/MinimalFoodCard';
-import OutOfBoundsFoodCard from './motion/OutOfBoundsFoodCard';
+import { Search, Star, ShoppingBag, Coffee, ChevronRight } from 'lucide-react';
 import { MENU_CATEGORIES, MENU_ITEMS } from '../data/cafeData';
 
 export default function MenuSection({ onOpenDelivery }) {
-  const { isMinimal } = useUiMode();
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [bestsellerOnly, setBestsellerOnly] = useState(false);
@@ -25,113 +21,86 @@ export default function MenuSection({ onOpenDelivery }) {
   }, [activeCategory, searchQuery, bestsellerOnly]);
 
   return (
-    <section id="menu" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-stone-900">
+    <section id="menu" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-stone-850">
       
       {/* Section Header */}
-      <div className="text-center max-w-3xl mx-auto mb-12">
-        {isMinimal ? (
-          <span className="text-[11px] font-mono uppercase tracking-[0.25em] text-[#c8a97e] mb-3 block font-medium">
-            The Menu • Artisan Kitchen & Sips
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-14">
+        <div>
+          <span className="text-[11px] font-mono uppercase tracking-[0.28em] text-[#c8a97e] block mb-3 font-medium">
+            Artisan Kitchen & Brew Bar
           </span>
-        ) : (
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#181513] border border-stone-800 text-stone-300 text-xs font-semibold tracking-widest uppercase mb-4"
-          >
-            <Utensils className="w-3.5 h-3.5 text-[#c8a97e]" />
-            Culinary Craft
-          </motion.div>
-        )}
-        <motion.h2
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="font-serif-title text-3xl sm:text-5xl font-bold text-[#fbf9f5] mb-4"
-        >
-          Curated Food & Artisan Sips
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-sm sm:text-base text-stone-300/80 font-light max-w-xl mx-auto leading-relaxed"
-        >
-          From freshly ground single-origin espresso to golden stone-baked pizzas and our famous crispy corn — explore the complete menu below.
-        </motion.p>
+          <h2 className="font-serif-title text-3xl sm:text-5xl font-bold text-[#fbf9f5]">
+            Curated Menu
+          </h2>
+        </div>
+        <p className="text-xs sm:text-sm text-stone-400 font-light max-w-md leading-relaxed">
+          Single-origin espresso, gourmet thick shakes, stone-baked pizzas, and our signature crispy corn — freshly prepared to order.
+        </p>
       </div>
 
-      {/* Search & Bestseller Controls */}
-      <div className="max-w-2xl mx-auto mb-8 flex flex-col sm:flex-row items-center gap-3">
-        <div className="relative flex-1 w-full">
-          <Search className="w-4 h-4 text-stone-400 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
-          <input
-            type="text"
-            placeholder="Search coffee, crispy corn, pasta, burger..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-11 pr-4 py-3 rounded-full bg-[#141210] border border-stone-800 text-stone-100 placeholder-stone-500 text-xs sm:text-sm focus:outline-none focus:border-[#c8a97e] transition-all shadow-inner"
-          />
-          {searchQuery && (
-            <button
-              onClick={() => setSearchQuery('')}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-stone-400 hover:text-white"
-            >
-              Clear
-            </button>
-          )}
+      {/* Minimal Category Tabs & Search */}
+      <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 mb-12 pb-4 border-b border-stone-850">
+        
+        {/* Category Text Links */}
+        <div className="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 scrollbar-none">
+          {MENU_CATEGORIES.map((cat) => {
+            const isActive = activeCategory === cat.id;
+            return (
+              <button
+                key={cat.id}
+                onClick={() => setActiveCategory(cat.id)}
+                className={`relative px-3 py-1.5 rounded-full text-xs font-mono tracking-wider transition-colors duration-200 whitespace-nowrap ${
+                  isActive
+                    ? 'text-[#090807] bg-[#f5f2eb] font-semibold'
+                    : 'text-stone-400 hover:text-[#f5f2eb]'
+                }`}
+              >
+                {cat.label}
+              </button>
+            );
+          })}
         </div>
 
-        <button
-          onClick={() => setBestsellerOnly(!bestsellerOnly)}
-          className={`px-4 py-3 rounded-full text-xs font-medium whitespace-nowrap transition-colors flex items-center gap-1.5 border ${
-            bestsellerOnly
-              ? 'bg-[#f5efe6] text-[#0c0b0a] font-semibold border-[#f5efe6]'
-              : 'bg-[#141210] text-stone-300 border-stone-800 hover:border-stone-600'
-          }`}
-        >
-          <Star className={`w-3.5 h-3.5 ${bestsellerOnly ? 'fill-[#0c0b0a]' : 'text-[#c8a97e]'}`} />
-          <span>Bestsellers Only</span>
-        </button>
+        {/* Minimal Search & Bestseller Toggle */}
+        <div className="flex items-center gap-3">
+          <div className="relative flex-1 sm:w-64">
+            <Search className="w-3.5 h-3.5 text-stone-500 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <input
+              type="text"
+              placeholder="Search dishes..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-9 pr-3 py-1.5 rounded-full bg-[#11100e] border border-stone-800 text-stone-200 placeholder-stone-500 text-xs focus:outline-none focus:border-[#c8a97e] transition-colors"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-stone-400 hover:text-white"
+              >
+                Clear
+              </button>
+            )}
+          </div>
+
+          <button
+            onClick={() => setBestsellerOnly(!bestsellerOnly)}
+            className={`px-3 py-1.5 rounded-full text-xs font-mono tracking-wider transition-colors flex items-center gap-1.5 border whitespace-nowrap ${
+              bestsellerOnly
+                ? 'bg-[#f5f2eb] text-[#090807] font-semibold border-[#f5f2eb]'
+                : 'text-stone-400 border-stone-800 hover:border-stone-700'
+            }`}
+          >
+            <Star className={`w-3 h-3 ${bestsellerOnly ? 'fill-[#090807]' : 'text-[#c8a97e]'}`} />
+            <span>Bestsellers</span>
+          </button>
+        </div>
+
       </div>
 
-      {/* Category Tabs with Shared Layout Morphing */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-4 scrollbar-none justify-start sm:justify-center mb-12">
-        {MENU_CATEGORIES.map((cat) => {
-          const isActive = activeCategory === cat.id;
-          return (
-            <button
-              key={cat.id}
-              onClick={() => setActiveCategory(cat.id)}
-              className={`relative px-4 py-2 rounded-full text-xs font-medium whitespace-nowrap transition-colors duration-200 ${
-                isActive ? 'text-[#0c0b0a] font-semibold' : 'text-stone-300 hover:text-white'
-              }`}
-            >
-              {isActive && (
-                <motion.div
-                  layoutId="activeMenuTabPill"
-                  className="absolute inset-0 bg-[#f5efe6] rounded-full shadow-md"
-                  transition={{ type: 'spring', stiffness: 380, damping: 28 }}
-                />
-              )}
-              <span className="relative z-10">{cat.label}</span>
-            </button>
-          );
-        })}
-      </div>
-
-      {/* Menu Cards Grid: Minimal Grid or 3D Out-Of-Bounds depending on UI mode */}
+      {/* Minimalist Menu Grid */}
       <motion.div
         layout
-        className={
-          isMinimal
-            ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'
-            : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12 sm:gap-y-16 pt-4'
-        }
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
       >
         <AnimatePresence mode="popLayout">
           {filteredItems.length > 0 ? (
@@ -139,38 +108,86 @@ export default function MenuSection({ onOpenDelivery }) {
               <motion.div
                 layout
                 key={item.id}
-                initial={{ opacity: 0, scale: 0.96 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.96 }}
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.98 }}
                 transition={{ duration: 0.25 }}
+                className="group flex flex-col justify-between rounded-2xl bg-[#11100e] border border-stone-850 hover:border-stone-700 p-4 transition-colors duration-200 shadow-sm"
               >
-                {isMinimal ? (
-                  <MinimalFoodCard
-                    item={item}
-                    onOpenDelivery={onOpenDelivery}
+                {/* Rectangular Food Photo */}
+                <div className="relative h-48 sm:h-52 w-full rounded-xl overflow-hidden bg-[#161412] mb-4">
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                    loading="lazy"
                   />
-                ) : (
-                  <OutOfBoundsFoodCard
-                    item={item}
-                    onOpenDelivery={onOpenDelivery}
-                  />
-                )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+
+                  {/* Corner Badges */}
+                  <div className="absolute top-2.5 left-2.5">
+                    <span className="px-2 py-0.5 rounded text-[10px] font-mono tracking-wider uppercase bg-black/70 backdrop-blur-sm text-[#c8a97e] border border-stone-800">
+                      {item.tag}
+                    </span>
+                  </div>
+
+                  <div className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded bg-black/70 backdrop-blur-sm border border-stone-800 flex items-center gap-1 text-[11px] font-mono text-stone-200">
+                    <Star className="w-3 h-3 fill-[#c8a97e] text-[#c8a97e]" />
+                    <span>{item.rating}</span>
+                  </div>
+
+                  <div className="absolute bottom-2.5 left-2.5 flex items-center gap-1.5 px-2 py-0.5 rounded bg-black/70 backdrop-blur-sm text-[10px] text-emerald-400 font-mono border border-emerald-950/40">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                    <span>Pure Veg</span>
+                  </div>
+                </div>
+
+                {/* Content Details */}
+                <div className="flex-1 flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-baseline justify-between gap-3 mb-1.5">
+                      <h3 className="font-serif-title text-base sm:text-lg font-bold text-[#f5f2eb] group-hover:text-[#c8a97e] transition-colors leading-snug">
+                        {item.name}
+                      </h3>
+                      <span className="font-mono text-sm font-semibold text-[#c8a97e] shrink-0">
+                        ₹{item.price}
+                      </span>
+                    </div>
+                    <p className="text-xs text-stone-400 font-light leading-relaxed line-clamp-2 mb-4">
+                      {item.description}
+                    </p>
+                  </div>
+
+                  {/* Footer Action */}
+                  <div className="pt-3 border-t border-stone-850 flex items-center justify-between text-xs">
+                    <span className="text-[10px] font-mono text-stone-500 uppercase tracking-widest">
+                      Freshly Sourced
+                    </span>
+                    <button
+                      onClick={onOpenDelivery}
+                      className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono text-stone-300 hover:text-white bg-[#191715] hover:bg-[#221f1c] border border-stone-800 hover:border-stone-700 transition-colors"
+                    >
+                      <ShoppingBag className="w-3 h-3 text-[#c8a97e]" />
+                      <span>Order</span>
+                    </button>
+                  </div>
+                </div>
+
               </motion.div>
             ))
           ) : (
             <div className="col-span-full py-16 text-center text-stone-400">
-              <Coffee className="w-10 h-10 mx-auto text-stone-500 mb-3 opacity-60 animate-pulse" />
-              <p className="font-serif-title text-lg font-semibold text-stone-200">No dishes match your selection</p>
-              <p className="text-xs text-stone-400 mt-1">Try resetting the filters or searching for another dish.</p>
+              <Coffee className="w-8 h-8 mx-auto text-stone-600 mb-2 opacity-60" />
+              <p className="font-serif-title text-base font-semibold text-stone-300">No dishes match your selection</p>
               <button
                 onClick={() => {
                   setActiveCategory('all');
                   setSearchQuery('');
                   setBestsellerOnly(false);
                 }}
-                className="mt-4 px-4 py-2 rounded-full text-xs font-semibold text-[#0c0b0a] bg-[#f5efe6]"
+                className="mt-3 px-4 py-1.5 rounded-full text-xs font-mono text-[#090807] bg-[#f5f2eb]"
               >
-                Reset Menu Filters
+                Reset Filters
               </button>
             </div>
           )}
@@ -178,29 +195,27 @@ export default function MenuSection({ onOpenDelivery }) {
       </motion.div>
 
       {/* Online Delivery Platform Banner */}
-      <motion.div 
-        whileHover={{ y: -3 }}
-        className={`mt-16 rounded-3xl bg-[#12100e] border border-stone-800/80 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl transition-shadow ${
-          isMinimal ? 'p-6 sm:p-7' : 'p-8'
-        }`}
-      >
+      <div className="mt-16 p-6 sm:p-8 rounded-2xl bg-[#11100e] border border-stone-850 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm">
         <div>
+          <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#c8a97e] block mb-1">
+            Doorstep Delivery
+          </span>
           <h3 className="font-serif-title text-xl font-bold text-[#fbf9f5] mb-1">
-            Want hot food delivered to your door?
+            Order Hot via Swiggy & Zomato
           </h3>
           <p className="text-xs sm:text-sm text-stone-400 font-light">
-            We deliver across Raj Nagar, RDC, Kavi Nagar, and surrounding Ghaziabad areas via Swiggy & Zomato.
+            Fast delivery across Raj Nagar, RDC, Kavi Nagar, and surrounding Ghaziabad areas.
           </p>
         </div>
         <button
           onClick={onOpenDelivery}
-          className="px-6 py-3.5 rounded-full font-semibold text-[#0c0b0a] bg-[#f5efe6] hover:bg-[#ebe1d2] shadow-md flex items-center gap-2 text-xs sm:text-sm shrink-0 transition-all hover:scale-105 active:scale-95"
+          className="px-6 py-3 rounded-full font-medium text-[#090807] bg-[#f5f2eb] hover:bg-[#ded8ce] flex items-center gap-2 text-xs sm:text-sm shrink-0 transition-colors"
         >
-          <ShoppingBag className="w-4 h-4 text-[#0c0b0a]" />
+          <ShoppingBag className="w-4 h-4 text-[#090807]" />
           <span>Order on Swiggy / Zomato</span>
           <ChevronRight className="w-4 h-4" />
         </button>
-      </motion.div>
+      </div>
 
     </section>
   );

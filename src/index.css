@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-heading: 'Cinzel', serif;
+    --font-body: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  body {
+    font-family: var(--font-body);
+    background-color: #0c0908;
+    color: #f5ede6;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+  }
+
+  h1, h2, h3, h4, .font-serif-title {
+    font-family: var(--font-heading);
+  }
+}
+
+/* Custom Cozy Amber & Neon Utilities */
+.text-glow-amber {
+  text-shadow: 0 0 12px rgba(245, 158, 11, 0.4), 0 0 25px rgba(217, 119, 6, 0.2);
+}
+
+.text-glow-neon {
+  text-shadow: 0 0 8px rgba(251, 146, 60, 0.6), 0 0 20px rgba(234, 88, 12, 0.4), 0 0 35px rgba(194, 65, 12, 0.2);
+}
+
+.box-glow-amber {
+  box-shadow: 0 10px 40px -10px rgba(245, 158, 11, 0.15), 0 0 20px rgba(217, 119, 6, 0.08);
+}
+
+.box-glow-card {
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6), 0 0 1px 1px rgba(245, 158, 11, 0.15);
+}
+
+/* Custom Warm Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0f0b09;
+}
+::-webkit-scrollbar-thumb {
+  background: #2e1c14;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #d97706;
+}
+
+/* Ambient steam animation keyframe */
+@keyframes riseSteam {
+  0% {
+    transform: translateY(0) scaleX(1);
+    opacity: 0;
+  }
+  30% {
+    opacity: 0.35;
+  }
+  60% {
+    transform: translateY(-50px) scaleX(1.3) rotate(3deg);
+    opacity: 0.25;
+  }
+  100% {
+    transform: translateY(-110px) scaleX(1.7) rotate(-4deg);
+    opacity: 0;
+  }
+}
+
+.animate-steam {
+  animation: riseSteam 4s ease-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.7;
+    filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.5));
+  }
+  50% {
+    opacity: 1;
+    filter: drop-shadow(0 0 18px rgba(251, 191, 36, 0.8));
+  }
+}
+
+.animate-neon-pulse {
+  animation: pulseGlow 3s ease-in-out infinite;
+}

@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Star, ShoppingBag, Utensils, Coffee, ChevronRight } from 'lucide-react';
-import TiltCard from './motion/TiltCard';
+import { Search, Star, Utensils, Coffee, ChevronRight, ShoppingBag } from 'lucide-react';
+import OutOfBoundsFoodCard from './motion/OutOfBoundsFoodCard';
 import { MENU_CATEGORIES, MENU_ITEMS } from '../data/cafeData';
 
 export default function MenuSection({ onOpenDelivery }) {
@@ -115,10 +115,10 @@ export default function MenuSection({ onOpenDelivery }) {
         })}
       </div>
 
-      {/* 3D Tilt Menu Cards Grid */}
+      {/* Out-Of-Bounds 3D Interactive Menu Cards Grid */}
       <motion.div
         layout
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12 sm:gap-y-16 pt-4"
       >
         <AnimatePresence mode="popLayout">
           {filteredItems.length > 0 ? (
@@ -126,71 +126,15 @@ export default function MenuSection({ onOpenDelivery }) {
               <motion.div
                 layout
                 key={item.id}
-                initial={{ opacity: 0, scale: 0.96 }}
+                initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.96 }}
+                exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.3 }}
               >
-                <TiltCard className="rounded-2xl bg-[#141210] border border-stone-800/80 hover:border-stone-600/80 overflow-hidden shadow-xl h-full flex flex-col justify-between">
-                  {/* Food Image */}
-                  <div className="relative h-48 w-full overflow-hidden bg-[#1a1714]">
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#141210] via-transparent to-black/30" />
-
-                    {/* Tag */}
-                    <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-semibold tracking-wider uppercase bg-black/70 backdrop-blur-md text-stone-200 border border-stone-700">
-                      {item.tag}
-                    </span>
-
-                    {/* Rating */}
-                    <div className="absolute top-3 right-3 px-2 py-0.5 rounded-full bg-black/70 backdrop-blur-md flex items-center gap-1 text-[11px] font-semibold text-stone-200">
-                      <Star className="w-3 h-3 fill-[#c8a97e] text-[#c8a97e]" />
-                      <span>{item.rating}</span>
-                    </div>
-
-                    {/* Veg indicator */}
-                    <div className="absolute bottom-2 left-3 flex items-center gap-1 text-[10px] text-emerald-400 font-semibold px-2 py-0.5 rounded bg-black/60 backdrop-blur-sm border border-emerald-800/40">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                      <span>Pure Veg</span>
-                    </div>
-                  </div>
-
-                  {/* Card Info */}
-                  <div className="p-5 flex-1 flex flex-col justify-between">
-                    <div>
-                      <div className="flex items-start justify-between gap-2 mb-2">
-                        <h3 className="font-serif-title text-base sm:text-lg font-bold text-[#fbf9f5] group-hover:text-[#c8a97e] transition-colors">
-                          {item.name}
-                        </h3>
-                        <span className="font-serif-title text-base font-bold text-[#fbf9f5] shrink-0">
-                          ₹{item.price}
-                        </span>
-                      </div>
-                      <p className="text-xs text-stone-400 font-light leading-relaxed line-clamp-2 mb-4">
-                        {item.description}
-                      </p>
-                    </div>
-
-                    {/* Actions */}
-                    <div className="pt-3 border-t border-stone-800/80 flex items-center justify-between">
-                      <span className="text-[10px] text-stone-500 uppercase tracking-widest font-sans">
-                        Freshly Prepared
-                      </span>
-                      <button
-                        onClick={onOpenDelivery}
-                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium text-stone-200 bg-[#1c1916] hover:bg-[#26231f] border border-stone-700 transition-colors"
-                      >
-                        <ShoppingBag className="w-3 h-3 text-[#c8a97e]" />
-                        <span>Order Now</span>
-                      </button>
-                    </div>
-                  </div>
-                </TiltCard>
+                <OutOfBoundsFoodCard
+                  item={item}
+                  onOpenDelivery={onOpenDelivery}
+                />
               </motion.div>
             ))
           ) : (
@@ -216,7 +160,7 @@ export default function MenuSection({ onOpenDelivery }) {
       {/* Online Delivery Platform Banner with Subtle Hover Lift */}
       <motion.div 
         whileHover={{ y: -3 }}
-        className="mt-16 p-8 rounded-3xl bg-[#141210] border border-stone-800/80 flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl transition-shadow hover:shadow-stone-900/50"
+        className="mt-20 p-8 rounded-3xl bg-[#141210] border border-stone-800/80 flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl transition-shadow hover:shadow-stone-900/50"
       >
         <div>
           <h3 className="font-serif-title text-xl font-bold text-[#fbf9f5] mb-1">

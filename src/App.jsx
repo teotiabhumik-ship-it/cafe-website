@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Lenis from 'lenis';
+import { UiModeProvider, useUiMode } from './context/UiModeContext';
 import Navbar from './components/Navbar';
 import AmbientCursor from './components/AmbientCursor';
 import Hero from './components/Hero';
@@ -10,11 +11,13 @@ import VisibleMapSection from './components/VisibleMapSection';
 import ReviewsSection from './components/ReviewsSection';
 import ReservationModal from './components/ReservationModal';
 import DeliveryModal from './components/DeliveryModal';
+import FloatingModeToggle from './components/FloatingModeToggle';
 import Footer from './components/Footer';
 
-export default function App() {
+function CafeApp() {
   const [isReserveOpen, setIsReserveOpen] = useState(false);
   const [isDeliveryOpen, setIsDeliveryOpen] = useState(false);
+  const { isMinimal } = useUiMode();
 
   // Initialize Lenis smooth scroll and expose to window for smooth anchor navigation
   useEffect(() => {
@@ -43,11 +46,13 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0c0b0a] text-[#ede8e1] font-sans selection:bg-[#c8a97e] selection:text-black relative">
-      {/* Subtle Ambient Light Follower */}
-      <AmbientCursor />
+    <div className={`min-h-screen text-[#ede8e1] font-sans selection:bg-[#c8a97e] selection:text-black relative ${
+      isMinimal ? 'bg-[#090908]' : 'bg-[#0c0b0a]'
+    }`}>
+      {/* Subtle Ambient Light Follower (active in Luxe mode) */}
+      {!isMinimal && <AmbientCursor />}
 
-      {/* Top Fixed Navigation with Smooth Animated Section Scrolling */}
+      {/* Top Fixed Navigation */}
       <Navbar
         onOpenReserve={() => setIsReserveOpen(true)}
         onOpenDelivery={() => setIsDeliveryOpen(true)}
@@ -55,7 +60,7 @@ export default function App() {
 
       {/* Main Experience Flow */}
       <main className="relative z-10">
-        {/* 1. Hero with Real Cafe Interior Backdrop & Steam Physics */}
+        {/* 1. Hero */}
         <Hero
           onOpenReserve={() => setIsReserveOpen(true)}
         />
@@ -80,6 +85,9 @@ export default function App() {
         <ReviewsSection />
       </main>
 
+      {/* Floating Mode Switcher in Bottom Right Corner */}
+      <FloatingModeToggle />
+
       {/* Footer */}
       <Footer
         onOpenReserve={() => setIsReserveOpen(true)}
@@ -98,5 +106,13 @@ export default function App() {
         onClose={() => setIsDeliveryOpen(false)}
       />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <UiModeProvider>
+      <CafeApp />
+    </UiModeProvider>
   );
 }

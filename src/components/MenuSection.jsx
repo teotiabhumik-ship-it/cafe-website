@@ -1,14 +1,13 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Star, ShoppingBag, Utensils, Coffee, ChevronRight, Sparkles } from 'lucide-react';
-import PopOutFoodCard from './motion/PopOutFoodCard';
+import { Search, Star, ShoppingBag, Utensils, Coffee, ChevronRight } from 'lucide-react';
+import TiltCard from './motion/TiltCard';
 import { MENU_CATEGORIES, MENU_ITEMS } from '../data/cafeData';
 
 export default function MenuSection({ onOpenDelivery }) {
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [bestsellerOnly, setBestsellerOnly] = useState(false);
-  const [poppedId, setPoppedId] = useState(null);
 
   const filteredItems = useMemo(() => {
     return MENU_ITEMS.filter((item) => {
@@ -26,7 +25,7 @@ export default function MenuSection({ onOpenDelivery }) {
     <section id="menu" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-stone-900">
       
       {/* Header */}
-      <div className="text-center max-w-3xl mx-auto mb-10">
+      <div className="text-center max-w-3xl mx-auto mb-12">
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -53,20 +52,8 @@ export default function MenuSection({ onOpenDelivery }) {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-sm sm:text-base text-stone-300/80 font-light max-w-xl mx-auto leading-relaxed"
         >
-          From freshly ground single-origin espresso to golden stone-baked pizzas and our famous crispy corn.
+          From freshly ground single-origin espresso to golden stone-baked pizzas and our famous crispy corn — explore the complete menu below.
         </motion.p>
-
-        {/* 3D Pop-Out Interactive Feature Tip */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#1c1916] border border-[#c8a97e]/40 text-[#c8a97e] text-xs font-medium mt-4 shadow-lg shadow-black/60"
-        >
-          <Sparkles className="w-3.5 h-3.5 text-[#c8a97e] animate-pulse" />
-          <span>Click any card to pop out the food plate in 3D!</span>
-        </motion.div>
       </div>
 
       {/* Search & Bestseller Controls */}
@@ -110,10 +97,7 @@ export default function MenuSection({ onOpenDelivery }) {
           return (
             <button
               key={cat.id}
-              onClick={() => {
-                setActiveCategory(cat.id);
-                setPoppedId(null);
-              }}
+              onClick={() => setActiveCategory(cat.id)}
               className={`relative px-4 py-2 rounded-full text-xs font-medium whitespace-nowrap transition-colors duration-200 ${
                 isActive ? 'text-[#0c0b0a] font-semibold' : 'text-stone-300 hover:text-white'
               }`}
@@ -131,10 +115,10 @@ export default function MenuSection({ onOpenDelivery }) {
         })}
       </div>
 
-      {/* 3D POP-OUT FOOD DISH CARDS GRID */}
+      {/* 3D Tilt Menu Cards Grid */}
       <motion.div
         layout
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
       >
         <AnimatePresence mode="popLayout">
           {filteredItems.length > 0 ? (
@@ -142,17 +126,71 @@ export default function MenuSection({ onOpenDelivery }) {
               <motion.div
                 layout
                 key={item.id}
-                initial={{ opacity: 0, scale: 0.95 }}
+                initial={{ opacity: 0, scale: 0.96 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.35 }}
+                exit={{ opacity: 0, scale: 0.96 }}
+                transition={{ duration: 0.3 }}
               >
-                <PopOutFoodCard
-                  item={item}
-                  onOpenDelivery={onOpenDelivery}
-                  isPopped={poppedId === item.id}
-                  onTogglePop={() => setPoppedId(poppedId === item.id ? null : item.id)}
-                />
+                <TiltCard className="rounded-2xl bg-[#141210] border border-stone-800/80 hover:border-stone-600/80 overflow-hidden shadow-xl h-full flex flex-col justify-between">
+                  {/* Food Image */}
+                  <div className="relative h-48 w-full overflow-hidden bg-[#1a1714]">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#141210] via-transparent to-black/30" />
+
+                    {/* Tag */}
+                    <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-semibold tracking-wider uppercase bg-black/70 backdrop-blur-md text-stone-200 border border-stone-700">
+                      {item.tag}
+                    </span>
+
+                    {/* Rating */}
+                    <div className="absolute top-3 right-3 px-2 py-0.5 rounded-full bg-black/70 backdrop-blur-md flex items-center gap-1 text-[11px] font-semibold text-stone-200">
+                      <Star className="w-3 h-3 fill-[#c8a97e] text-[#c8a97e]" />
+                      <span>{item.rating}</span>
+                    </div>
+
+                    {/* Veg indicator */}
+                    <div className="absolute bottom-2 left-3 flex items-center gap-1 text-[10px] text-emerald-400 font-semibold px-2 py-0.5 rounded bg-black/60 backdrop-blur-sm border border-emerald-800/40">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                      <span>Pure Veg</span>
+                    </div>
+                  </div>
+
+                  {/* Card Info */}
+                  <div className="p-5 flex-1 flex flex-col justify-between">
+                    <div>
+                      <div className="flex items-start justify-between gap-2 mb-2">
+                        <h3 className="font-serif-title text-base sm:text-lg font-bold text-[#fbf9f5] group-hover:text-[#c8a97e] transition-colors">
+                          {item.name}
+                        </h3>
+                        <span className="font-serif-title text-base font-bold text-[#fbf9f5] shrink-0">
+                          ₹{item.price}
+                        </span>
+                      </div>
+                      <p className="text-xs text-stone-400 font-light leading-relaxed line-clamp-2 mb-4">
+                        {item.description}
+                      </p>
+                    </div>
+
+                    {/* Actions */}
+                    <div className="pt-3 border-t border-stone-800/80 flex items-center justify-between">
+                      <span className="text-[10px] text-stone-500 uppercase tracking-widest font-sans">
+                        Freshly Prepared
+                      </span>
+                      <button
+                        onClick={onOpenDelivery}
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium text-stone-200 bg-[#1c1916] hover:bg-[#26231f] border border-stone-700 transition-colors"
+                      >
+                        <ShoppingBag className="w-3 h-3 text-[#c8a97e]" />
+                        <span>Order Now</span>
+                      </button>
+                    </div>
+                  </div>
+                </TiltCard>
               </motion.div>
             ))
           ) : (
@@ -165,7 +203,6 @@ export default function MenuSection({ onOpenDelivery }) {
                   setActiveCategory('all');
                   setSearchQuery('');
                   setBestsellerOnly(false);
-                  setPoppedId(null);
                 }}
                 className="mt-4 px-4 py-2 rounded-full text-xs font-semibold text-[#0c0b0a] bg-[#f5efe6]"
               >
@@ -176,7 +213,7 @@ export default function MenuSection({ onOpenDelivery }) {
         </AnimatePresence>
       </motion.div>
 
-      {/* Online Delivery Platform Banner */}
+      {/* Online Delivery Platform Banner with Subtle Hover Lift */}
       <motion.div 
         whileHover={{ y: -3 }}
         className="mt-16 p-8 rounded-3xl bg-[#141210] border border-stone-800/80 flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl transition-shadow hover:shadow-stone-900/50"

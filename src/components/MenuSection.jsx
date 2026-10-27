@@ -1,12 +1,26 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Star, ShoppingBag, UtensilsCrossed } from 'lucide-react';
+import { Search, Star, ShoppingBag, UtensilsCrossed, X, Plus, Minus, MessageCircle } from 'lucide-react';
 import { MENU_CATEGORIES, MENU_ITEMS } from '../data/cafeData';
 
 export default function MenuSection({ onOpenDelivery }) {
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [bestsellerOnly, setBestsellerOnly] = useState(false);
+  const [selectedDish, setSelectedDish] = useState(null);
+  const [quantity, setQuantity] = useState(1);
+
+  // Close popup with Escape key
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && selectedDish) {
+        setSelectedDish(null);
+        setQuantity(1);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedDish]);
 
   const filteredItems = useMemo(() => {
     return MENU_ITEMS.filter((item) => {
@@ -19,6 +33,26 @@ export default function MenuSection({ onOpenDelivery }) {
       return matchesCategory && matchesSearch && matchesBestseller;
     });
   }, [activeCategory, searchQuery, bestsellerOnly]);
+
+  const handleOpenDish = (dish) => {
+    setSelectedDish(dish);
+    setQuantity(1);
+  };
+
+  const handleCloseDish = () => {
+    setSelectedDish(null);
+    setQuantity(1);
+  };
+
+  const handleWhatsAppDishOrder = (dish, qty) => {
+    const text = encodeURIComponent(
+      `Hi Cafe ElleBee! I'd like to order:\n\n` +
+      `🍽️ ${qty}x ${dish.name} (₹${dish.price * qty})\n` +
+      `Category: ${dish.category}\n\n` +
+      `Please let me know preparation time and delivery/takeaway details. Thank you!`
+    );
+    window.open(`https://wa.me/919354460764?text=${text}`, '_blank');
+  };
 
   return (
     <section id="menu" className="py-20 px-4 sm:px-6 lg:px-8 max-w-[var(--container)] mx-auto border-t border-[var(--color-rule)]">
@@ -119,8 +153,10 @@ export default function MenuSection({ onOpenDelivery }) {
                 initial={{ opacity: 0, scale: 0.96 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.96 }}
+                whileHover={{ y: -4 }}
                 transition={{ duration: 0.2 }}
-                className="group flex flex-col justify-between rounded-[var(--radius-card)] bg-[var(--color-paper-2)] border border-[var(--color-rule)] hover:border-[var(--color-muted)] p-4 transition-colors"
+                onClick={() => handleOpenDish(item)}
+                className="group flex flex-col justify-between rounded-[var(--radius-card)] bg-[var(--color-paper-2)] border border-[var(--color-rule)] hover:border-[var(--color-muted)] p-4 transition-colors hover:shadow-lg cursor-pointer"
               >
                 {/* Food Photo Container */}
                 <div className="relative h-48 w-full rounded-[var(--radius-card)] overflow-hidden bg-[var(--color-paper-3)] mb-4">
@@ -167,7 +203,10 @@ export default function MenuSection({ onOpenDelivery }) {
                     </span>
                     <button
                       type="button"
-                      onClick={onOpenDelivery}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onOpenDelivery();
+                      }}
                       className="btn-secondary text-xs py-1 px-3 group-hover:border-[var(--color-muted)] active:opacity-85 disabled:opacity-50 transition-colors"
                     >
                       <ShoppingBag className="w-3 h-3 text-[var(--color-accent)]" aria-hidden="true" />
@@ -186,6 +225,132 @@ export default function MenuSection({ onOpenDelivery }) {
           )}
         </AnimatePresence>
       </motion.div>
+
+      {/* Animated Dish Quick-View Pop-up Modal */}
+      <AnimatePresence>
+        {selectedDish && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={handleCloseDish}
+            className="fixed inset-0 z-[var(--z-modal)] flex items-center justify-center p-4 bg-black/85"
+            role="dialog"
+            aria-modal="true"
+            aria-label={selectedDish.name}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.92, y: 16 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.94, y: 10 }}
+              transition={{ type: "spring", stiffness: 360, damping: 26 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative max-w-lg w-full bg-[var(--color-paper-2)] rounded-[var(--radius-card)] border border-[var(--color-rule)] shadow-[var(--shadow-card)] overflow-hidden"
+            >
+              {/* Close Button */}
+              <button
+                type="button"
+                onClick={handleCloseDish}
+                className="absolute top-4 right-4 z-20 p-2 rounded-full bg-[var(--color-paper)]/85 text-[var(--color-ink)] border border-[var(--color-rule)] hover:bg-[var(--color-paper-3)] active:opacity-80 disabled:opacity-50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)] cursor-pointer"
+                aria-label="Close dish popup"
+              >
+                <X className="w-4 h-4" aria-hidden="true" />
+              </button>
+
+              {/* Large Authentic Dish Photo */}
+              <div className="relative h-64 sm:h-72 w-full bg-[var(--color-paper-3)]">
+                <img
+                  src={selectedDish.image}
+                  alt={selectedDish.name}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-paper-2)] via-transparent to-transparent pointer-events-none" />
+                
+                {selectedDish.tag && (
+                  <span className="absolute top-4 left-4 px-2.5 py-1 rounded-[var(--radius-pill)] text-xs text-[var(--color-ink)] bg-[var(--color-paper)]/90 border border-[var(--color-rule)] lowercase">
+                    {selectedDish.tag}
+                  </span>
+                )}
+              </div>
+
+              {/* Dish Content Details */}
+              <div className="p-6">
+                <div className="flex items-baseline justify-between gap-4 mb-2">
+                  <h3 className="text-xl sm:text-2xl font-normal text-[var(--color-ink)]">
+                    {selectedDish.name}
+                  </h3>
+                  <span className="price-figure text-2xl shrink-0">
+                    ₹{selectedDish.price * quantity}
+                  </span>
+                </div>
+
+                <p className="text-xs sm:text-sm text-[var(--color-ink-2)] font-normal leading-relaxed mb-6">
+                  {selectedDish.description}
+                </p>
+
+                {/* Dietary and Category Attributes */}
+                <div className="flex flex-wrap items-center gap-3 py-3 border-y border-[var(--color-rule)] text-xs text-[var(--color-muted)] mb-6">
+                  <span className="badge-tag">pure veg</span>
+                  <span className="badge-tag capitalize">{selectedDish.category}</span>
+                  <span className="badge-tag">prepared to order</span>
+                </div>
+
+                {/* Quantity Controller & Order Actions */}
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-[var(--color-muted)] font-medium">Quantity:</span>
+                    <div className="flex items-center gap-3 bg-[var(--color-paper)] border border-[var(--color-rule)] rounded-[var(--radius-pill)] px-3 py-1">
+                      <button
+                        type="button"
+                        onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                        className="text-[var(--color-muted)] hover:text-[var(--color-ink)] active:opacity-75 disabled:opacity-50 focus-visible:outline-none cursor-pointer"
+                        aria-label="Decrease quantity"
+                      >
+                        <Minus className="w-3.5 h-3.5" aria-hidden="true" />
+                      </button>
+                      <span className="font-[var(--font-display)] text-sm text-[var(--color-ink)] min-w-[16px] text-center">
+                        {quantity}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => setQuantity(quantity + 1)}
+                        className="text-[var(--color-muted)] hover:text-[var(--color-ink)] active:opacity-75 disabled:opacity-50 focus-visible:outline-none cursor-pointer"
+                        aria-label="Increase quantity"
+                      >
+                        <Plus className="w-3.5 h-3.5" aria-hidden="true" />
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                    <button
+                      type="button"
+                      onClick={() => handleWhatsAppDishOrder(selectedDish, quantity)}
+                      className="btn-primary flex-1 py-3 justify-center text-xs active:opacity-85 disabled:opacity-50"
+                    >
+                      <MessageCircle className="w-4 h-4 shrink-0" aria-hidden="true" />
+                      <span>Order on WhatsApp (₹{selectedDish.price * quantity})</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        handleCloseDish();
+                        onOpenDelivery();
+                      }}
+                      className="btn-secondary py-3 px-4 justify-center text-xs active:opacity-85 disabled:opacity-50"
+                    >
+                      <span>Delivery platforms</span>
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
     </section>
   );

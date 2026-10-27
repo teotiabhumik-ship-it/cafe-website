@@ -1,6 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Star, ShoppingBag, Coffee, ChevronRight } from 'lucide-react';
+import { Search, Star, ShoppingBag, UtensilsCrossed } from 'lucide-react';
 import { MENU_CATEGORIES, MENU_ITEMS } from '../data/cafeData';
 
 export default function MenuSection({ onOpenDelivery }) {
@@ -14,45 +13,44 @@ export default function MenuSection({ onOpenDelivery }) {
       const matchesSearch =
         item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.tag.toLowerCase().includes(searchQuery.toLowerCase());
+        (item.tag && item.tag.toLowerCase().includes(searchQuery.toLowerCase()));
       const matchesBestseller = !bestsellerOnly || (item.tag && item.tag.toLowerCase().includes('bestseller'));
       return matchesCategory && matchesSearch && matchesBestseller;
     });
   }, [activeCategory, searchQuery, bestsellerOnly]);
 
   return (
-    <section id="menu" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-stone-850">
+    <section id="menu" className="py-20 px-4 sm:px-6 lg:px-8 max-w-[var(--container)] mx-auto border-t border-[var(--color-rule)]">
       
       {/* Section Header */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-14">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
         <div>
-          <span className="text-[11px] font-mono uppercase tracking-[0.28em] text-[#c8a97e] block mb-3 font-medium">
-            Artisan Kitchen & Brew Bar
-          </span>
-          <h2 className="font-serif-title text-3xl sm:text-5xl font-bold text-[#fbf9f5]">
-            Curated Menu
+          <h2 className="text-2xl sm:text-4xl font-normal text-[var(--color-ink)]">
+            Curated kitchen menu
           </h2>
         </div>
-        <p className="text-xs sm:text-sm text-stone-400 font-light max-w-md leading-relaxed">
-          Single-origin espresso, gourmet thick shakes, stone-baked pizzas, and our signature crispy corn — freshly prepared to order.
+        <p className="text-xs sm:text-sm text-[var(--color-muted)] font-normal max-w-md leading-relaxed">
+          Single-origin espresso, gourmet pizzas, dim sums, and signature pastas prepared fresh to order.
         </p>
       </div>
 
-      {/* Minimal Category Tabs & Search */}
-      <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 mb-12 pb-4 border-b border-stone-850">
+      {/* Category Pills & Search */}
+      <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 mb-8 pb-4 border-b border-[var(--color-rule)]">
         
-        {/* Category Text Links */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 scrollbar-none">
+        {/* Category Pills */}
+        <div className="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 scrollbar-none" role="tablist">
           {MENU_CATEGORIES.map((cat) => {
             const isActive = activeCategory === cat.id;
             return (
               <button
                 key={cat.id}
+                role="tab"
+                aria-selected={isActive}
                 onClick={() => setActiveCategory(cat.id)}
-                className={`relative px-3 py-1.5 rounded-full text-xs font-mono tracking-wider transition-colors duration-200 whitespace-nowrap ${
+                className={`px-3.5 py-1.5 rounded-[var(--radius-pill)] text-xs font-medium whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)] ${
                   isActive
-                    ? 'text-[#090807] bg-[#f5f2eb] font-semibold'
-                    : 'text-stone-400 hover:text-[#f5f2eb]'
+                    ? 'bg-[var(--color-accent)] text-[var(--color-accent-ink)] font-semibold'
+                    : 'bg-[var(--color-paper-2)] text-[var(--color-muted)] hover:text-[var(--color-ink)] border border-[var(--color-rule)]'
                 }`}
               >
                 {cat.label}
@@ -61,21 +59,21 @@ export default function MenuSection({ onOpenDelivery }) {
           })}
         </div>
 
-        {/* Minimal Search & Bestseller Toggle */}
-        <div className="flex items-center gap-3">
-          <div className="relative flex-1 sm:w-64">
-            <Search className="w-3.5 h-3.5 text-stone-500 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+        {/* Search & Bestseller Toggle */}
+        <div className="flex items-center gap-2.5">
+          <div className="relative flex-1 sm:w-60">
+            <Search className="w-3.5 h-3.5 text-[var(--color-muted)] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" aria-hidden="true" />
             <input
               type="text"
               placeholder="Search dishes..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-3 py-1.5 rounded-full bg-[#11100e] border border-stone-800 text-stone-200 placeholder-stone-500 text-xs focus:outline-none focus:border-[#c8a97e] transition-colors"
+              className="w-full pl-8 pr-3 py-1.5 rounded-[var(--radius-pill)] bg-[var(--color-paper-2)] border border-[var(--color-rule)] text-[var(--color-ink)] placeholder-[var(--color-muted)] text-xs focus:outline-none focus:border-[var(--color-focus)] focus-visible:ring-2 focus-visible:ring-[var(--color-focus)]"
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-stone-400 hover:text-white"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-[var(--color-muted)] hover:text-[var(--color-ink)]"
               >
                 Clear
               </button>
@@ -84,137 +82,88 @@ export default function MenuSection({ onOpenDelivery }) {
 
           <button
             onClick={() => setBestsellerOnly(!bestsellerOnly)}
-            className={`px-3 py-1.5 rounded-full text-xs font-mono tracking-wider transition-colors flex items-center gap-1.5 border whitespace-nowrap ${
+            className={`px-3 py-1.5 rounded-[var(--radius-pill)] text-xs transition-colors flex items-center gap-1.5 whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)] ${
               bestsellerOnly
-                ? 'bg-[#f5f2eb] text-[#090807] font-semibold border-[#f5f2eb]'
-                : 'text-stone-400 border-stone-800 hover:border-stone-700'
+                ? 'bg-[var(--color-accent)] text-[var(--color-accent-ink)] font-semibold'
+                : 'bg-[var(--color-paper-2)] text-[var(--color-muted)] border border-[var(--color-rule)] hover:text-[var(--color-ink)]'
             }`}
           >
-            <Star className={`w-3 h-3 ${bestsellerOnly ? 'fill-[#090807]' : 'text-[#c8a97e]'}`} />
+            <Star className={`w-3 h-3 ${bestsellerOnly ? 'fill-current' : 'text-[var(--color-accent)]'}`} aria-hidden="true" />
             <span>Bestsellers</span>
           </button>
         </div>
 
       </div>
 
-      {/* Minimalist Menu Grid */}
-      <motion.div
-        layout
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-      >
-        <AnimatePresence mode="popLayout">
-          {filteredItems.length > 0 ? (
-            filteredItems.map((item) => (
-              <motion.div
-                layout
-                key={item.id}
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.98 }}
-                transition={{ duration: 0.25 }}
-                className="group flex flex-col justify-between rounded-2xl bg-[#11100e] border border-stone-850 hover:border-stone-700 p-4 transition-colors duration-200 shadow-sm"
-              >
-                {/* Rectangular Food Photo */}
-                <div className="relative h-48 sm:h-52 w-full rounded-xl overflow-hidden bg-[#161412] mb-4">
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+      {/* Menu Cards Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {filteredItems.length > 0 ? (
+          filteredItems.map((item, idx) => (
+            <div
+              key={item.id}
+              className="flex flex-col justify-between rounded-[var(--radius-card)] bg-[var(--color-paper-2)] border border-[var(--color-rule)] p-4"
+            >
+              {/* Food Photo Container */}
+              <div className="relative h-48 w-full rounded-[var(--radius-card)] overflow-hidden bg-[var(--color-paper-3)] mb-4">
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  className="w-full h-full object-cover"
+                  loading={idx === 0 ? undefined : "lazy"}
+                  fetchPriority={idx === 0 ? "high" : undefined}
+                />
+                
+                {/* Tag pill */}
+                {item.tag && (
+                  <span className="absolute top-2.5 left-2.5 px-2 py-0.5 rounded-[var(--radius-pill)] text-[11px] text-[var(--color-ink)] bg-[var(--color-paper)]/85 border border-[var(--color-rule)] lowercase">
+                    {item.tag}
+                  </span>
+                )}
 
-                  {/* Corner Badges */}
-                  <div className="absolute top-2.5 left-2.5">
-                    <span className="px-2 py-0.5 rounded text-[10px] font-mono tracking-wider uppercase bg-black/70 backdrop-blur-sm text-[#c8a97e] border border-stone-800">
-                      {item.tag}
+                <span className="absolute bottom-2.5 left-2.5 px-2 py-0.5 rounded-[var(--radius-pill)] text-[10px] text-[var(--color-ink-2)] bg-[var(--color-paper)]/90 border border-[var(--color-rule)]">
+                  Pure veg
+                </span>
+              </div>
+
+              {/* Title & Description */}
+              <div className="flex-1 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-baseline justify-between gap-3 mb-1.5">
+                    <h3 className="text-base font-normal text-[var(--color-ink)]">
+                      {item.name}
+                    </h3>
+                    <span className="price-figure shrink-0">
+                      ₹{item.price}
                     </span>
                   </div>
-
-                  <div className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded bg-black/70 backdrop-blur-sm border border-stone-800 flex items-center gap-1 text-[11px] font-mono text-stone-200">
-                    <Star className="w-3 h-3 fill-[#c8a97e] text-[#c8a97e]" />
-                    <span>{item.rating}</span>
-                  </div>
-
-                  <div className="absolute bottom-2.5 left-2.5 flex items-center gap-1.5 px-2 py-0.5 rounded bg-black/70 backdrop-blur-sm text-[10px] text-emerald-400 font-mono border border-emerald-950/40">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                    <span>Pure Veg</span>
-                  </div>
+                  <p className="text-xs text-[var(--color-ink-2)] font-normal leading-relaxed line-clamp-2 mb-4">
+                    {item.description}
+                  </p>
                 </div>
 
-                {/* Content Details */}
-                <div className="flex-1 flex flex-col justify-between">
-                  <div>
-                    <div className="flex items-baseline justify-between gap-3 mb-1.5">
-                      <h3 className="font-serif-title text-base sm:text-lg font-bold text-[#f5f2eb] group-hover:text-[#c8a97e] transition-colors leading-snug">
-                        {item.name}
-                      </h3>
-                      <span className="font-mono text-sm font-semibold text-[#c8a97e] shrink-0">
-                        ₹{item.price}
-                      </span>
-                    </div>
-                    <p className="text-xs text-stone-400 font-light leading-relaxed line-clamp-2 mb-4">
-                      {item.description}
-                    </p>
-                  </div>
-
-                  {/* Footer Action */}
-                  <div className="pt-3 border-t border-stone-850 flex items-center justify-between text-xs">
-                    <span className="text-[10px] font-mono text-stone-500 uppercase tracking-widest">
-                      Freshly Sourced
-                    </span>
-                    <button
-                      onClick={onOpenDelivery}
-                      className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono text-stone-300 hover:text-white bg-[#191715] hover:bg-[#221f1c] border border-stone-800 hover:border-stone-700 transition-colors"
-                    >
-                      <ShoppingBag className="w-3 h-3 text-[#c8a97e]" />
-                      <span>Order</span>
-                    </button>
-                  </div>
+                {/* Footer Action */}
+                <div className="pt-3 border-t border-[var(--color-rule)] flex items-center justify-between text-xs">
+                  <span className="text-xs text-[var(--color-muted)]">
+                    Freshly prepared
+                  </span>
+                  <button
+                    onClick={onOpenDelivery}
+                    className="btn-secondary text-xs py-1 px-3"
+                  >
+                    <ShoppingBag className="w-3 h-3 text-[var(--color-accent)]" aria-hidden="true" />
+                    <span>Order</span>
+                  </button>
                 </div>
+              </div>
 
-              </motion.div>
-            ))
-          ) : (
-            <div className="col-span-full py-16 text-center text-stone-400">
-              <Coffee className="w-8 h-8 mx-auto text-stone-600 mb-2 opacity-60" />
-              <p className="font-serif-title text-base font-semibold text-stone-300">No dishes match your selection</p>
-              <button
-                onClick={() => {
-                  setActiveCategory('all');
-                  setSearchQuery('');
-                  setBestsellerOnly(false);
-                }}
-                className="mt-3 px-4 py-1.5 rounded-full text-xs font-mono text-[#090807] bg-[#f5f2eb]"
-              >
-                Reset Filters
-              </button>
             </div>
-          )}
-        </AnimatePresence>
-      </motion.div>
-
-      {/* Online Delivery Platform Banner */}
-      <div className="mt-16 p-6 sm:p-8 rounded-2xl bg-[#11100e] border border-stone-850 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm">
-        <div>
-          <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#c8a97e] block mb-1">
-            Doorstep Delivery
-          </span>
-          <h3 className="font-serif-title text-xl font-bold text-[#fbf9f5] mb-1">
-            Order Hot via Swiggy & Zomato
-          </h3>
-          <p className="text-xs sm:text-sm text-stone-400 font-light">
-            Fast delivery across Raj Nagar, RDC, Kavi Nagar, and surrounding Ghaziabad areas.
-          </p>
-        </div>
-        <button
-          onClick={onOpenDelivery}
-          className="px-6 py-3 rounded-full font-medium text-[#090807] bg-[#f5f2eb] hover:bg-[#ded8ce] flex items-center gap-2 text-xs sm:text-sm shrink-0 transition-colors"
-        >
-          <ShoppingBag className="w-4 h-4 text-[#090807]" />
-          <span>Order on Swiggy / Zomato</span>
-          <ChevronRight className="w-4 h-4" />
-        </button>
+          ))
+        ) : (
+          <div className="col-span-full py-16 text-center text-[var(--color-muted)]">
+            <UtensilsCrossed className="w-8 h-8 mx-auto text-[var(--color-muted)] mb-2 opacity-50" aria-hidden="true" />
+            <p className="text-sm">No dishes found matching your search.</p>
+          </div>
+        )}
       </div>
 
     </section>

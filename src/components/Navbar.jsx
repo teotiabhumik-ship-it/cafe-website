@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Coffee, Calendar, ShoppingBag, Menu as MenuIcon, X } from 'lucide-react';
+import { Menu as MenuIcon, X } from 'lucide-react';
 import { CAFE_INFO } from '../data/cafeData';
 
 export default function Navbar({ onOpenReserve, onOpenDelivery }) {
@@ -11,7 +11,7 @@ export default function Navbar({ onOpenReserve, onOpenDelivery }) {
     { name: 'Spaces', href: '#gallery' },
     { name: 'Menu', href: '#menu' },
     { name: 'Celebrations', href: '#celebrations' },
-    { name: 'Location', href: '#map-location' },
+    { name: 'Location & hours', href: '#map-location' },
     { name: 'Reviews', href: '#reviews' },
   ];
 
@@ -69,31 +69,31 @@ export default function Navbar({ onOpenReserve, onOpenDelivery }) {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-[var(--z-sticky-nav)] transition-colors duration-200 ${
         scrolled
-          ? 'bg-[#090807]/95 backdrop-blur-md border-b border-stone-800/60 py-3.5'
-          : 'bg-[#090807]/60 backdrop-blur-sm border-b border-stone-900/40 py-5'
+          ? 'bg-[var(--color-paper)]/95 backdrop-blur-md border-b border-[var(--color-rule)] py-3'
+          : 'bg-[var(--color-paper)]/75 backdrop-blur-sm border-b border-[var(--color-rule)]/50 py-4'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[var(--container)] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           
-          {/* Brand Logo in Timeless Tracked Typography */}
+          {/* Brand Wordmark in Young Serif */}
           <a
             href="#"
             onClick={(e) => handleNavClick(e, '#')}
-            className="flex items-baseline gap-2.5 cursor-pointer group"
+            className="flex items-baseline gap-2.5 cursor-pointer no-underline group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)] rounded-sm"
           >
-            <span className="font-serif text-lg sm:text-xl font-bold tracking-[0.2em] uppercase text-[#f5f2eb] group-hover:text-[#c8a97e] transition-colors">
-              ElleBee
+            <span className="font-[var(--font-display)] text-xl font-normal text-[var(--color-ink)] group-hover:text-[var(--color-accent)] transition-colors">
+              Cafe ElleBee
             </span>
-            <span className="text-[10px] tracking-[0.2em] uppercase text-stone-500 font-mono hidden sm:inline">
-              RDC • Raj Nagar
+            <span className="text-xs text-[var(--color-muted)] font-normal hidden sm:inline">
+              RDC, Raj Nagar
             </span>
           </a>
 
-          {/* Minimalist Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-8">
+          {/* Nav links: body face, step smaller, sentence case, untracked */}
+          <nav className="hidden md:flex items-center gap-7" aria-label="Main navigation">
             {navLinks.map((link) => {
               const isActive = activeSection === link.href;
               return (
@@ -101,37 +101,37 @@ export default function Navbar({ onOpenReserve, onOpenDelivery }) {
                   key={link.name}
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link.href)}
-                  className={`text-xs font-mono tracking-widest uppercase transition-colors relative py-1 cursor-pointer ${
-                    isActive ? 'text-[#f5f2eb] font-semibold' : 'text-stone-400 hover:text-[#f5f2eb]'
+                  className={`text-sm no-underline transition-colors relative py-1 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)] rounded-sm ${
+                    isActive ? 'text-[var(--color-ink)] font-medium' : 'text-[var(--color-muted)] hover:text-[var(--color-ink)]'
                   }`}
                 >
                   {link.name}
                   {isActive && (
-                    <span className="absolute bottom-0 left-0 w-full h-[1.5px] bg-[#c8a97e]" />
+                    <span className="absolute bottom-0 left-0 w-full h-[1.5px] bg-[var(--color-accent)]" />
                   )}
                 </a>
               );
             })}
           </nav>
 
-          {/* Minimal Actions */}
+          {/* Primary & Secondary Actions */}
           <div className="hidden sm:flex items-center gap-3">
-            <span className="text-[11px] font-mono text-stone-400 tracking-wider hidden lg:inline mr-2">
-              11:00 – 23:00
+            <span className="text-xs text-[var(--color-muted)] font-normal hidden lg:inline mr-1">
+              Daily 11:00 to 23:00
             </span>
 
             <button
               onClick={onOpenDelivery}
-              className="px-3.5 py-1.5 rounded-full text-xs font-mono text-stone-300 hover:text-white border border-stone-800 hover:border-stone-700 transition-colors"
+              className="btn-secondary text-xs py-1.5 px-3.5 active:translate-y-px disabled:opacity-50"
             >
-              Order Food
+              Order takeaway
             </button>
 
             <button
               onClick={onOpenReserve}
-              className="px-4 py-1.5 rounded-full text-xs font-medium text-[#090807] bg-[#f5f2eb] hover:bg-[#ded8ce] transition-colors shadow-sm"
+              className="btn-primary text-xs py-1.5 px-4 active:translate-y-px disabled:opacity-50"
             >
-              Reserve Table
+              Book table
             </button>
           </div>
 
@@ -139,56 +139,56 @@ export default function Navbar({ onOpenReserve, onOpenDelivery }) {
           <div className="flex md:hidden items-center gap-2">
             <button
               onClick={onOpenReserve}
-              className="px-3 py-1 text-xs font-medium text-[#090807] bg-[#f5f2eb] rounded-full"
+              className="btn-primary text-xs py-1 px-3"
             >
-              Reserve
+              Book
             </button>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-1.5 text-stone-300 hover:text-white rounded-md"
-              aria-label="Toggle Menu"
+              className="p-1.5 text-[var(--color-muted)] hover:text-[var(--color-ink)] rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)]"
+              aria-label="Toggle navigation menu"
             >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <MenuIcon className="w-5 h-5" />}
+              {mobileMenuOpen ? <X className="w-5 h-5" aria-hidden="true" /> : <MenuIcon className="w-5 h-5" aria-hidden="true" />}
             </button>
           </div>
 
         </div>
       </div>
 
-      {/* Minimal Mobile Drawer */}
+      {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-[#0c0b0a] border-b border-stone-800 px-6 py-5 space-y-4 shadow-2xl">
-          <div className="flex flex-col space-y-2">
+        <div className="md:hidden bg-[var(--color-paper-2)] border-b border-[var(--color-rule)] px-6 py-5 space-y-4 shadow-xl">
+          <div className="flex flex-col space-y-2.5">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
-                className="text-xs font-mono tracking-widest uppercase text-stone-300 hover:text-white py-1.5"
+                className="text-sm text-[var(--color-ink-2)] hover:text-[var(--color-ink)] py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)]"
               >
                 {link.name}
               </a>
             ))}
           </div>
 
-          <div className="pt-3 border-t border-stone-800/80 flex items-center justify-between gap-3">
+          <div className="pt-3 border-t border-[var(--color-rule)] flex items-center justify-between gap-3">
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
                 onOpenDelivery();
               }}
-              className="w-1/2 py-2 text-xs font-mono text-stone-300 border border-stone-800 rounded-full text-center"
+              className="btn-secondary w-1/2 text-xs py-2 text-center"
             >
-              Order Online
+              Order takeaway
             </button>
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
                 onOpenReserve();
               }}
-              className="w-1/2 py-2 text-xs font-medium text-[#090807] bg-[#f5f2eb] rounded-full text-center"
+              className="btn-primary w-1/2 text-xs py-2 text-center"
             >
-              Reserve Table
+              Book table
             </button>
           </div>
         </div>

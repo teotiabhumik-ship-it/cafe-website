@@ -42,7 +42,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#090807] text-[#ede8e1] font-sans selection:bg-[#c8a97e] selection:text-black relative antialiased">
+    <div className="min-h-screen bg-[var(--color-paper)] text-[var(--color-ink)] relative antialiased">
       {/* Top Fixed Minimal Navigation */}
       <Navbar
         onOpenReserve={() => setIsReserveOpen(true)}

@@ -1,7 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { ArrowDown, Star, ArrowRight } from 'lucide-react';
-import { CAFE_INFO } from '../data/cafeData';
+import { ArrowDown } from 'lucide-react';
 
 export default function Hero({ onOpenReserve }) {
   const smoothScrollTo = (e, targetId) => {
@@ -25,111 +23,72 @@ export default function Hero({ onOpenReserve }) {
   };
 
   return (
-    <section className="relative pt-36 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <section className="relative pt-32 pb-16 px-4 sm:px-6 lg:px-8 max-w-[var(--container)] mx-auto">
       
-      {/* Editorial Header Block */}
-      <div className="max-w-4xl mx-auto text-center flex flex-col items-center">
+      {/* Stage Header Block */}
+      <div className="max-w-3xl mx-auto text-center flex flex-col items-center">
         
-        {/* Monospace Overline */}
-        <motion.span
-          initial={{ opacity: 0, y: -8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-[11px] font-mono uppercase tracking-[0.28em] text-[#c8a97e] mb-6 block font-medium"
-        >
-          Specialty Coffee & Bistro • RDC, Raj Nagar
-        </motion.span>
+        {/* Headline: seven words, Young Serif */}
+        <h1 className="text-3xl sm:text-5xl md:text-6xl font-normal text-[var(--color-ink)] leading-[1.05] tracking-tight">
+          Artisanal coffee and dining in Raj Nagar
+        </h1>
 
-        {/* Grand Minimalist Title */}
-        <motion.h1
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.1 }}
-          className="font-serif-title text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-[#fbf9f5] leading-[1.12] mb-6 max-w-3xl"
-        >
-          Artisanal Coffee. Thoughtful Plates. Quiet Evenings.
-        </motion.h1>
+        {/* One sentence: ten words, Instrument Sans */}
+        <p className="text-base sm:text-lg text-[var(--color-ink-2)] font-normal leading-relaxed max-w-xl mx-auto mt-4 mb-6">
+          Freshly pulled espresso, stone-baked pizzas, and booth seating in RDC.
+        </p>
 
-        {/* Minimal Subtitle */}
-        <motion.p
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className="text-base sm:text-lg text-stone-400 font-light leading-relaxed max-w-2xl mb-10"
-        >
-          A quiet sanctuary nestled on the ground floor of RDC, Raj Nagar. Crafted for unhurried conversations, solitary reading, and freshly pulled single-origin roast.
-        </motion.p>
-
-        {/* Minimal Actions */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.3 }}
-          className="flex flex-col sm:flex-row items-center gap-4 mb-16"
-        >
+        {/* Primary and secondary actions */}
+        <div className="flex flex-wrap items-center justify-center gap-3 mb-10">
           <button
             onClick={onOpenReserve}
-            className="w-full sm:w-auto px-8 py-3.5 rounded-full text-xs sm:text-sm font-medium text-[#090807] bg-[#f5f2eb] hover:bg-[#ded8ce] transition-colors shadow-sm"
+            className="btn-primary"
           >
-            Reserve a Table
+            Reserve a table
           </button>
           <a
             href="#menu"
             onClick={(e) => smoothScrollTo(e, '#menu')}
-            className="w-full sm:w-auto px-7 py-3.5 rounded-full text-xs sm:text-sm font-mono text-stone-300 hover:text-white border border-stone-800 hover:border-stone-700 transition-colors flex items-center justify-center gap-2"
+            className="btn-secondary"
           >
-            <span>Explore Menu</span>
-            <ArrowDown className="w-3.5 h-3.5 text-stone-400" />
+            <span>View the menu</span>
+            <ArrowDown className="w-3.5 h-3.5 text-[var(--color-muted)]" aria-hidden="true" />
           </a>
-        </motion.div>
+        </div>
       </div>
 
-      {/* Cinematic Wide Ambient Photo */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.98 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.9, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-        className="relative w-full h-[400px] sm:h-[500px] rounded-2xl overflow-hidden border border-stone-800/60 shadow-2xl mb-12"
-      >
+      {/* Stage Photograph: Authentic Cafe ElleBee Interior */}
+      <div className="relative w-full h-[340px] sm:h-[460px] lg:h-[500px] rounded-[var(--radius-card)] overflow-hidden border border-[var(--color-rule)] shadow-[var(--shadow-card)] mb-8 bg-[var(--color-paper-2)]">
         <img
           src="/images/cafe_interior_main.jpg"
-          alt="Cafe ElleBee Dining Hall & Skylight Lounge"
+          alt="Cafe ElleBee main dining hall with teal booths and skylight"
           className="w-full h-full object-cover"
+          fetchPriority="high"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#090807] via-transparent to-black/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-paper)]/75 via-transparent to-transparent pointer-events-none" />
         
-        {/* Caption in bottom-left */}
-        <div className="absolute bottom-6 left-6 sm:bottom-8 sm:left-8">
-          <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-[#c8a97e] block mb-1">
-            Ground Floor Lounge • RDC Raj Nagar
-          </span>
-          <p className="font-serif-title text-base sm:text-lg text-[#fbf9f5] font-semibold">
-            Teal banquettes, coffered wooden skylight, and artisan coffee aromas.
+        <div className="absolute bottom-5 left-5 sm:bottom-6 sm:left-6">
+          <p className="font-[var(--font-display)] text-sm sm:text-base text-[var(--color-ink)] font-normal">
+            Ground floor dining hall with floral skylight and teal banquettes.
           </p>
         </div>
-      </motion.div>
+      </div>
 
-      {/* Minimal Status Strip */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, delay: 0.45 }}
-        className="pt-6 border-t border-stone-850 flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-xs font-mono text-stone-400"
-      >
-        <span className="flex items-center gap-2 text-stone-300">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-          Open Daily 11:00 – 23:00
-        </span>
-        <span className="hidden sm:inline text-stone-700">•</span>
-        <span className="flex items-center gap-1.5 text-stone-300">
-          <Star className="w-3 h-3 fill-[#c8a97e] text-[#c8a97e]" />
-          4.6★ Google (1,200+ Reviews)
-        </span>
-        <span className="hidden sm:inline text-stone-700">•</span>
-        <span>100% Pure Veg</span>
-        <span className="hidden sm:inline text-stone-700">•</span>
-        <span>B-19 Ground Floor, RDC Raj Nagar</span>
-      </motion.div>
+      {/* Meta Strip: 3 Clean Columns with Hairlines, Zero Middle Dots */}
+      <div className="pt-4 border-t border-[var(--color-rule)] grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-[var(--color-muted)] font-normal">
+        <div className="sm:text-left">
+          <span className="text-[var(--color-ink-2)] font-medium">Hours: </span>
+          <span>Daily 11:00 to 23:00</span>
+        </div>
+        <div className="sm:text-center">
+          <span className="text-[var(--color-ink-2)] font-medium">Location: </span>
+          <span>B-19 Ground Floor, RDC Raj Nagar</span>
+        </div>
+        <div className="sm:text-right">
+          <span className="text-[var(--color-ink-2)] font-medium">Kitchen: </span>
+          <span>100% pure vegetarian casual dining</span>
+        </div>
+      </div>
 
     </section>
   );

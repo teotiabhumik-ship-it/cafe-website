@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { X, Calendar, Clock, Users, Sparkles, MessageCircle, CheckCircle2, Phone, Heart } from 'lucide-react';
+import { X, CheckCircle2, MessageCircle } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { CAFE_INFO } from '../data/cafeData';
 
@@ -25,10 +24,10 @@ export default function ReservationModal({ isOpen, onClose }) {
 
     try {
       confetti({
-        particleCount: 80,
-        spread: 70,
+        particleCount: 60,
+        spread: 60,
         origin: { y: 0.6 },
-        colors: ['#c8a97e', '#f5efe6', '#10b981', '#f43f5e'],
+        colors: ['#c8a97e', '#f5efe6', '#f43f5e'],
       });
     } catch (err) {
       // fallback
@@ -40,13 +39,13 @@ export default function ReservationModal({ isOpen, onClose }) {
   const handleWhatsAppSend = () => {
     const text = encodeURIComponent(
       `Hi Cafe ElleBee! I'd like to reserve a table:\n\n` +
-      `👤 Name: ${formData.name}\n` +
-      `📞 Phone: ${formData.phone}\n` +
-      `👥 Guests: ${formData.guests}\n` +
-      `📅 Date: ${formData.date || 'Today'}\n` +
-      `⏰ Time: ${formData.time}\n` +
-      `🎉 Occasion: ${formData.occasion}\n` +
-      (formData.notes ? `📝 Special Request: ${formData.notes}\n` : '') +
+      `Name: ${formData.name}\n` +
+      `Phone: ${formData.phone}\n` +
+      `Guests: ${formData.guests}\n` +
+      `Date: ${formData.date || 'Today'}\n` +
+      `Time: ${formData.time}\n` +
+      `Occasion: ${formData.occasion}\n` +
+      (formData.notes ? `Special Request: ${formData.notes}\n` : '') +
       `\nPlease confirm availability. Thank you!`
     );
     window.open(`https://wa.me/919354460764?text=${text}`, '_blank');
@@ -58,72 +57,69 @@ export default function ReservationModal({ isOpen, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md overflow-y-auto">
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95, y: 20 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.95, y: 20 }}
-        className="relative max-w-lg w-full bg-[#161412] rounded-3xl border border-stone-700 shadow-2xl overflow-hidden my-8"
+    <div className="fixed inset-0 z-[var(--z-modal)] flex items-center justify-center p-4 bg-black/85 overflow-y-auto">
+      <div
+        className="relative max-w-lg w-full bg-[var(--color-paper-2)] rounded-[var(--radius-card)] border border-[var(--color-rule)] shadow-[var(--shadow-card)] overflow-hidden my-8"
       >
-        {/* Header Ribbon */}
-        <div className="p-6 bg-[#1b1815] border-b border-stone-800 relative">
+        {/* Header */}
+        <div className="p-6 bg-[var(--color-paper-3)] border-b border-[var(--color-rule)] relative">
           <button
             onClick={handleClose}
-            className="absolute top-5 right-5 p-2 rounded-full bg-black/40 hover:bg-black text-stone-300 hover:text-white transition-colors"
+            className="absolute top-5 right-5 p-1.5 rounded-full bg-[var(--color-paper)] text-[var(--color-muted)] hover:text-[var(--color-ink)] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)]"
+            aria-label="Close modal"
           >
-            <X className="w-5 h-5" />
+            <X className="w-5 h-5" aria-hidden="true" />
           </button>
 
-          <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#c8a97e] mb-1">
-            <Sparkles className="w-4 h-4 text-[#c8a97e]" />
-            <span>Table & Party Reservation</span>
-          </div>
-          <h3 className="font-serif-title text-2xl font-bold text-[#fbf9f5]">
-            {submitted ? 'Reservation Requested!' : 'Book Your Cozy Spot'}
+          <span className="text-xs text-[var(--color-muted)] block mb-1">
+            Table and party reservation
+          </span>
+          <h3 className="text-xl sm:text-2xl font-normal text-[var(--color-ink)]">
+            {submitted ? 'Reservation requested' : 'Book a table'}
           </h3>
-          <p className="text-xs text-stone-400 mt-1 font-light">
-            Cafe ElleBee • B-19 Ground Floor, RDC Raj Nagar
+          <p className="text-xs text-[var(--color-muted)] mt-1 font-normal">
+            Cafe ElleBee, B-19 Ground Floor, RDC Raj Nagar
           </p>
         </div>
 
         {/* Content Body */}
         <div className="p-6 sm:p-8">
           {submitted ? (
-            <div className="text-center space-y-6 py-4">
-              <div className="w-16 h-16 rounded-full bg-emerald-500/15 border border-emerald-500/40 flex items-center justify-center mx-auto text-emerald-400">
-                <CheckCircle2 className="w-9 h-9" />
+            <div className="text-center space-y-6 py-2">
+              <div className="w-14 h-14 rounded-full bg-[var(--color-paper)] border border-[var(--color-rule)] flex items-center justify-center mx-auto text-[var(--color-accent)]">
+                <CheckCircle2 className="w-8 h-8" aria-hidden="true" />
               </div>
 
               <div>
-                <h4 className="font-serif-title text-xl font-bold text-[#fbf9f5]">
-                  Thank You, {formData.name}!
+                <h4 className="text-lg font-normal text-[var(--color-ink)]">
+                  Thank you, {formData.name}
                 </h4>
-                <p className="text-sm text-stone-300 font-light mt-2 max-w-sm mx-auto leading-relaxed">
-                  We have received your reservation request for <strong>{formData.guests} guests</strong> on <strong>{formData.date || 'today'}</strong> at <strong>{formData.time}</strong>.
+                <p className="text-xs sm:text-sm text-[var(--color-ink-2)] font-normal mt-2 max-w-sm mx-auto leading-relaxed">
+                  We received your request for {formData.guests} guests on {formData.date || 'today'} at {formData.time}.
                 </p>
               </div>
 
-              <div className="p-4 rounded-2xl bg-[#13110f] border border-stone-800 text-left text-xs text-stone-300 space-y-1.5">
-                <p><strong>Occasion:</strong> {formData.occasion}</p>
-                <p><strong>Contact:</strong> {formData.phone}</p>
-                {formData.notes && <p><strong>Notes:</strong> {formData.notes}</p>}
+              <div className="p-4 rounded-[var(--radius-card)] bg-[var(--color-paper)] border border-[var(--color-rule)] text-left text-xs text-[var(--color-ink-2)] space-y-1.5">
+                <p><span className="text-[var(--color-muted)]">Occasion:</span> {formData.occasion}</p>
+                <p><span className="text-[var(--color-muted)]">Contact:</span> {formData.phone}</p>
+                {formData.notes && <p><span className="text-[var(--color-muted)]">Notes:</span> {formData.notes}</p>}
               </div>
 
               {/* Instant WhatsApp Confirmation */}
               <div className="space-y-3 pt-2">
                 <button
                   onClick={handleWhatsAppSend}
-                  className="w-full py-3.5 px-6 rounded-full font-semibold text-white bg-emerald-600 hover:bg-emerald-500 shadow-lg shadow-emerald-900/30 flex items-center justify-center gap-2 text-sm transition-all"
+                  className="btn-primary w-full py-3 justify-center text-xs whitespace-nowrap"
                 >
-                  <MessageCircle className="w-4 h-4" />
-                  <span>Send Confirmation to Cafe on WhatsApp</span>
+                  <MessageCircle className="w-4 h-4 shrink-0" aria-hidden="true" />
+                  <span>Confirm on WhatsApp</span>
                 </button>
 
                 <button
                   onClick={handleClose}
-                  className="w-full py-2.5 text-xs text-stone-400 hover:text-white"
+                  className="btn-secondary w-full py-2 justify-center text-xs"
                 >
-                  Close Window
+                  Close
                 </button>
               </div>
             </div>
@@ -132,8 +128,8 @@ export default function ReservationModal({ isOpen, onClose }) {
               {/* Name & Phone */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-medium text-stone-300 mb-1">
-                    Your Name *
+                  <label className="block text-xs font-normal text-[var(--color-ink-2)] mb-1">
+                    Your name *
                   </label>
                   <input
                     type="text"
@@ -141,12 +137,12 @@ export default function ReservationModal({ isOpen, onClose }) {
                     placeholder="e.g. Priya Sharma"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#12100e] border border-stone-800 text-stone-100 placeholder-stone-500 text-sm focus:outline-none focus:border-[#c8a97e]"
+                    className="w-full px-3.5 py-2 rounded-lg bg-[var(--color-paper)] border border-[var(--color-rule)] text-[var(--color-ink)] placeholder-[var(--color-muted)] text-xs focus:outline-none focus:border-[var(--color-focus)] focus-visible:ring-2 focus-visible:ring-[var(--color-focus)]"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-stone-300 mb-1">
-                    Phone Number *
+                  <label className="block text-xs font-normal text-[var(--color-ink-2)] mb-1">
+                    Phone number *
                   </label>
                   <input
                     type="tel"
@@ -154,7 +150,7 @@ export default function ReservationModal({ isOpen, onClose }) {
                     placeholder="+91 98765 43210"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#12100e] border border-stone-800 text-stone-100 placeholder-stone-500 text-sm focus:outline-none focus:border-[#c8a97e]"
+                    className="w-full px-3.5 py-2 rounded-lg bg-[var(--color-paper)] border border-[var(--color-rule)] text-[var(--color-ink)] placeholder-[var(--color-muted)] text-xs focus:outline-none focus:border-[var(--color-focus)] focus-visible:ring-2 focus-visible:ring-[var(--color-focus)]"
                   />
                 </div>
               </div>
@@ -162,31 +158,31 @@ export default function ReservationModal({ isOpen, onClose }) {
               {/* Guests & Occasion */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-medium text-stone-300 mb-1">
-                    Number of Guests
+                  <label className="block text-xs font-normal text-[var(--color-ink-2)] mb-1">
+                    Number of guests
                   </label>
                   <select
                     value={formData.guests}
                     onChange={(e) => setFormData({ ...formData, guests: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#12100e] border border-stone-800 text-stone-100 text-sm focus:outline-none focus:border-[#c8a97e]"
+                    className="w-full px-3.5 py-2 rounded-lg bg-[var(--color-paper)] border border-[var(--color-rule)] text-[var(--color-ink)] text-xs focus:outline-none focus:border-[var(--color-focus)] focus-visible:ring-2 focus-visible:ring-[var(--color-focus)]"
                   >
                     <option value="1">1 Person (Solo Break)</option>
                     <option value="2">2 People (Cozy Date)</option>
-                    <option value="3-4">3 – 4 People (Friends Catchup)</option>
-                    <option value="5-8">5 – 8 People (Small Party)</option>
-                    <option value="10-15">10 – 15 People (Group Celebration)</option>
+                    <option value="3-4">3 to 4 People (Friends Catchup)</option>
+                    <option value="5-8">5 to 8 People (Small Party)</option>
+                    <option value="10-15">10 to 15 People (Group Celebration)</option>
                     <option value="15+">15+ People (Private Lounge Booking)</option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-stone-300 mb-1">
-                    Occasion / Event
+                  <label className="block text-xs font-normal text-[var(--color-ink-2)] mb-1">
+                    Occasion / event
                   </label>
                   <select
                     value={formData.occasion}
                     onChange={(e) => setFormData({ ...formData, occasion: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#12100e] border border-stone-800 text-stone-100 text-sm focus:outline-none focus:border-[#c8a97e]"
+                    className="w-full px-3.5 py-2 rounded-lg bg-[var(--color-paper)] border border-[var(--color-rule)] text-[var(--color-ink)] text-xs focus:outline-none focus:border-[var(--color-focus)] focus-visible:ring-2 focus-visible:ring-[var(--color-focus)]"
                   >
                     <option value="Casual Coffee & Bites">Casual Coffee & Bites</option>
                     <option value="Birthday Party Celebration">Birthday Party Celebration</option>
@@ -201,25 +197,25 @@ export default function ReservationModal({ isOpen, onClose }) {
               {/* Date & Time */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-medium text-stone-300 mb-1">
-                    Reservation Date
+                  <label className="block text-xs font-normal text-[var(--color-ink-2)] mb-1">
+                    Reservation date
                   </label>
                   <input
                     type="date"
                     value={formData.date}
                     onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#12100e] border border-stone-800 text-stone-100 text-sm focus:outline-none focus:border-[#c8a97e]"
+                    className="w-full px-3.5 py-2 rounded-lg bg-[var(--color-paper)] border border-[var(--color-rule)] text-[var(--color-ink)] text-xs focus:outline-none focus:border-[var(--color-focus)] focus-visible:ring-2 focus-visible:ring-[var(--color-focus)]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-stone-300 mb-1">
-                    Preferred Time Slot
+                  <label className="block text-xs font-normal text-[var(--color-ink-2)] mb-1">
+                    Preferred time slot
                   </label>
                   <select
                     value={formData.time}
                     onChange={(e) => setFormData({ ...formData, time: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#12100e] border border-stone-800 text-stone-100 text-sm focus:outline-none focus:border-[#c8a97e]"
+                    className="w-full px-3.5 py-2 rounded-lg bg-[var(--color-paper)] border border-[var(--color-rule)] text-[var(--color-ink)] text-xs focus:outline-none focus:border-[var(--color-focus)] focus-visible:ring-2 focus-visible:ring-[var(--color-focus)]"
                   >
                     <option value="12:00 PM">12:00 PM (Lunch)</option>
                     <option value="01:30 PM">01:30 PM</option>
@@ -234,34 +230,34 @@ export default function ReservationModal({ isOpen, onClose }) {
 
               {/* Special Requests */}
               <div>
-                <label className="block text-xs font-medium text-stone-300 mb-1">
-                  Special Notes or Decor Requests (Optional)
+                <label className="block text-xs font-normal text-[var(--color-ink-2)] mb-1">
+                  Special notes or decor requests (optional)
                 </label>
                 <textarea
                   rows="2"
-                  placeholder="e.g. Birthday balloon decor, quiet corner table, custom dessert..."
+                  placeholder="e.g. Birthday balloon decor, quiet corner booth..."
                   value={formData.notes}
                   onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#12100e] border border-stone-800 text-stone-100 placeholder-stone-500 text-sm focus:outline-none focus:border-[#c8a97e]"
+                  className="w-full px-3.5 py-2 rounded-lg bg-[var(--color-paper)] border border-[var(--color-rule)] text-[var(--color-ink)] placeholder-[var(--color-muted)] text-xs focus:outline-none focus:border-[var(--color-focus)] focus-visible:ring-2 focus-visible:ring-[var(--color-focus)]"
                 ></textarea>
               </div>
 
-              {/* Submit CTA (Ivory & Obsidian) */}
+              {/* Submit CTA */}
               <div className="pt-2">
                 <button
                   type="submit"
-                  className="w-full py-3.5 px-6 rounded-full font-semibold text-[#0c0b0a] bg-[#f5efe6] hover:bg-[#ebe1d2] shadow-xl text-sm transition-all"
+                  className="btn-primary w-full py-3 justify-center text-xs"
                 >
-                  Confirm Table Request
+                  Confirm table request
                 </button>
-                <p className="text-[11px] text-center text-stone-400 mt-2 font-light">
+                <p className="text-[11px] text-center text-[var(--color-muted)] mt-2 font-normal">
                   No advance fee required. Tables are held for 15 minutes past reservation time.
                 </p>
               </div>
             </form>
           )}
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }

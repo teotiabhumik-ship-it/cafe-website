@@ -1,68 +1,60 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { CAFE_GALLERY } from '../data/cafeData';
 
 export default function CafeGallerySection() {
   return (
-    <section id="gallery" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-stone-850">
+    <section id="gallery" className="py-20 px-4 sm:px-6 lg:px-8 max-w-[var(--container)] mx-auto border-t border-[var(--color-rule)]">
       
-      {/* Section Header */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-16">
+      {/* Section Header: No eyebrows, plain Young Serif heading */}
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12">
         <div>
-          <span className="text-[11px] font-mono uppercase tracking-[0.28em] text-[#c8a97e] block mb-3 font-medium">
-            Spaces & Atmosphere
-          </span>
-          <h2 className="font-serif-title text-3xl sm:text-5xl font-bold text-[#fbf9f5]">
-            Inside The Cafe
+          <h2 className="text-2xl sm:text-4xl font-normal text-[var(--color-ink)]">
+            Inside the cafe
           </h2>
         </div>
-        <p className="text-xs sm:text-sm text-stone-400 font-light max-w-md leading-relaxed">
-          Crafted for unhurried afternoons, intimate conversations, study sessions, and private celebrations under warm incandescent glow.
+        <p className="text-xs sm:text-sm text-[var(--color-muted)] font-normal max-w-md leading-relaxed">
+          Crafted for unhurried afternoons, study sessions, and private celebrations under warm incandescent light.
         </p>
       </div>
 
-      {/* Editorial Numbered Gallery Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {/* Gallery Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {CAFE_GALLERY.map((item, index) => (
-          <motion.div
+          <div
             key={item.title}
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: index * 0.08 }}
-            className="group flex flex-col justify-between"
+            className="flex flex-col justify-between rounded-[var(--radius-card)] bg-[var(--color-paper-2)] border border-[var(--color-rule)] p-4"
           >
-            {/* Crisp Photo Container */}
-            <div className="relative h-64 sm:h-72 w-full rounded-xl overflow-hidden bg-[#141210] border border-stone-850 mb-4">
+            {/* Crisp Local Photo */}
+            <div className="relative h-60 w-full rounded-[var(--radius-card)] overflow-hidden bg-[var(--color-paper-3)] mb-4">
               <img
                 src={item.image}
                 alt={item.title}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                loading="lazy"
+                className="w-full h-full object-cover"
+                loading={index === 0 ? undefined : "lazy"}
+                fetchPriority={index === 0 ? "high" : undefined}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#090807]/70 via-transparent to-transparent pointer-events-none" />
-
+              
               {/* Number Index */}
-              <span className="absolute top-3 left-3 text-[10px] font-mono tracking-widest text-stone-300 bg-black/60 backdrop-blur-sm px-2 py-0.5 rounded border border-stone-800">
+              <span className="absolute top-3 left-3 text-xs text-[var(--color-ink)] bg-[var(--color-paper)]/85 px-2 py-0.5 rounded-[var(--radius-pill)] border border-[var(--color-rule)]">
                 0{index + 1}
               </span>
             </div>
 
-            {/* Quiet Caption Details */}
+            {/* Caption Details */}
             <div>
-              <div className="flex items-baseline justify-between gap-2 mb-1">
-                <h3 className="font-serif-title text-base font-semibold text-[#f5f2eb] group-hover:text-[#c8a97e] transition-colors">
+              <div className="flex items-baseline justify-between gap-2 mb-1.5">
+                <h3 className="text-base font-normal text-[var(--color-ink)]">
                   {item.title}
                 </h3>
-                <span className="text-[10px] font-mono uppercase tracking-widest text-stone-500">
+                <span className="text-xs text-[var(--color-muted)] lowercase">
                   {item.category}
                 </span>
               </div>
-              <p className="text-xs text-stone-400 font-light leading-relaxed">
+              <p className="text-xs text-[var(--color-ink-2)] font-normal leading-relaxed">
                 {item.caption}
               </p>
             </div>
-          </motion.div>
+          </div>
         ))}
       </div>
 

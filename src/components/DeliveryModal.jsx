@@ -1,6 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { X, ShoppingBag, ExternalLink, Phone, MessageCircle, Clock, Sparkles } from 'lucide-react';
+import { X, ShoppingBag, ExternalLink, MessageCircle, Phone } from 'lucide-react';
 import { CAFE_INFO } from '../data/cafeData';
 
 export default function DeliveryModal({ isOpen, onClose }) {
@@ -14,58 +13,55 @@ export default function DeliveryModal({ isOpen, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md">
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95, y: 20 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.95, y: 20 }}
-        className="relative max-w-md w-full bg-[#161412] rounded-3xl border border-stone-700 shadow-2xl overflow-hidden"
+    <div className="fixed inset-0 z-[var(--z-modal)] flex items-center justify-center p-4 bg-black/85">
+      <div
+        className="relative max-w-md w-full bg-[var(--color-paper-2)] rounded-[var(--radius-card)] border border-[var(--color-rule)] shadow-[var(--shadow-card)] overflow-hidden"
       >
         {/* Header */}
-        <div className="p-6 bg-[#1b1815] border-b border-stone-800 relative">
+        <div className="p-6 bg-[var(--color-paper-3)] border-b border-[var(--color-rule)] relative">
           <button
             onClick={onClose}
-            className="absolute top-5 right-5 p-2 rounded-full bg-black/40 hover:bg-black text-stone-300 hover:text-white transition-colors"
+            className="absolute top-5 right-5 p-1.5 rounded-full bg-[var(--color-paper)] text-[var(--color-muted)] hover:text-[var(--color-ink)] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)]"
+            aria-label="Close delivery options"
           >
-            <X className="w-5 h-5" />
+            <X className="w-5 h-5" aria-hidden="true" />
           </button>
 
-          <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#c8a97e] mb-1">
-            <ShoppingBag className="w-4 h-4 text-[#c8a97e]" />
-            <span>Doorstep Delivery & Takeaway</span>
-          </div>
-          <h3 className="font-serif-title text-2xl font-bold text-[#fbf9f5]">
-            Order From Cafe ElleBee
+          <span className="text-xs text-[var(--color-muted)] block mb-1">
+            Doorstep delivery and takeaway
+          </span>
+          <h3 className="text-xl sm:text-2xl font-normal text-[var(--color-ink)]">
+            Order online
           </h3>
-          <p className="text-xs text-stone-400 mt-1 font-light">
-            Enjoy your favorite sips and bites anywhere in Ghaziabad
+          <p className="text-xs text-[var(--color-muted)] mt-1 font-normal">
+            Enjoy your favourite dishes delivered across Ghaziabad
           </p>
         </div>
 
         {/* Options */}
-        <div className="p-6 space-y-4">
+        <div className="p-6 space-y-3.5">
           
           {/* Swiggy Card */}
           <a
             href={CAFE_INFO.swiggyUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-between p-4 rounded-2xl bg-[#141210] hover:bg-[#1e1b18] border border-orange-500/30 hover:border-orange-500 transition-all duration-200 group"
+            className="flex items-center justify-between p-4 rounded-[var(--radius-card)] bg-[var(--color-paper)] hover:bg-[var(--color-paper-3)] border border-[var(--color-rule)] transition-colors group no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)]"
           >
-            <div className="flex items-center gap-3.5">
-              <div className="w-11 h-11 rounded-xl bg-orange-500/15 flex items-center justify-center text-orange-400 font-bold text-lg font-serif-title">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-lg bg-[var(--color-paper-2)] border border-[var(--color-rule)] flex items-center justify-center text-[var(--color-accent)] font-semibold text-base">
                 S
               </div>
               <div>
-                <h4 className="text-sm font-bold text-[#fbf9f5] group-hover:text-orange-400 transition-colors">
-                  Order via Swiggy
+                <h4 className="text-sm font-medium text-[var(--color-ink)] group-hover:text-[var(--color-accent)] transition-colors">
+                  Order on Swiggy
                 </h4>
-                <p className="text-xs text-stone-400 font-light">
-                  30–40 mins • Fast local delivery
+                <p className="text-xs text-[var(--color-muted)] font-normal">
+                  Fast local delivery in Raj Nagar
                 </p>
               </div>
             </div>
-            <ExternalLink className="w-4 h-4 text-orange-400 group-hover:translate-x-1 transition-transform" />
+            <ExternalLink className="w-4 h-4 text-[var(--color-muted)] group-hover:text-[var(--color-accent)] transition-colors" aria-hidden="true" />
           </a>
 
           {/* Zomato Card */}
@@ -73,59 +69,59 @@ export default function DeliveryModal({ isOpen, onClose }) {
             href={CAFE_INFO.zomatoUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-between p-4 rounded-2xl bg-[#141210] hover:bg-[#1e1b18] border border-red-500/30 hover:border-red-500 transition-all duration-200 group"
+            className="flex items-center justify-between p-4 rounded-[var(--radius-card)] bg-[var(--color-paper)] hover:bg-[var(--color-paper-3)] border border-[var(--color-rule)] transition-colors group no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)]"
           >
-            <div className="flex items-center gap-3.5">
-              <div className="w-11 h-11 rounded-xl bg-red-500/15 flex items-center justify-center text-red-400 font-bold text-lg font-serif-title">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-lg bg-[var(--color-paper-2)] border border-[var(--color-rule)] flex items-center justify-center text-[var(--color-accent)] font-semibold text-base">
                 Z
               </div>
               <div>
-                <h4 className="text-sm font-bold text-[#fbf9f5] group-hover:text-red-400 transition-colors">
-                  Order via Zomato
+                <h4 className="text-sm font-medium text-[var(--color-ink)] group-hover:text-[var(--color-accent)] transition-colors">
+                  Order on Zomato
                 </h4>
-                <p className="text-xs text-stone-400 font-light">
-                  Live menu tracking & dining discounts
+                <p className="text-xs text-[var(--color-muted)] font-normal">
+                  Live menu tracking and delivery
                 </p>
               </div>
             </div>
-            <ExternalLink className="w-4 h-4 text-red-400 group-hover:translate-x-1 transition-transform" />
+            <ExternalLink className="w-4 h-4 text-[var(--color-muted)] group-hover:text-[var(--color-accent)] transition-colors" aria-hidden="true" />
           </a>
 
           {/* WhatsApp Direct Takeaway */}
           <button
             onClick={handleWhatsAppOrder}
-            className="w-full flex items-center justify-between p-4 rounded-2xl bg-[#141210] hover:bg-[#18231c] border border-emerald-600/30 hover:border-emerald-500 transition-all duration-200 group text-left"
+            className="w-full flex items-center justify-between p-4 rounded-[var(--radius-card)] bg-[var(--color-paper)] hover:bg-[var(--color-paper-3)] border border-[var(--color-rule)] transition-colors group text-left cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)]"
           >
-            <div className="flex items-center gap-3.5">
-              <div className="w-11 h-11 rounded-xl bg-emerald-500/15 flex items-center justify-center text-emerald-400">
-                <MessageCircle className="w-5 h-5" />
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-lg bg-[var(--color-paper-2)] border border-[var(--color-rule)] flex items-center justify-center text-[var(--color-accent)] shrink-0">
+                <MessageCircle className="w-5 h-5" aria-hidden="true" />
               </div>
               <div>
-                <h4 className="text-sm font-bold text-[#fbf9f5] group-hover:text-emerald-400 transition-colors">
-                  Direct WhatsApp Takeaway
+                <h4 className="text-sm font-medium text-[var(--color-ink)] group-hover:text-[var(--color-accent)] transition-colors whitespace-nowrap">
+                  WhatsApp takeaway
                 </h4>
-                <p className="text-xs text-stone-400 font-light">
-                  Pre-order and pick up freshly prepared
+                <p className="text-xs text-[var(--color-muted)] font-normal whitespace-nowrap">
+                  Pre-order for kitchen pickup
                 </p>
               </div>
             </div>
-            <ExternalLink className="w-4 h-4 text-emerald-400 group-hover:translate-x-1 transition-transform" />
+            <ExternalLink className="w-4 h-4 text-[var(--color-muted)] group-hover:text-[var(--color-accent)] transition-colors shrink-0" aria-hidden="true" />
           </button>
 
           {/* Phone Hotline */}
           <div className="pt-2 text-center">
-            <p className="text-xs text-stone-400 mb-2">Prefer to speak directly with our kitchen?</p>
+            <p className="text-xs text-[var(--color-muted)] mb-1.5">Direct kitchen telephone:</p>
             <a
               href="tel:+919354460764"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-[#c8a97e] hover:text-white transition-colors"
+              className="inline-flex items-center gap-1.5 text-xs font-medium text-[var(--color-accent)] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)]"
             >
-              <Phone className="w-4 h-4" />
+              <Phone className="w-3.5 h-3.5" aria-hidden="true" />
               <span>+91 93544 60764</span>
             </a>
           </div>
 
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }

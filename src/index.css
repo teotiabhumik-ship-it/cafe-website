@@ -1,53 +1,124 @@
+/* Hallmark · shape: Photographic · genre: atmospheric · theme: Spore (by request) · redesign: full
+ * hero: Stage · nav: edge-aligned · footer: mast · imagery: photographs · signature: dish-ledger · spore: cellar
+ * axes: dark/roman-serif/warm · posture: committed · contrast: pass · fold: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P5 H5 E5 S5 R5 V5 · weakest: H, hero copy strictly capped at 7-word title and 11-word sentence */
+
+@import url("./tokens.css");
+@import url("./base.css");
 @import "tailwindcss";
 
-@layer base {
-  :root {
-    --font-heading: 'Cinzel', serif;
-    --font-body: 'Plus Jakarta Sans', sans-serif;
-  }
-
-  body {
-    font-family: var(--font-body);
-    background-color: #090807;
-    color: #ede8e1;
-    overflow-x: hidden;
-    scroll-behavior: smooth;
-  }
-
-  h1, h2, h3, h4, .font-serif-title {
-    font-family: var(--font-heading);
-  }
+@theme {
+  --color-paper: var(--color-paper);
+  --color-paper-2: var(--color-paper-2);
+  --color-paper-3: var(--color-paper-3);
+  --color-ink: var(--color-ink);
+  --color-ink-2: var(--color-ink-2);
+  --color-muted: var(--color-muted);
+  --color-rule: var(--color-rule);
+  --color-accent: var(--color-accent);
+  --color-accent-2: var(--color-accent-2);
+  --color-accent-ink: var(--color-accent-ink);
+  --color-focus: var(--color-focus);
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
 }
 
-/* Hairline Minimalist Borders */
-.border-stone-850 {
-  border-color: rgba(45, 41, 38, 0.7);
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  border-radius: var(--radius-pill);
+  padding: 10px 22px;
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background-color var(--dur-micro) var(--ease-out);
+}
+.btn-primary:hover {
+  background: var(--color-accent-2);
+}
+.btn-primary:active {
+  transform: translateY(1px);
+}
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.btn-primary:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
 }
 
-/* Elegant Warm Accents */
-.text-brass {
-  color: #c8a97e;
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  border-radius: var(--radius-pill);
+  padding: 9px 20px;
+  background: transparent;
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  text-decoration: none;
+  border: 1.5px solid var(--color-rule);
+  cursor: pointer;
+  transition: border-color var(--dur-micro) var(--ease-out), background-color var(--dur-micro) var(--ease-out);
+}
+.btn-secondary:hover {
+  border-color: var(--color-muted);
+  background: var(--color-paper-2);
+}
+.btn-secondary:active {
+  transform: translateY(1px);
+}
+.btn-secondary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.btn-secondary:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
 }
 
-.bg-brass {
-  background-color: #c8a97e;
+.badge-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  font-size: var(--text-xs);
+  font-family: var(--font-body);
+  color: var(--color-muted);
+  background: var(--color-paper-2);
+  border: 1px solid var(--color-rule);
+  text-transform: lowercase;
 }
 
-.border-brass {
-  border-color: rgba(200, 169, 126, 0.35);
+.price-figure {
+  font-family: var(--font-display);
+  font-variant-numeric: lining-nums;
+  color: var(--color-accent);
+  font-size: var(--text-lg);
+  line-height: 1;
 }
 
-/* Refined Dark Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #090807;
+  background: var(--color-paper);
 }
 ::-webkit-scrollbar-thumb {
-  background: #24211d;
+  background: var(--color-paper-3);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #38342e;
+  background: var(--color-rule);
 }
